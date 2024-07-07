@@ -3,6 +3,7 @@ import MainText from "./components/MainText";
 import SingleCharacter from "./components/SingleCharacter";
 import {Character} from "./types/types";
 import {AppState} from "./types/types";
+import Loader from "./components/Loader";
 // import {Props} from "./types/types";
 // import {Characters} from "./types/types";
 
@@ -13,10 +14,13 @@ export default class App extends React.Component<{}, AppState> {
       characters: {
         results: [],
       },
+      isLoading: true,
     };
   }
   componentDidMount(): void {
     console.log("componentDidMount");
+
+    console.log("true");
     fetch("https://rickandmortyapi.com/api/character/?page=1")
       .then((response) => {
         if (!response.ok) {
@@ -25,23 +29,37 @@ export default class App extends React.Component<{}, AppState> {
         return response.json();
       })
       .then((data) => {
-        this.setState({characters: data});
+        this.setState({characters: data, isLoading: false});
       })
       .catch((err) => {
         console.error("There was a problem with the fetch operation:", err);
+        this.setState({
+          isLoading: false,
+        });
       });
+
+    console.log(false);
   }
 
   render() {
-    //console.log(this.state.characters.results[1]);
+    const {isLoading, characters} = this.state;
+    if (isLoading) {
+      return <Loader />;
+    }
     return (
       <div className="container">
         <MainText />
-        <div className="grid-container">
-          {this.state.characters.results.map((character: Character) => {
-            return <SingleCharacter key={character.id} character={character} />;
-          })}
-        </div>
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <div className="grid-container">
+            {characters.results.map((character: Character) => {
+              return (
+                <SingleCharacter key={character.id} character={character} />
+              );
+            })}
+          </div>
+        )}
       </div>
     );
   }

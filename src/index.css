@@ -67,3 +67,66 @@
   gap: 44px;
   grid-auto-rows: minmax(100px, auto);
 }
+/* HTML: <div class="loader"></div> */
+.loader1 {
+  width: 100px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  padding: 6px;
+  background:
+    conic-gradient(from 135deg at top, currentColor 90deg, #0000 0) 0
+      calc(50% - 4px) / 17px 8.5px,
+    radial-gradient(
+        farthest-side at bottom left,
+        #0000 calc(100% - 6px),
+        currentColor calc(100% - 5px) 99%,
+        #0000
+      )
+      top right/50% 50% content-box content-box,
+    radial-gradient(
+        farthest-side at top,
+        #0000 calc(100% - 6px),
+        currentColor calc(100% - 5px) 99%,
+        #0000
+      )
+      bottom / 100% 50% content-box content-box;
+  background-repeat: no-repeat;
+  animation: l11 1s infinite linear;
+}
+@keyframes l11 {
+  100% {
+    transform: rotate(1turn);
+  }
+}
+
+/* HTML: <div class="loader"></div> */
+.loader {
+  width: fit-content;
+  font-weight: bold;
+  font-family: monospace;
+  font-size: 25px;
+  clip-path: inset(0 3ch 0 0);
+  animation: l4 1s steps(4) infinite;
+}
+.loader:before {
+  content: "Loading...";
+}
+@keyframes l4 {
+  to {
+    clip-path: inset(0 -1ch 0 0);
+  }
+}
+
+.loader-section {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}

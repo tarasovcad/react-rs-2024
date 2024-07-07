@@ -7,6 +7,7 @@ export interface AppState {
   characters: {
     results: Character[];
   };
+  isLoading: boolean;
 }
 
 export interface SingleState {
