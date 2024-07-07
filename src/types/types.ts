@@ -24,6 +24,9 @@ export interface SingleProps {
 
 export interface SearchState {
   term: string;
+}
+export interface NavbarState {
+  term: string;
   shouldThrowError: boolean;
 }
 

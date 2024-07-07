@@ -1,8 +1,8 @@
 import React from "react";
 import Search from "./Search";
-import {SearchProps, SearchState} from "../types/types";
+import {SearchProps, NavbarState} from "../types/types";
 
-export default class Navbar extends React.Component<SearchProps, SearchState> {
+export default class Navbar extends React.Component<SearchProps, NavbarState> {
   constructor(props: SearchProps) {
     super(props);
     this.state = {
