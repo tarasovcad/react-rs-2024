@@ -1,25 +1,13 @@
-import React, {ReactNode} from "react";
+import React from "react";
 import MainText from "./components/MainText";
 import SingleCharacter from "./components/SingleCharacter";
+import {Character} from "./types/types";
+import {AppState} from "./types/types";
+// import {Props} from "./types/types";
+// import {Characters} from "./types/types";
 
-interface Props {
-  children: ReactNode;
-}
-
-interface Character {
-  id: number;
-  name: string;
-  image: string;
-}
-
-interface Characters {
-  characters: {
-    results: [];
-  };
-}
-
-export default class App extends React.Component<Props, Characters> {
-  constructor(props: Props) {
+export default class App extends React.Component<{}, AppState> {
+  constructor(props: {}) {
     super(props);
     this.state = {
       characters: {
@@ -30,18 +18,28 @@ export default class App extends React.Component<Props, Characters> {
   componentDidMount(): void {
     console.log("componentDidMount");
     fetch("https://rickandmortyapi.com/api/character/?page=1")
-      .then(response => response.json())
-      .then(data => {
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Error");
+        }
+        return response.json();
+      })
+      .then((data) => {
         this.setState({characters: data});
+      })
+      .catch((err) => {
+        console.error("There was a problem with the fetch operation:", err);
       });
   }
+
   render() {
+    //console.log(this.state.characters.results[1]);
     return (
       <div className="container">
         <MainText />
         <div className="grid-container">
           {this.state.characters.results.map((character: Character) => {
-            return <SingleCharacter key={character.id} />;
+            return <SingleCharacter key={character.id} character={character} />;
           })}
         </div>
       </div>

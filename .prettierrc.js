@@ -1,6 +1,6 @@
 export default {
   // Avoid parentheses around arrow function parameters
-  arrowParens: "avoid",
+  arrowParens: "always",
 
   // Place the opening bracket of a block in the same line as the statement
   bracketSameLine: true,
