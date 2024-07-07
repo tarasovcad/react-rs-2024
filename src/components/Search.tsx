@@ -15,6 +15,7 @@ export default class Search extends React.Component<SearchProps, SearchState> {
 
   onButtonClick = () => {
     this.props.onSearchChange(this.state.term);
+    localStorage.setItem("formData", JSON.stringify(this.state));
   };
 
   componentDidMount(): void {
@@ -30,9 +31,6 @@ export default class Search extends React.Component<SearchProps, SearchState> {
     }
   }
 
-  componentDidUpdate(): void {
-    localStorage.setItem("formData", JSON.stringify(this.state));
-  }
   render() {
     return (
       <div className="search-wrapper">

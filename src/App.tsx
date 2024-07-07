@@ -1,5 +1,4 @@
 import React from "react";
-import MainText from "./components/MainText";
 import SingleCharacter from "./components/SingleCharacter";
 import {Character} from "./types/types";
 import {AppState} from "./types/types";
@@ -26,12 +25,16 @@ export default class App extends React.Component<{}, AppState> {
     if (savedData) {
       try {
         const parsedData = JSON.parse(savedData);
-        this.setState(parsedData);
+        this.setState(parsedData, () => {
+          this.fetchCharacters();
+        });
       } catch (error) {
         console.error("Error parsing saved data:", error);
       }
     }
+  }
 
+  fetchCharacters() {
     fetch(`https://rickandmortyapi.com/api/character/?name=${this.state.term}`)
       .then((response) => {
         if (!response.ok) {
@@ -59,14 +62,26 @@ export default class App extends React.Component<{}, AppState> {
 
   render() {
     console.log(this.state.term);
-    const {isLoading, characters, notFound} = this.state;
+    const {isLoading, characters, notFound, term} = this.state;
     if (isLoading) {
       return <Loader />;
     }
     return (
       <div className="container">
         <Navbar onSearchChange={this.handleSearchChange} />
-        <MainText />
+        <h1 className="characters mb-[4px] mt-[50px]">
+          {term ? `Search results for: ${term}` : "Characters"}
+        </h1>
+        <h2 className="description mb-[45px]">
+          All of the characters that appear in the
+          <a
+            href="https://rickandmorty.fandom.com/wiki/Rickipedia"
+            target="_blank"
+            rel="noreferrer">
+            <em> Rick and Morty </em>
+          </a>
+          franchise.
+        </h2>
         {notFound ? <h2>No characters found :(</h2> : null}
         {isLoading ? (
           <Loader />
