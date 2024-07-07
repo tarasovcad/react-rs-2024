@@ -20,11 +20,19 @@ export default class App extends React.Component<{}, AppState> {
       term: "",
     };
   }
-  componentDidMount(): void {
-    console.log("componentDidMount");
 
-    console.log("true");
-    fetch("https://rickandmortyapi.com/api/character/?page=1")
+  componentDidMount(): void {
+    const savedData = localStorage.getItem("formData");
+    if (savedData) {
+      try {
+        const parsedData = JSON.parse(savedData);
+        this.setState(parsedData);
+      } catch (error) {
+        console.error("Error parsing saved data:", error);
+      }
+    }
+
+    fetch(`https://rickandmortyapi.com/api/character/?name=${this.state.term}`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Error");
@@ -43,8 +51,6 @@ export default class App extends React.Component<{}, AppState> {
           notFound: true,
         });
       });
-
-    console.log(false);
   }
 
   handleSearchChange = (term: string) => {

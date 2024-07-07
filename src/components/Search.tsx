@@ -10,16 +10,14 @@ export default class Search extends React.Component<SearchProps, SearchState> {
   }
   onInputChange = (event: React.FormEvent<HTMLInputElement>) => {
     const newTerm = event.currentTarget.value;
-    //  => Not right
-    // this.setState({term: newTerm});
-    // this.props.onSearchChange(this.state.term);
-    this.setState({term: newTerm}, () => {
-      this.props.onSearchChange(newTerm);
-    });
+    this.setState({term: newTerm});
+  };
+
+  onButtonClick = () => {
+    this.props.onSearchChange(this.state.term);
   };
 
   componentDidMount(): void {
-    console.log("Mount");
     const savedData = localStorage.getItem("formData");
 
     if (savedData) {
@@ -45,7 +43,9 @@ export default class Search extends React.Component<SearchProps, SearchState> {
           type="text"
           placeholder="Search anything...."
         />
-        <button className="search-button m1l-[-14px]">
+        <button
+          className="search-button m1l-[-14px]"
+          onClick={this.onButtonClick}>
           <img src="./../../src/assets/images/search.svg" alt="" />
         </button>
       </div>
