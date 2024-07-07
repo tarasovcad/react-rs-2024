@@ -8,6 +8,7 @@ export interface AppState {
     results: Character[];
   };
   isLoading: boolean;
+  notFound: boolean;
 }
 
 export interface SingleState {
@@ -16,4 +17,8 @@ export interface SingleState {
 
 export interface SingleProps {
   character: Character;
+}
+
+export interface SearchState {
+  term: string;
 }

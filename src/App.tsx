@@ -15,6 +15,7 @@ export default class App extends React.Component<{}, AppState> {
         results: [],
       },
       isLoading: true,
+      notFound: false,
     };
   }
   componentDidMount(): void {
@@ -36,19 +37,23 @@ export default class App extends React.Component<{}, AppState> {
         this.setState({
           isLoading: false,
         });
+        this.setState({
+          notFound: true,
+        });
       });
 
     console.log(false);
   }
 
   render() {
-    const {isLoading, characters} = this.state;
+    const {isLoading, characters, notFound} = this.state;
     if (isLoading) {
       return <Loader />;
     }
     return (
       <div className="container">
         <MainText />
+        {notFound ? <h2>No characters found :(</h2> : null}
         {isLoading ? (
           <Loader />
         ) : (
