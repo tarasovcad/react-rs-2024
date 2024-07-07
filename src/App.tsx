@@ -4,6 +4,7 @@ import SingleCharacter from "./components/SingleCharacter";
 import {Character} from "./types/types";
 import {AppState} from "./types/types";
 import Loader from "./components/Loader";
+import Navbar from "./components/Navbar";
 // import {Props} from "./types/types";
 // import {Characters} from "./types/types";
 
@@ -16,6 +17,7 @@ export default class App extends React.Component<{}, AppState> {
       },
       isLoading: true,
       notFound: false,
+      searchTerm: "",
     };
   }
   componentDidMount(): void {
@@ -44,6 +46,9 @@ export default class App extends React.Component<{}, AppState> {
 
     console.log(false);
   }
+  handleSearch = (term: string) => {
+    this.setState({searchTerm: term});
+  };
 
   render() {
     const {isLoading, characters, notFound} = this.state;
@@ -52,6 +57,7 @@ export default class App extends React.Component<{}, AppState> {
     }
     return (
       <div className="container">
+        <Navbar />
         <MainText />
         {notFound ? <h2>No characters found :(</h2> : null}
         {isLoading ? (

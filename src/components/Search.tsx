@@ -1,15 +1,22 @@
 import React from "react";
 import {SearchState} from "../types/types";
 
-export default class Search extends React.Component<{}, SearchState> {
-  constructor(props: {}) {
+interface SearchProps {
+  onSearchChange: (term: string) => void;
+}
+
+export default class Search extends React.Component<SearchProps, SearchState> {
+  constructor(props: SearchProps) {
     super(props);
     this.state = {
       term: "",
     };
   }
   onInputChange = (event: React.FormEvent<HTMLInputElement>) => {
-    this.setState({term: event.currentTarget.value});
+    const newTerm = event.currentTarget.value;
+    this.setState({term: newTerm}, () => {
+      this.props.onSearchChange(newTerm);
+    });
   };
 
   componentDidMount(): void {

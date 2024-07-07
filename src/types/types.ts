@@ -9,6 +9,7 @@ export interface AppState {
   };
   isLoading: boolean;
   notFound: boolean;
+  searchTerm: string;
 }
 
 export interface SingleState {
