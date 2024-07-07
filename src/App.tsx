@@ -17,7 +17,7 @@ export default class App extends React.Component<{}, AppState> {
       },
       isLoading: true,
       notFound: false,
-      searchTerm: "",
+      term: "",
     };
   }
   componentDidMount(): void {
@@ -46,18 +46,20 @@ export default class App extends React.Component<{}, AppState> {
 
     console.log(false);
   }
-  handleSearch = (term: string) => {
-    this.setState({searchTerm: term});
+
+  handleSearchChange = (term: string) => {
+    this.setState({term});
   };
 
   render() {
+    console.log(this.state.term);
     const {isLoading, characters, notFound} = this.state;
     if (isLoading) {
       return <Loader />;
     }
     return (
       <div className="container">
-        <Navbar />
+        <Navbar onSearchChange={this.handleSearchChange} />
         <MainText />
         {notFound ? <h2>No characters found :(</h2> : null}
         {isLoading ? (

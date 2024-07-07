@@ -1,9 +1,5 @@
 import React from "react";
-import {SearchState} from "../types/types";
-
-interface SearchProps {
-  onSearchChange: (term: string) => void;
-}
+import {SearchProps, SearchState} from "../types/types";
 
 export default class Search extends React.Component<SearchProps, SearchState> {
   constructor(props: SearchProps) {
@@ -14,6 +10,9 @@ export default class Search extends React.Component<SearchProps, SearchState> {
   }
   onInputChange = (event: React.FormEvent<HTMLInputElement>) => {
     const newTerm = event.currentTarget.value;
+    //  => Not right
+    // this.setState({term: newTerm});
+    // this.props.onSearchChange(this.state.term);
     this.setState({term: newTerm}, () => {
       this.props.onSearchChange(newTerm);
     });
@@ -37,7 +36,6 @@ export default class Search extends React.Component<SearchProps, SearchState> {
     localStorage.setItem("formData", JSON.stringify(this.state));
   }
   render() {
-    console.log(this.state.term);
     return (
       <div className="search-wrapper">
         <input

@@ -9,7 +9,7 @@ export interface AppState {
   };
   isLoading: boolean;
   notFound: boolean;
-  searchTerm: string;
+  term: string;
 }
 
 export interface SingleState {
@@ -22,4 +22,9 @@ export interface SingleProps {
 
 export interface SearchState {
   term: string;
+}
+
+export interface SearchProps {
+  // the function that doesn't return anything
+  onSearchChange: (term: string) => void;
 }
