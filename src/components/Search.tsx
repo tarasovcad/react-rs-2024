@@ -39,7 +39,7 @@ export default class Search extends React.Component<SearchProps, SearchState> {
           onChange={this.onInputChange}
           className="search"
           type="text"
-          placeholder="Search anything...."
+          placeholder="Search character...."
           onKeyDown={(e) => {
             if (e.key === "Enter") this.onButtonClick();
           }}

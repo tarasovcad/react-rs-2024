@@ -33,10 +33,11 @@ export default class App extends React.Component<{}, AppState> {
       }
     }
   }
-  componentDidUpdate(): void {
-    this.fetchCharacters();
-  }
+
   fetchCharacters() {
+    this.setState({
+      isLoading: true,
+    });
     fetch(`https://rickandmortyapi.com/api/character/?name=${this.state.term}`)
       .then((response) => {
         if (!response.ok) {
@@ -59,11 +60,12 @@ export default class App extends React.Component<{}, AppState> {
   }
 
   handleSearchChange = (term: string) => {
-    this.setState({term});
+    this.setState({term}, () => {
+      this.fetchCharacters();
+    });
   };
 
   render() {
-    console.log(this.state.term);
     const {isLoading, characters, notFound, term} = this.state;
     if (isLoading) {
       return <Loader />;
