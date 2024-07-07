@@ -1,68 +1,69 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
+  font-family: "Tahoma", sans-serif;
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  background-color: #fff;
+  font-weight: 400;
+  font-size: 25px;
+  color: #000;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+.container {
+  margin: 0 auto;
+  max-width: 1280px;
 }
 
-body {
-  margin: 0;
+.search-wrapper {
   display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  align-items: center;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+.search {
+  border: 1px solid #d6d6d6;
+  border-radius: 25px;
+  background: #fdfdfd;
+  max-width: 300px;
+  max-height: 52px;
+  align-self: center;
+  font-weight: 400;
+  font-size: 20px;
+  color: rgba(0, 0, 0, 0.57);
+  padding: 14px 60px 14px 21px;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
+.search-button {
   cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  border-radius: 15px;
+  width: 35px;
+  height: 35px;
+  background: #4470e2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: -50px;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+.characters {
+  font-weight: 400;
+  font-size: 33px;
+  color: #000;
+}
+
+.description {
+  font-weight: 400;
+  font-size: 25px;
+  color: #909090;
+}
+.description > a > em {
+  color: #4470e2;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 44px;
+  grid-auto-rows: minmax(100px, auto);
 }

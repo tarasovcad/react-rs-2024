@@ -20,6 +20,12 @@ module.exports = {
   plugins: ["react", "react-hooks", "@typescript-eslint", "react-compiler"],
   rules: {
     "react-compiler/react-compiler": "error",
+    "prettier/prettier": [
+      "error",
+      {
+        endOfLine: "auto",
+      },
+    ],
   },
   settings: {
     react: {
