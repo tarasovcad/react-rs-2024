@@ -40,6 +40,9 @@ export default class Search extends React.Component<SearchProps, SearchState> {
           className="search"
           type="text"
           placeholder="Search anything...."
+          onKeyDown={(e) => {
+            if (e.key === "Enter") this.onButtonClick();
+          }}
         />
         <button
           className="search-button m1l-[-14px]"
