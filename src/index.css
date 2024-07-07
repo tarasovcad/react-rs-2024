@@ -180,3 +180,21 @@
   color: #4470e2;
   font-weight: 600;
 }
+
+.error-button {
+  margin-top: 10px;
+  background-color: #4470e2;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  color: #fff;
+  transition: all 0.4s;
+  font-size: 20px;
+  padding: 10px 30px;
+  max-width: 300px;
+  max-height: 52px;
+}
+
+.error-button:hover {
+  color: #c7c6c6;
+}

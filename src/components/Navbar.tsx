@@ -7,6 +7,7 @@ export default class Navbar extends React.Component<SearchProps, SearchState> {
     super(props);
     this.state = {
       term: "",
+      shouldThrowError: false,
     };
   }
   handleSearchChange = (term: string) => {
@@ -14,14 +15,26 @@ export default class Navbar extends React.Component<SearchProps, SearchState> {
 
     this.props.onSearchChange(term);
   };
+  callError() {
+    throw new Error("This is a test error");
+  }
   render() {
-    //console.log(this.state.term);
+    if (this.state.shouldThrowError) {
+      this.callError();
+    }
     return (
       <div className="header max-h-[90px] bg-navbar py-[13px] px-[26px] flex justify-between">
         <div className="logo w-[64px] h-[64px]">
           <img src="./../../src/assets/images/logo.png" alt="Logo" />
         </div>
-        <Search onSearchChange={this.handleSearchChange} />
+        <div className="flex gap-4">
+          <button
+            className="error-button"
+            onClick={() => this.setState({shouldThrowError: true})}>
+            Throw error
+          </button>
+          <Search onSearchChange={this.handleSearchChange} />
+        </div>
       </div>
     );
   }

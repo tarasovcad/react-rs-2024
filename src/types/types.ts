@@ -24,6 +24,7 @@ export interface SingleProps {
 
 export interface SearchState {
   term: string;
+  shouldThrowError: boolean;
 }
 
 export interface SearchProps {

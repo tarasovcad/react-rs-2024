@@ -19,11 +19,13 @@ export default class ErrorBoundary extends React.Component<Props, ErrorState> {
     this.setState({error: error, errorInfo: errorInfo});
     console.log(error, errorInfo);
   }
+  handleReload = () => {
+    window.location.reload();
+  };
 
   render() {
     if (this.state.hasError) {
       return (
-        // <div>Error happened at {this.state.errorInfo?.componentStack}</div>
         <div className="error">
           <img
             src="./../../src/assets/images/error.png"
@@ -34,7 +36,7 @@ export default class ErrorBoundary extends React.Component<Props, ErrorState> {
           />
           <h1>Something went wrong</h1>
           <p>There was a problem processing the request. Plese try again.</p>
-          <button>Reload</button>
+          <button onClick={this.handleReload}>Reload</button>
           <p className="error-info">
             <span>Your error: </span>
             {this.state.errorInfo?.componentStack}
