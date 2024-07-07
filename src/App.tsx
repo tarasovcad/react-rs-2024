@@ -33,7 +33,9 @@ export default class App extends React.Component<{}, AppState> {
       }
     }
   }
-
+  componentDidUpdate(): void {
+    this.fetchCharacters();
+  }
   fetchCharacters() {
     fetch(`https://rickandmortyapi.com/api/character/?name=${this.state.term}`)
       .then((response) => {
@@ -43,7 +45,7 @@ export default class App extends React.Component<{}, AppState> {
         return response.json();
       })
       .then((data) => {
-        this.setState({characters: data, isLoading: false});
+        this.setState({characters: data, isLoading: false, notFound: false});
       })
       .catch((err) => {
         console.error("There was a problem with the fetch operation:", err);
@@ -82,9 +84,8 @@ export default class App extends React.Component<{}, AppState> {
           </a>
           franchise.
         </h2>
-        {notFound ? <h2>No characters found :(</h2> : null}
-        {isLoading ? (
-          <Loader />
+        {notFound ? (
+          <h2>No characters found :(</h2>
         ) : (
           <div className="grid-container">
             {characters.results.map((character: Character) => {
