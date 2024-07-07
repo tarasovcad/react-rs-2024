@@ -64,12 +64,16 @@ export default class App extends React.Component<{}, AppState> {
       this.fetchCharacters();
     });
   };
+  ErrorComponent = () => {
+    throw new Error();
+  };
 
   render() {
     const {isLoading, characters, notFound, term} = this.state;
     if (isLoading) {
       return <Loader />;
     }
+    throw new Error();
     return (
       <div className="container">
         <Navbar onSearchChange={this.handleSearchChange} />

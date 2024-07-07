@@ -130,3 +130,53 @@
   justify-content: center;
   gap: 20px;
 }
+
+.error {
+  max-width: 1000px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50%;
+}
+
+.error > h1 {
+  font-weight: 400;
+  font-size: 33px;
+  color: #000;
+}
+
+.error > p {
+  font-weight: 400;
+  font-size: 25px;
+  color: #909090;
+}
+
+.error > button {
+  margin-top: 10px;
+  background-color: #4470e2;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 40px;
+  cursor: pointer;
+  color: #fff;
+  transition: all 0.4s;
+}
+
+.error > button:hover {
+  color: #c7c6c6;
+}
+
+.error-info {
+  margin-top: 55px;
+  word-wrap: break-word;
+}
+
+.error-info > span {
+  color: #4470e2;
+  font-weight: 600;
+}

@@ -1,3 +1,5 @@
+import {ReactNode} from "react";
+
 export interface Character {
   id: number;
   name: string;
@@ -27,4 +29,8 @@ export interface SearchState {
 export interface SearchProps {
   // the function that doesn't return anything
   onSearchChange: (term: string) => void;
+}
+
+export interface Props {
+  children: ReactNode;
 }
