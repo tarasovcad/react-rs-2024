@@ -25,7 +25,7 @@ export default class Navbar extends React.Component<SearchProps, NavbarState> {
     return (
       <div className="header max-h-[90px] bg-navbar py-[13px] px-[26px] flex justify-between">
         <div className="logo w-[64px] h-[64px]">
-          <img src="./../../src/assets/images/logo.png" alt="Logo" />
+          <img src="./images/logo.png" alt="Logo" />
         </div>
         <div className="flex gap-4">
           <button

@@ -22,16 +22,22 @@ export default class App extends React.Component<{}, AppState> {
 
   componentDidMount(): void {
     const savedData = localStorage.getItem("formData");
+    let initialState;
     if (savedData) {
       try {
-        const parsedData = JSON.parse(savedData);
-        this.setState(parsedData, () => {
-          this.fetchCharacters();
-        });
+        initialState = JSON.parse(savedData);
       } catch (error) {
         console.error("Error parsing saved data:", error);
+        initialState = {term: ""};
       }
+    } else {
+      initialState = {term: ""};
     }
+    this.setState(initialState, () => {
+      // Save the initial state to localStorage
+      localStorage.setItem("formData", JSON.stringify(this.state));
+      this.fetchCharacters();
+    });
   }
 
   fetchCharacters() {

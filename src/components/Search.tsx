@@ -47,7 +47,7 @@ export default class Search extends React.Component<SearchProps, SearchState> {
         <button
           className="search-button m1l-[-14px]"
           onClick={this.onButtonClick}>
-          <img src="./../../src/assets/images/search.svg" alt="" />
+          <img src="./images/search.svg" alt="" />
         </button>
       </div>
     );
