@@ -198,3 +198,8 @@
 .error-button:hover {
   color: #c7c6c6;
 }
+.desc {
+  font-size: 25px;
+  color: gray;
+  margin-bottom: 15px;
+}

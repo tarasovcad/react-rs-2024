@@ -21,6 +21,7 @@ export default class SingleCharacter extends React.Component<
           loading="lazy"
         />
         <h2 className="mt-[12px]">{this.state.character.name} </h2>
+        <p className="desc">Alive or not: {this.state.character.status}</p>
       </div>
     );
   }

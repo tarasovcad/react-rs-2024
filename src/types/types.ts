@@ -4,6 +4,7 @@ export interface Character {
   id: number;
   name: string;
   image: string;
+  status: string;
 }
 export interface AppState {
   characters: {
