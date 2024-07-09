@@ -1,5 +1,5 @@
 import React from "react";
-import {SearchProps, SearchState} from "../types/types";
+import {type SearchProps, SearchState} from "../types/types";
 
 export default class Search extends React.Component<SearchProps, SearchState> {
   constructor(props: SearchProps) {
@@ -15,11 +15,11 @@ export default class Search extends React.Component<SearchProps, SearchState> {
 
   onButtonClick = () => {
     this.props.onSearchChange(this.state.term);
-    localStorage.setItem("formData", JSON.stringify(this.state));
+    localStorage.setItem("tarasovcardFormData", JSON.stringify(this.state));
   };
 
   componentDidMount(): void {
-    const savedData = localStorage.getItem("formData");
+    const savedData = localStorage.getItem("tarasovcardFormData");
 
     if (savedData) {
       try {

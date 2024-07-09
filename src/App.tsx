@@ -1,12 +1,9 @@
 import React from "react";
 import SingleCharacter from "./components/SingleCharacter";
-import {Character} from "./types/types";
-import {AppState} from "./types/types";
+import {type Character} from "./types/types";
+import {type AppState} from "./types/types";
 import Loader from "./components/Loader";
 import Navbar from "./components/Navbar";
-// import {Props} from "./types/types";
-// import {Characters} from "./types/types";
-
 export default class App extends React.Component<{}, AppState> {
   constructor(props: {}) {
     super(props);
@@ -21,7 +18,7 @@ export default class App extends React.Component<{}, AppState> {
   }
 
   componentDidMount(): void {
-    const savedData = localStorage.getItem("formData");
+    const savedData = localStorage.getItem("tarasovcardFormData");
     let initialState;
     if (savedData) {
       try {
@@ -35,7 +32,7 @@ export default class App extends React.Component<{}, AppState> {
     }
     this.setState(initialState, () => {
       // Save the initial state to localStorage
-      localStorage.setItem("formData", JSON.stringify(this.state));
+      localStorage.setItem("tarasovcardFormData", JSON.stringify(this.state));
       this.fetchCharacters();
     });
   }

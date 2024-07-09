@@ -1,5 +1,5 @@
 import React, {ErrorInfo} from "react";
-import {Props} from "../types/types";
+import {type Props} from "../types/types";
 
 interface ErrorState {
   hasError: boolean;

@@ -1,6 +1,6 @@
 import React from "react";
-import {SingleState} from "../types/types";
-import {SingleProps} from "../types/types";
+import {type SingleState} from "../types/types";
+import {type SingleProps} from "../types/types";
 export default class SingleCharacter extends React.Component<
   SingleProps,
   SingleState
