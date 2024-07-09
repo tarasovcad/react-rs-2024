@@ -13,7 +13,8 @@ export default class Search extends React.Component<SearchProps, SearchState> {
     this.setState({term: newTerm});
   };
 
-  onButtonClick = () => {
+  onFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event?.preventDefault();
     this.props.onSearchChange(this.state.term);
     localStorage.setItem("tarasovcardFormData", JSON.stringify(this.state));
   };
@@ -33,23 +34,18 @@ export default class Search extends React.Component<SearchProps, SearchState> {
 
   render() {
     return (
-      <div className="search-wrapper">
+      <form className="search-wrapper" onSubmit={this.onFormSubmit}>
         <input
           value={this.state.term}
           onChange={this.onInputChange}
           className="search"
           type="text"
           placeholder="Search character...."
-          onKeyDown={(e) => {
-            if (e.key === "Enter") this.onButtonClick();
-          }}
         />
-        <button
-          className="search-button m1l-[-14px]"
-          onClick={this.onButtonClick}>
+        <button className="search-button m1l-[-14px]">
           <img src="./images/search.svg" alt="" />
         </button>
-      </div>
+      </form>
     );
   }
 }
