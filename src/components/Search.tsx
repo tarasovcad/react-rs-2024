@@ -16,21 +16,7 @@ export default class Search extends React.Component<SearchProps, SearchState> {
   onFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event?.preventDefault();
     this.props.onSearchChange(this.state.term);
-    localStorage.setItem("tarasovcardFormData", JSON.stringify(this.state));
   };
-
-  componentDidMount(): void {
-    const savedData = localStorage.getItem("tarasovcardFormData");
-
-    if (savedData) {
-      try {
-        const parsedData = JSON.parse(savedData);
-        this.setState(parsedData);
-      } catch (error) {
-        console.error("Error parsing saved data:", error);
-      }
-    }
-  }
 
   render() {
     return (

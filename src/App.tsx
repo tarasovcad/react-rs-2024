@@ -18,23 +18,7 @@ export default class App extends React.Component<{}, AppState> {
   }
 
   componentDidMount(): void {
-    const savedData = localStorage.getItem("tarasovcardFormData");
-    let initialState;
-    if (savedData) {
-      try {
-        initialState = JSON.parse(savedData);
-      } catch (error) {
-        console.error("Error parsing saved data:", error);
-        initialState = {term: ""};
-      }
-    } else {
-      initialState = {term: ""};
-    }
-    this.setState(initialState, () => {
-      // Save the initial state to localStorage
-      localStorage.setItem("tarasovcardFormData", JSON.stringify(this.state));
-      this.fetchCharacters();
-    });
+    this.fetchCharacters();
   }
 
   fetchCharacters() {
