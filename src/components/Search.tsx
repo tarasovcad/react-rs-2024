@@ -1,37 +1,34 @@
-import React from "react";
-import {type SearchProps, SearchState} from "../types/types";
+import React, {useState} from "react";
+import {useContext} from "react";
+import {SearchContext} from "../App";
+function Search() {
+  const [value, setValue] = useState("");
 
-export default class Search extends React.Component<SearchProps, SearchState> {
-  constructor(props: SearchProps) {
-    super(props);
-    this.state = {
-      term: "",
-    };
+  const {term, setTerm} = useContext(SearchContext);
+
+  function handleSubmit(event: React.SyntheticEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setTerm(value);
+    console.log(term);
   }
-  onInputChange = (event: React.FormEvent<HTMLInputElement>) => {
-    const newTerm = event.currentTarget.value;
-    this.setState({term: newTerm});
-  };
-
-  onFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event?.preventDefault();
-    this.props.onSearchChange(this.state.term);
-  };
-
-  render() {
-    return (
-      <form className="search-wrapper" onSubmit={this.onFormSubmit}>
-        <input
-          value={this.state.term}
-          onChange={this.onInputChange}
-          className="search"
-          type="text"
-          placeholder="Search character...."
-        />
-        <button className="search-button m1l-[-14px]">
-          <img src="./images/search.svg" alt="" />
-        </button>
-      </form>
-    );
+  function onInputChange(e: React.FormEvent<HTMLInputElement>) {
+    setValue(e.currentTarget.value);
+    console.log(value);
   }
+  return (
+    <form className="search-wrapper" onSubmit={handleSubmit}>
+      <input
+        value={value}
+        onChange={onInputChange}
+        className="search"
+        type="text"
+        placeholder="Search character...."
+      />
+      <button className="search-button m1l-[-14px]">
+        <img src="./images/search.svg" alt="" />
+      </button>
+    </form>
+  );
 }
+
+export default Search;

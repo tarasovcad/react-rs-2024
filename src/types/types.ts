@@ -39,3 +39,7 @@ export interface SearchProps {
 export interface Props {
   children: ReactNode;
 }
+export type GlobalContent = {
+  term: string;
+  setTerm: (c: string) => void;
+};
