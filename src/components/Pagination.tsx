@@ -1,4 +1,5 @@
 import React from "react";
+import {useNavigate} from "react-router-dom";
 
 interface PaginationProps {
   totalPages: number;
@@ -11,14 +12,17 @@ const Pagination = ({
   currentPage,
   setCurrentPage,
 }: PaginationProps) => {
+  const navigate = useNavigate();
   function onClickPrev() {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
+      navigate(`/search/${currentPage - 1}`);
     }
   }
   function onClickNext() {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
+      navigate(`/search/${currentPage + 1}`);
     }
   }
   return (

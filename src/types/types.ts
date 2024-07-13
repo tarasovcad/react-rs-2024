@@ -55,13 +55,15 @@ export interface FetchDataByTermProps {
   setTerm: (term: string) => void;
   setNotFound: (notFound: boolean) => void;
   isLoading: (loading: boolean) => void;
-  setCharacters: (characters: Character[]) => void;
+  setCharacters: (characters: {results: []}) => void;
   setTotalPages: (totalPages: number) => void;
   currentPage: number;
-  // setNext: (next: string) => void;
-  // setPrev: (prev: string) => void;
 }
 
 export type ParamTypes = {
   page: string | undefined;
 };
+
+export interface CharactersData {
+  results: Character[];
+}

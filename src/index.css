@@ -231,3 +231,6 @@
 .pagination-btn:hover {
   background: #5987ff;
 }
+.pagination-btn:disabled {
+  background: #c7c6c6;
+}

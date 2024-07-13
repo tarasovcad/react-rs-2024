@@ -2,11 +2,16 @@ import React, {createContext, useState} from "react";
 import {useEffect} from "react";
 import SingleCharacter from "./components/SingleCharacter";
 import Loader from "./components/Loader";
-import {type Character, GlobalContent, ParamTypes} from "./types/types";
+import {
+  type Character,
+  CharactersData,
+  GlobalContent,
+  ParamTypes,
+} from "./types/types";
 import Navbar from "./components/Navbar";
 import Pagination from "./components/Pagination";
 import {FetchDataByTerm} from "./api/fetchData";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 
 export const SearchContext = createContext<GlobalContent>({
   term: "",
@@ -17,15 +22,17 @@ const App = () => {
   const [loading, isLoading] = useState(false);
   const [term, setTerm] = useState("");
   const [notFound, setNotFound] = useState(false);
-  const [characters, setCharacters] = useState<Character[]>([]);
+  const [characters, setCharacters] = useState<CharactersData>({results: []});
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const {page} = useParams<ParamTypes>();
-
+  const navigate = useNavigate();
   console.log(page);
   useEffect(() => {
     if (page) {
       setCurrentPage(Number(page));
+    } else {
+      navigate(`/search/${currentPage}`);
     }
 
     const items = JSON.parse(
@@ -40,7 +47,6 @@ const App = () => {
     <SearchContext.Provider value={{term, setTerm}}>
       <div className="container">
         <Navbar />
-        {/* Need to fix */}
         <h1 className="characters mb-[4px] mt-[50px]">
           {term ? `Search results for: ${term}` : "Characters"}
         </h1>

@@ -5,7 +5,6 @@ export const FetchDataByTerm = ({
   isLoading,
   setNotFound,
   setCharacters,
-  //setTerm,
   term,
   setTotalPages,
   currentPage,
