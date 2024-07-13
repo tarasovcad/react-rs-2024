@@ -2,10 +2,11 @@ import React, {createContext, useState} from "react";
 import {useEffect} from "react";
 import SingleCharacter from "./components/SingleCharacter";
 import Loader from "./components/Loader";
-import {type Character, GlobalContent} from "./types/types";
+import {type Character, GlobalContent, ParamTypes} from "./types/types";
 import Navbar from "./components/Navbar";
 import Pagination from "./components/Pagination";
 import {FetchDataByTerm} from "./api/fetchData";
+import {useParams} from "react-router-dom";
 
 export const SearchContext = createContext<GlobalContent>({
   term: "",
@@ -17,8 +18,16 @@ const App = () => {
   const [term, setTerm] = useState("");
   const [notFound, setNotFound] = useState(false);
   const [characters, setCharacters] = useState<Character[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const {page} = useParams<ParamTypes>();
 
+  console.log(page);
   useEffect(() => {
+    if (page) {
+      setCurrentPage(Number(page));
+    }
+
     const items = JSON.parse(
       localStorage.getItem("tarasovcadLocalStorage") || "{}",
     );
@@ -53,14 +62,18 @@ const App = () => {
         ) : (
           <>
             <div className="grid-container mt-10">
-              {characters &&
-                characters.map((character: Character) => {
+              {characters.results &&
+                characters.results.map((character: Character) => {
                   return (
                     <SingleCharacter key={character.id} character={character} />
                   );
                 })}
             </div>
-            <Pagination />
+            <Pagination
+              totalPages={totalPages}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+            />
           </>
         )}
         <FetchDataByTerm
@@ -69,6 +82,8 @@ const App = () => {
           setNotFound={setNotFound}
           setCharacters={setCharacters}
           setTerm={setTerm}
+          setTotalPages={setTotalPages}
+          currentPage={currentPage}
         />
       </div>
     </SearchContext.Provider>

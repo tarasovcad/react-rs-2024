@@ -7,10 +7,14 @@ export const FetchDataByTerm = ({
   setCharacters,
   //setTerm,
   term,
+  setTotalPages,
+  currentPage,
 }: FetchDataByTermProps) => {
   useEffect(() => {
     isLoading(true);
-    fetch(`https://rickandmortyapi.com/api/character/?name=${term}`)
+    fetch(
+      `https://rickandmortyapi.com/api/character/?page=${currentPage}&name=${term}`,
+    )
       .then((response) => {
         if (!response.ok) {
           throw new Error("Something went wrong...");
@@ -21,7 +25,8 @@ export const FetchDataByTerm = ({
         if (data.results.length === 0) {
           setNotFound(true);
         }
-        setCharacters(data.results);
+        setTotalPages(data.info.pages);
+        setCharacters(data);
         setNotFound(false);
         isLoading(false);
       })
@@ -29,6 +34,6 @@ export const FetchDataByTerm = ({
         isLoading(false);
         setNotFound(true);
       });
-  }, [term]);
+  }, [term, currentPage]);
   return null;
 };

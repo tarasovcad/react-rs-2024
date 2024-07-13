@@ -8,17 +8,15 @@ function Search() {
     "",
   );
 
-  const {term, setTerm} = useContext(SearchContext);
+  const {setTerm} = useContext(SearchContext);
 
   function handleSubmit(event: React.SyntheticEvent<HTMLFormElement>) {
     event.preventDefault();
     setTerm(value);
     setItem(value);
-    console.log(term);
   }
   function onInputChange(e: React.FormEvent<HTMLInputElement>) {
     setValue(e.currentTarget.value);
-    console.log(value);
   }
 
   return (

@@ -6,6 +6,11 @@ export interface Character {
   image: string;
   status: string;
 }
+export interface CharacterArray {
+  characters: {
+    results: Character[];
+  };
+}
 export interface AppState {
   characters: {
     results: Character[];
@@ -51,4 +56,12 @@ export interface FetchDataByTermProps {
   setNotFound: (notFound: boolean) => void;
   isLoading: (loading: boolean) => void;
   setCharacters: (characters: Character[]) => void;
+  setTotalPages: (totalPages: number) => void;
+  currentPage: number;
+  // setNext: (next: string) => void;
+  // setPrev: (prev: string) => void;
 }
+
+export type ParamTypes = {
+  page: string | undefined;
+};
