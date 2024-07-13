@@ -18,6 +18,12 @@ const App = () => {
 
   useEffect(() => {
     isLoading(true);
+    const items = JSON.parse(
+      localStorage.getItem("tarasovcadLocalStorage") || "{}",
+    );
+    if (items) {
+      setTerm(items);
+    }
     fetch(`https://rickandmortyapi.com/api/character/?name=${term}`)
       .then((response) => {
         if (!response.ok) {
@@ -38,6 +44,7 @@ const App = () => {
         setNotFound(true);
       });
   }, [term]);
+
   return (
     <SearchContext.Provider value={{term, setTerm}}>
       <div className="container">

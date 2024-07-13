@@ -1,20 +1,26 @@
-import React, {useState} from "react";
+import React from "react";
 import {useContext} from "react";
 import {SearchContext} from "../App";
+import useLocalStorage from "../hooks/useLocalStorage";
 function Search() {
-  const [value, setValue] = useState("");
+  const [value, setValue, setItem] = useLocalStorage(
+    "tarasovcadLocalStorage",
+    "",
+  );
 
   const {term, setTerm} = useContext(SearchContext);
 
   function handleSubmit(event: React.SyntheticEvent<HTMLFormElement>) {
     event.preventDefault();
     setTerm(value);
+    setItem(value);
     console.log(term);
   }
   function onInputChange(e: React.FormEvent<HTMLInputElement>) {
     setValue(e.currentTarget.value);
     console.log(value);
   }
+
   return (
     <form className="search-wrapper" onSubmit={handleSubmit}>
       <input
