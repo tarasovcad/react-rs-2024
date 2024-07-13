@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import Search from "./Search";
+import {Link} from "react-router-dom";
 
 const Navbar = () => {
   const [shouldThrowError, setShouldThrowError] = useState(false);
@@ -12,9 +13,12 @@ const Navbar = () => {
   }
   return (
     <div className="header max-h-[90px] bg-navbar py-[13px] px-[26px] flex justify-between">
-      <div className="logo w-[64px] h-[64px]">
-        <img src="./images/logo.png" alt="Logo" />
-      </div>
+      <Link to="/">
+        <div className="logo w-[64px] h-[64px]">
+          <img src="./images/logo.png" alt="Logo" />
+        </div>
+      </Link>
+
       <div className="flex gap-4">
         <button
           className="error-button"

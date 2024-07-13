@@ -203,3 +203,31 @@
   color: gray;
   margin-bottom: 15px;
 }
+
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  gap: 30px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.pagination-btn {
+  color: #fff;
+  font-weight: 400;
+  font-size: 22px;
+  background: #4470e2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9px;
+  padding: 11px 24px;
+  width: 140px;
+  height: 50px;
+  transition: all 0.3s;
+}
+.pagination-btn:hover {
+  background: #5987ff;
+}

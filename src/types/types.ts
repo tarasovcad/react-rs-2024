@@ -39,7 +39,16 @@ export interface SearchProps {
 export interface Props {
   children: ReactNode;
 }
+
 export type GlobalContent = {
   term: string;
   setTerm: (c: string) => void;
 };
+
+export interface FetchDataByTermProps {
+  term: string;
+  setTerm: (term: string) => void;
+  setNotFound: (notFound: boolean) => void;
+  isLoading: (loading: boolean) => void;
+  setCharacters: (characters: Character[]) => void;
+}

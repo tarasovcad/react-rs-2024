@@ -4,6 +4,8 @@ import SingleCharacter from "./components/SingleCharacter";
 import Loader from "./components/Loader";
 import {type Character, GlobalContent} from "./types/types";
 import Navbar from "./components/Navbar";
+import Pagination from "./components/Pagination";
+import {FetchDataByTerm} from "./api/fetchData";
 
 export const SearchContext = createContext<GlobalContent>({
   term: "",
@@ -17,33 +19,13 @@ const App = () => {
   const [characters, setCharacters] = useState<Character[]>([]);
 
   useEffect(() => {
-    isLoading(true);
     const items = JSON.parse(
       localStorage.getItem("tarasovcadLocalStorage") || "{}",
     );
     if (items) {
       setTerm(items);
     }
-    fetch(`https://rickandmortyapi.com/api/character/?name=${term}`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Something went wrong...");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        if (data.results.length === 0) {
-          setNotFound(true);
-        }
-        setCharacters(data.results);
-        setNotFound(false);
-        isLoading(false);
-      })
-      .catch(() => {
-        isLoading(false);
-        setNotFound(true);
-      });
-  }, [term]);
+  }, []);
 
   return (
     <SearchContext.Provider value={{term, setTerm}}>
@@ -69,15 +51,25 @@ const App = () => {
         {notFound === true ? (
           <h2>No characters found :(</h2>
         ) : (
-          <div className="grid-container mt-10">
-            {characters &&
-              characters.map((character: Character) => {
-                return (
-                  <SingleCharacter key={character.id} character={character} />
-                );
-              })}
-          </div>
+          <>
+            <div className="grid-container mt-10">
+              {characters &&
+                characters.map((character: Character) => {
+                  return (
+                    <SingleCharacter key={character.id} character={character} />
+                  );
+                })}
+            </div>
+            <Pagination />
+          </>
         )}
+        <FetchDataByTerm
+          term={term}
+          isLoading={isLoading}
+          setNotFound={setNotFound}
+          setCharacters={setCharacters}
+          setTerm={setTerm}
+        />
       </div>
     </SearchContext.Provider>
   );
