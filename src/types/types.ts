@@ -46,8 +46,8 @@ export interface Props {
 }
 
 export type GlobalContent = {
-  term: string;
   setTerm: (c: string) => void;
+  setCurrentPage: (currentPage: number) => void;
 };
 
 export interface FetchDataByTermProps {
@@ -66,4 +66,9 @@ export type ParamTypes = {
 
 export interface CharactersData {
   results: Character[];
+}
+export interface PaginationProps {
+  totalPages: number;
+  currentPage: number;
+  setCurrentPage: (currentPage: number) => void;
 }

@@ -14,8 +14,8 @@ import {FetchDataByTerm} from "./api/fetchData";
 import {useNavigate, useParams} from "react-router-dom";
 
 export const SearchContext = createContext<GlobalContent>({
-  term: "",
   setTerm: () => {},
+  setCurrentPage: () => {},
 });
 
 const App = () => {
@@ -27,7 +27,6 @@ const App = () => {
   const [totalPages, setTotalPages] = useState(1);
   const {page} = useParams<ParamTypes>();
   const navigate = useNavigate();
-  console.log(page);
   useEffect(() => {
     if (page) {
       setCurrentPage(Number(page));
@@ -42,9 +41,9 @@ const App = () => {
       setTerm(items);
     }
   }, []);
-
+  console.log(currentPage);
   return (
-    <SearchContext.Provider value={{term, setTerm}}>
+    <SearchContext.Provider value={{setTerm, setCurrentPage}}>
       <div className="container">
         <Navbar />
         <h1 className="characters mb-[4px] mt-[50px]">

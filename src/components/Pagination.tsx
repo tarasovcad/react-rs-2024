@@ -1,12 +1,6 @@
 import React from "react";
 import {useNavigate} from "react-router-dom";
-
-interface PaginationProps {
-  totalPages: number;
-  currentPage: number;
-  setCurrentPage: (currentPage: number) => void;
-}
-
+import {PaginationProps} from "../types/types";
 const Pagination = ({
   totalPages,
   currentPage,
