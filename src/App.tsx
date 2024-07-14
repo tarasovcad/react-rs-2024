@@ -26,15 +26,13 @@ const App = () => {
   const [characters, setCharacters] = useState<CharactersData>({results: []});
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [detailedCardOpen, setDetailedCardOpen] = useState(true);
   const [searchParams, setSearchParams] = useSearchParams();
-  const [detailedcardID, setDetailedcardID] = useState<number>(0);
+  const [detailedcardID, setDetailedcardID] = useState<number>();
+  const [detailedcardLoading, isDetailedcardLoading] = useState(false);
   const {page} = useParams<ParamTypes>();
   const navigate = useNavigate();
 
   useEffect(() => {
-    setDetailedCardOpen(false);
-    console.log(searchParams);
     if (page) {
       setCurrentPage(Number(page));
     } else {
@@ -55,11 +53,12 @@ const App = () => {
       return params;
     });
   }
-  console.log(detailedcardID);
+
   return (
     <SearchContext.Provider value={{setTerm, setCurrentPage}}>
       <div className="container">
         <Navbar />
+
         <h1 className="characters mb-[4px] mt-[50px]">
           {term ? `Search results for: ${term}` : "Characters"}
         </h1>
@@ -83,7 +82,7 @@ const App = () => {
             <div className="flex mt-10">
               <div
                 className={
-                  detailedCardOpen
+                  searchParams.size === 1
                     ? "grid-container-with-detailedcard"
                     : "grid-container"
                 }>
@@ -98,7 +97,13 @@ const App = () => {
                     );
                   })}
               </div>
-              {detailedCardOpen && <DetailedCard />}
+              {searchParams.size === 1 && detailedcardID && (
+                <DetailedCard
+                  detailedcardID={detailedcardID}
+                  isDetailedcardLoading={isDetailedcardLoading}
+                  detailedcardLoading={detailedcardLoading}
+                />
+              )}
             </div>
             <Pagination
               totalPages={totalPages}

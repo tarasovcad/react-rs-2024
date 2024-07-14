@@ -1,23 +1,16 @@
-import {ReactNode} from "react";
-
 export interface Character {
   id: number;
   name: string;
   image: string;
   status: string;
+  gender: string;
+  species: string;
 }
+
 export interface CharacterArray {
   characters: {
     results: Character[];
   };
-}
-export interface AppState {
-  characters: {
-    results: Character[];
-  };
-  isLoading: boolean;
-  notFound: boolean;
-  term: string;
 }
 
 export interface SingleState {
@@ -42,10 +35,6 @@ export interface SearchProps {
   onSearchChange: (term: string) => void;
 }
 
-export interface Props {
-  children: ReactNode;
-}
-
 export type GlobalContent = {
   setTerm: (c: string) => void;
   setCurrentPage: (currentPage: number) => void;
@@ -60,6 +49,17 @@ export interface FetchDataByTermProps {
   setTotalPages: (totalPages: number) => void;
   currentPage: number;
 }
+export interface FetchDataByIDProps {
+  isDetailedcardLoading: (detailedcardLoading: boolean) => void;
+  detailedcardID: number;
+  setDetailedCardData: (characters: Character) => void;
+}
+
+export interface DetailedCardpProps {
+  isDetailedcardLoading: (detailedcardLoading: boolean) => void;
+  detailedcardID: number;
+  detailedcardLoading: boolean;
+}
 
 export type ParamTypes = {
   page: string | undefined;
@@ -72,4 +72,8 @@ export interface PaginationProps {
   totalPages: number;
   currentPage: number;
   setCurrentPage: (currentPage: number) => void;
+}
+
+export interface DetailedCardData {
+  detailedCardData: Character[];
 }

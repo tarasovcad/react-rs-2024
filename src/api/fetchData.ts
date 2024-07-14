@@ -1,5 +1,5 @@
 import {useEffect} from "react";
-import {type FetchDataByTermProps} from "../types/types";
+import {FetchDataByIDProps, type FetchDataByTermProps} from "../types/types";
 
 export const FetchDataByTerm = ({
   isLoading,
@@ -34,5 +34,30 @@ export const FetchDataByTerm = ({
         setNotFound(true);
       });
   }, [term, currentPage]);
+  return null;
+};
+
+export const FetchDataByID = ({
+  isDetailedcardLoading,
+  detailedcardID,
+  setDetailedCardData,
+}: FetchDataByIDProps) => {
+  useEffect(() => {
+    isDetailedcardLoading(true);
+    fetch(`https://rickandmortyapi.com/api/character/${detailedcardID}`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Something went wrong...");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setDetailedCardData(data);
+        isDetailedcardLoading(false);
+      })
+      .catch(() => {
+        isDetailedcardLoading(false);
+      });
+  }, [detailedcardID]);
   return null;
 };
