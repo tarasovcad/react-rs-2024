@@ -7,6 +7,7 @@ const DetailedCard = ({
   detailedcardID,
   isDetailedcardLoading,
   detailedcardLoading,
+  hideDetailedCard,
 }: DetailedCardpProps) => {
   const [detailedCardData, setDetailedCardData] = useState<Character | null>(
     null,
@@ -21,7 +22,9 @@ const DetailedCard = ({
           <LoaderDetailedCard />
         ) : (
           <>
-            <div className="close"></div>
+            <div
+              className="close cursor-pointer"
+              onClick={hideDetailedCard}></div>
             <img src={image} alt="Image" loading="lazy" />
             <h1>{name}</h1>
             <h2>

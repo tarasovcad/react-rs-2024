@@ -59,6 +59,7 @@ export interface DetailedCardpProps {
   isDetailedcardLoading: (detailedcardLoading: boolean) => void;
   detailedcardID: number;
   detailedcardLoading: boolean;
+  hideDetailedCard: () => void;
 }
 
 export type ParamTypes = {

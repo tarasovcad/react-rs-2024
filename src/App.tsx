@@ -53,7 +53,7 @@ const App = () => {
       return params;
     });
   }
-
+  const isDetailsOpen = Boolean(Number(searchParams.get("details"))) || false;
   return (
     <SearchContext.Provider value={{setTerm, setCurrentPage}}>
       <div className="container">
@@ -97,11 +97,18 @@ const App = () => {
                     );
                   })}
               </div>
-              {searchParams.size === 1 && detailedcardID && (
+              {/* {searchParams.size === 1 && detailedcardID && ( */}
+              {isDetailsOpen && detailedcardID && (
                 <DetailedCard
                   detailedcardID={detailedcardID}
                   isDetailedcardLoading={isDetailedcardLoading}
                   detailedcardLoading={detailedcardLoading}
+                  hideDetailedCard={() => {
+                    setSearchParams((params) => {
+                      params.set("details", "0");
+                      return params;
+                    });
+                  }}
                 />
               )}
             </div>
