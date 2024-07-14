@@ -11,7 +11,7 @@ import {
 import Navbar from "./components/Navbar";
 import Pagination from "./components/Pagination";
 import {FetchDataByTerm} from "./api/fetchData";
-import {useNavigate, useParams} from "react-router-dom";
+import {useNavigate, useParams, useSearchParams} from "react-router-dom";
 import DetailedCard from "./components/DetailedCard";
 
 export const SearchContext = createContext<GlobalContent>({
@@ -27,11 +27,14 @@ const App = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [detailedCardOpen, setDetailedCardOpen] = useState(true);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [detailedcardID, setDetailedcardID] = useState<number>(0);
   const {page} = useParams<ParamTypes>();
   const navigate = useNavigate();
 
   useEffect(() => {
-    setDetailedCardOpen(true);
+    setDetailedCardOpen(false);
+    console.log(searchParams);
     if (page) {
       setCurrentPage(Number(page));
     } else {
@@ -45,7 +48,14 @@ const App = () => {
       setTerm(items);
     }
   }, []);
-  console.log(currentPage);
+  function handlePageClick(id: number) {
+    setDetailedcardID(id);
+    setSearchParams((params) => {
+      params.set("details", "1");
+      return params;
+    });
+  }
+  console.log(detailedcardID);
   return (
     <SearchContext.Provider value={{setTerm, setCurrentPage}}>
       <div className="container">
@@ -83,6 +93,7 @@ const App = () => {
                       <SingleCharacter
                         key={character.id}
                         character={character}
+                        handlePageClick={handlePageClick}
                       />
                     );
                   })}

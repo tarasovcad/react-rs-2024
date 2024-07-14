@@ -22,6 +22,7 @@ export interface AppState {
 
 export interface SingleState {
   character: Character;
+  handlePageClick: (id: number) => void;
 }
 
 export interface SingleProps {
