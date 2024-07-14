@@ -12,6 +12,7 @@ import Navbar from "./components/Navbar";
 import Pagination from "./components/Pagination";
 import {FetchDataByTerm} from "./api/fetchData";
 import {useNavigate, useParams} from "react-router-dom";
+import DetailedCard from "./components/DetailedCard";
 
 export const SearchContext = createContext<GlobalContent>({
   setTerm: () => {},
@@ -25,9 +26,12 @@ const App = () => {
   const [characters, setCharacters] = useState<CharactersData>({results: []});
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [detailedCardOpen, setDetailedCardOpen] = useState(true);
   const {page} = useParams<ParamTypes>();
   const navigate = useNavigate();
+
   useEffect(() => {
+    setDetailedCardOpen(true);
     if (page) {
       setCurrentPage(Number(page));
     } else {
@@ -66,13 +70,24 @@ const App = () => {
           <h2>No characters found :(</h2>
         ) : (
           <>
-            <div className="grid-container mt-10">
-              {characters.results &&
-                characters.results.map((character: Character) => {
-                  return (
-                    <SingleCharacter key={character.id} character={character} />
-                  );
-                })}
+            <div className="flex mt-10">
+              <div
+                className={
+                  detailedCardOpen
+                    ? "grid-container-with-detailedcard"
+                    : "grid-container"
+                }>
+                {characters.results &&
+                  characters.results.map((character: Character) => {
+                    return (
+                      <SingleCharacter
+                        key={character.id}
+                        character={character}
+                      />
+                    );
+                  })}
+              </div>
+              {detailedCardOpen && <DetailedCard />}
             </div>
             <Pagination
               totalPages={totalPages}

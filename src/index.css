@@ -64,9 +64,16 @@
 .grid-container {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 44px;
+  gap: 30px;
   grid-auto-rows: minmax(100px, auto);
 }
+.grid-container-with-detailedcard {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  grid-auto-rows: minmax(100px, auto);
+}
+
 /* HTML: <div class="loader"></div> */
 .loader1 {
   width: 100px;
@@ -233,4 +240,63 @@
 }
 .pagination-btn:disabled {
   background: #c7c6c6;
+}
+
+.detailed-card__container {
+  position: sticky;
+  padding: 25px;
+  top: 35px;
+  width: 400px;
+  margin-left: 15px;
+  height: fit-content;
+  background: #fff5f5;
+  border-radius: 10px;
+  border: 1px solid #dadada;
+}
+
+.detailed-card__container > img {
+  width: 210px;
+  border-radius: 15px;
+}
+
+.detailed-card__container > h1 {
+  font-size: 30px;
+  font-weight: 500;
+  margin-top: 10px;
+}
+.detailed-card__container > h2 {
+  font-size: 25px;
+  color: #909090;
+  font-style: italic;
+}
+.detailed-card__container > h2 > span {
+  text-decoration: underline;
+}
+/* Close button */
+.close {
+  position: absolute;
+  right: 25px;
+  top: 20px;
+  width: 25px;
+  height: 25px;
+  opacity: 1;
+  transition: all 0.1s;
+}
+.close:hover {
+  opacity: 0.3;
+}
+.close:before,
+.close:after {
+  position: absolute;
+  left: 15px;
+  content: "";
+  height: 33px;
+  width: 2px;
+  background-color: #4470e2;
+}
+.close:before {
+  transform: rotate(45deg);
+}
+.close:after {
+  transform: rotate(-45deg);
 }
