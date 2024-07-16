@@ -10,7 +10,9 @@ function Search() {
   );
 
   const {setTerm, setCurrentPage} = useContext(SearchContext);
+
   const navigate = useNavigate();
+
   function handleSubmit(event: React.SyntheticEvent<HTMLFormElement>) {
     event.preventDefault();
     setTerm(value);
@@ -23,7 +25,7 @@ function Search() {
   }
 
   return (
-    <form className="search-wrapper" onSubmit={handleSubmit}>
+    <form className="search-wrapper" onSubmit={handleSubmit} role="form">
       <input
         value={value}
         onChange={onInputChange}
