@@ -50,13 +50,13 @@ export interface FetchDataByTermProps {
   currentPage: number;
 }
 export interface FetchDataByIDProps {
-  isDetailedcardLoading: (detailedcardLoading: boolean) => void;
+  isDetailedcardLoading: boolean;
   detailedcardID: number;
   setDetailedCardData: (characters: Character) => void;
 }
 
 export interface DetailedCardpProps {
-  isDetailedcardLoading: (detailedcardLoading: boolean) => void;
+  isDetailedcardLoading: boolean;
   detailedcardID: number;
   detailedcardLoading: boolean;
   hideDetailedCard: () => void;
