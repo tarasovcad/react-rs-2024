@@ -7,12 +7,14 @@ const SingleCharacter: React.FC<SingleState> = ({
   const {name, image, id} = character;
 
   return (
-    // <Link to={`details/${name}`}>
     <div
       className="flex flex-col cursor-pointer"
-      onClick={() => handlePageClick(id)}>
+      onClick={() => handlePageClick(id)}
+      data-testid={`character-${id}`}>
       <img src={image} alt={name} loading="lazy" />
-      <h2 className="mt-[12px] text-lg">{name} </h2>
+      <h2 className="mt-[12px] text-lg" data-testid="character-name">
+        {name}
+      </h2>
     </div>
     // </Link>
   );

@@ -59,7 +59,9 @@ const App = () => {
       <div className="container">
         <Navbar />
 
-        <h1 className="characters mb-[4px] mt-[50px]">
+        <h1
+          className="characters mb-[4px] mt-[50px]"
+          data-testid="main-heading">
           {term ? `Search results for: ${term}` : "Characters"}
         </h1>
         <h2 className="description mb-[45px]">
@@ -73,14 +75,19 @@ const App = () => {
           franchise.
         </h2>
 
-        {loading && <Loader />}
+        {loading && (
+          <div data-testid="loader">
+            <Loader />
+          </div>
+        )}
 
         {notFound === true ? (
-          <h2>No characters found :(</h2>
+          <h2 data-testid="not-found">No characters found :(</h2>
         ) : (
           <>
             <div className="flex mt-10">
               <div
+                data-testid="grid-container"
                 className={
                   searchParams.size === 1
                     ? "grid-container-with-detailedcard"
@@ -93,23 +100,26 @@ const App = () => {
                         key={character.id}
                         character={character}
                         handlePageClick={handlePageClick}
+                        data-testid={`character-${character.id}`}
                       />
                     );
                   })}
               </div>
               {/* {searchParams.size === 1 && detailedcardID && ( */}
               {isDetailsOpen && detailedcardID && (
-                <DetailedCard
-                  detailedcardID={detailedcardID}
-                  isDetailedcardLoading={isDetailedcardLoading}
-                  detailedcardLoading={detailedcardLoading}
-                  hideDetailedCard={() => {
-                    setSearchParams((params) => {
-                      params.set("details", "0");
-                      return params;
-                    });
-                  }}
-                />
+                <div data-testid="detailed-card">
+                  <DetailedCard
+                    detailedcardID={detailedcardID}
+                    isDetailedcardLoading={isDetailedcardLoading}
+                    detailedcardLoading={detailedcardLoading}
+                    hideDetailedCard={() => {
+                      setSearchParams((params) => {
+                        params.set("details", "0");
+                        return params;
+                      });
+                    }}
+                  />
+                </div>
               )}
             </div>
             <Pagination

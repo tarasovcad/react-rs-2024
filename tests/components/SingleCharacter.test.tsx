@@ -1,6 +1,5 @@
 import React from "react";
 import {render, screen, fireEvent} from "@testing-library/react";
-
 import SingleCharacter from "../../src/components/SingleCharacter";
 import {Character} from "../../src/types/types";
 

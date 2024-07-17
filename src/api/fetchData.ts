@@ -43,7 +43,9 @@ export const FetchDataByID = ({
   setDetailedCardData,
 }: FetchDataByIDProps) => {
   useEffect(() => {
-    isDetailedcardLoading(true);
+    if (typeof isDetailedcardLoading === "function") {
+      isDetailedcardLoading(true);
+    }
     fetch(`https://rickandmortyapi.com/api/character/${detailedcardID}`)
       .then((response) => {
         if (!response.ok) {
@@ -53,10 +55,14 @@ export const FetchDataByID = ({
       })
       .then((data) => {
         setDetailedCardData(data);
-        isDetailedcardLoading(false);
+        if (typeof isDetailedcardLoading === "function") {
+          isDetailedcardLoading(false);
+        }
       })
       .catch(() => {
-        isDetailedcardLoading(false);
+        if (typeof isDetailedcardLoading === "function") {
+          isDetailedcardLoading(false);
+        }
       });
   }, [detailedcardID]);
   return null;

@@ -1,3 +1,5 @@
+import {ReactNode} from "react";
+
 export interface Character {
   id: number;
   name: string;
@@ -11,6 +13,10 @@ export interface CharacterArray {
   characters: {
     results: Character[];
   };
+}
+
+export interface Props {
+  children: ReactNode;
 }
 
 export interface SingleState {
@@ -50,12 +56,18 @@ export interface FetchDataByTermProps {
   currentPage: number;
 }
 export interface FetchDataByIDProps {
-  isDetailedcardLoading: boolean;
+  isDetailedcardLoading?: boolean | ((detailedcardLoading: boolean) => void);
   detailedcardID: number;
   setDetailedCardData: (characters: Character) => void;
 }
 
 export interface DetailedCardpProps {
+  isDetailedcardLoading?: boolean | ((detailedcardLoading: boolean) => void);
+  detailedcardID: number;
+  detailedcardLoading: boolean;
+  hideDetailedCard: () => void;
+}
+export interface DetailedCardpProps3 {
   isDetailedcardLoading: boolean;
   detailedcardID: number;
   detailedcardLoading: boolean;
@@ -77,4 +89,20 @@ export interface PaginationProps {
 
 export interface DetailedCardData {
   detailedCardData: Character[];
+}
+export interface CharacterResult {
+  id: number;
+  name: string;
+}
+
+export interface ApiResponse {
+  results: CharacterResult[];
+  info: {pages: number};
+}
+
+export interface SingleCharacterResponse {
+  id: number;
+  name: string;
+  status: string;
+  species: string;
 }
