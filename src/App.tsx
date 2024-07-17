@@ -11,7 +11,12 @@ import {
 import Navbar from "./components/Navbar";
 import Pagination from "./components/Pagination";
 import {FetchDataByTerm} from "./api/fetchData";
-import {useNavigate, useParams, useSearchParams} from "react-router-dom";
+import {
+  Outlet,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 import DetailedCard from "./components/DetailedCard";
 
 export const SearchContext = createContext<GlobalContent>({
@@ -105,7 +110,7 @@ const App = () => {
                     );
                   })}
               </div>
-              {/* {searchParams.size === 1 && detailedcardID && ( */}
+              <Outlet />
               {isDetailsOpen && detailedcardID && (
                 <div data-testid="detailed-card">
                   <DetailedCard
