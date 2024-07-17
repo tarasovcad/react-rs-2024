@@ -34,7 +34,7 @@ function Search() {
         placeholder="Search character...."
       />
       <button className="search-button m1l-[-14px]">
-        <img src="./images/search.svg" alt="" />
+        <img src="../images/search.svg" alt="" />
       </button>
     </form>
   );

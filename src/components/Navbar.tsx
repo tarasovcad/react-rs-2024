@@ -15,7 +15,7 @@ const Navbar = () => {
     <div className="header max-h-[90px] bg-navbar py-[13px] px-[26px] flex justify-between">
       <Link to="/search/1" reloadDocument>
         <div className="logo w-[64px] h-[64px]">
-          <img src="./images/logo.png" alt="Logo" />
+          <img src="../images/logo.png" alt="Logo" />
         </div>
       </Link>
 

@@ -91,13 +91,7 @@ const App = () => {
         ) : (
           <>
             <div className="flex mt-10">
-              <div
-                data-testid="grid-container"
-                className={
-                  searchParams.size === 1
-                    ? "grid-container-with-detailedcard"
-                    : "grid-container"
-                }>
+              <div data-testid="grid-container" className={"grid-container"}>
                 {characters.results &&
                   characters.results.map((character: Character) => {
                     return (
@@ -110,28 +104,28 @@ const App = () => {
                     );
                   })}
               </div>
-              <Outlet />
-              {isDetailsOpen && detailedcardID && (
-                <div data-testid="detailed-card">
-                  <DetailedCard
-                    detailedcardID={detailedcardID}
-                    isDetailedcardLoading={isDetailedcardLoading}
-                    detailedcardLoading={detailedcardLoading}
-                    hideDetailedCard={() => {
-                      setSearchParams((params) => {
-                        params.set("details", "0");
-                        return params;
-                      });
-                    }}
-                  />
-                </div>
-              )}
             </div>
             <Pagination
               totalPages={totalPages}
               currentPage={currentPage}
               setCurrentPage={setCurrentPage}
             />
+            <Outlet />
+            {isDetailsOpen && detailedcardID && (
+              <div data-testid="detailed-card">
+                <DetailedCard
+                  detailedcardID={detailedcardID}
+                  isDetailedcardLoading={isDetailedcardLoading}
+                  detailedcardLoading={detailedcardLoading}
+                  hideDetailedCard={() => {
+                    setSearchParams((params) => {
+                      params.set("details", "0");
+                      return params;
+                    });
+                  }}
+                />
+              </div>
+            )}
           </>
         )}
         <FetchDataByTerm

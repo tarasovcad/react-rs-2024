@@ -15,8 +15,13 @@ const DetailedCard = ({
 
   const {name, status, gender, species, image} = detailedCardData ?? {};
 
+  const handleOverlayClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (event.target === event.currentTarget) {
+      hideDetailedCard();
+    }
+  };
   return (
-    <>
+    <div className="detailedcard-overlay" onClick={handleOverlayClick}>
       <div className="detailed-card__container">
         {detailedcardLoading ? (
           <LoaderDetailedCard />
@@ -44,7 +49,7 @@ const DetailedCard = ({
         detailedcardID={detailedcardID}
         setDetailedCardData={setDetailedCardData}
       />
-    </>
+    </div>
   );
 };
 
