@@ -17,9 +17,13 @@ const selectedDataSlice = createSlice({
         (item) => item.id !== action.payload.id,
       );
     },
+    unselectAllItems: (state) => {
+      state.selectedItems = [];
+    },
   },
 });
 
-export const {addItem, removeItem} = selectedDataSlice.actions;
+export const {addItem, removeItem, unselectAllItems} =
+  selectedDataSlice.actions;
 
 export default selectedDataSlice.reducer;
