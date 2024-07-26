@@ -231,7 +231,7 @@
   margin: 0 auto;
   gap: 30px;
   margin-top: 50px;
-  margin-bottom: 50px;
+  margin-bottom: 100px;
 }
 
 .pagination-btn {
@@ -325,4 +325,13 @@
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.3);
+}
+
+.checkbox {
+  position: absolute;
+  cursor: pointer;
+  height: 20px;
+  width: 20px;
+  top: 25px;
+  right: 25px;
 }

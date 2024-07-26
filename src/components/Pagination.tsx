@@ -20,7 +20,7 @@ const Pagination = ({
     }
   }
   return (
-    <div className="pagination-container">
+    <div className="pagination-container ">
       <button
         className="pagination-btn"
         onClick={onClickPrev}

@@ -4,6 +4,9 @@ module.exports = {
   theme: {
     colors: {
       navbar: "#E8E8E8",
+      main: "#4470e2",
+      white: "#ffff",
+      hover: "#adbbff",
     },
   },
   plugins: [],

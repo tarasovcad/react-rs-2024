@@ -106,3 +106,7 @@ export interface SingleCharacterResponse {
   status: string;
   species: string;
 }
+
+export interface SelectedDataState {
+  selectedItems: Character[];
+}

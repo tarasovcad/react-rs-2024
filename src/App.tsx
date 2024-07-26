@@ -18,6 +18,7 @@ import {
   useSearchParams,
 } from "react-router-dom";
 import DetailedCard from "./components/DetailedCard";
+import ModalMenu from "./components/ModalMenu";
 
 export const SearchContext = createContext<GlobalContent>({
   setTerm: () => {},
@@ -126,6 +127,7 @@ const App = () => {
                 />
               </div>
             )}
+            <ModalMenu />
           </>
         )}
         <FetchDataByTerm
