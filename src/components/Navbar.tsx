@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import Search from "./Search";
 import {Link} from "react-router-dom";
+import ThemeToggleButton from "./ThemeToggleButton";
 
 const Navbar = () => {
   const [shouldThrowError, setShouldThrowError] = useState(false);
@@ -12,7 +13,7 @@ const Navbar = () => {
     callError();
   }
   return (
-    <div className="header max-h-[90px] bg-navbar py-[13px] px-[26px] flex justify-between">
+    <div className="header max-h-[90px] py-[13px] px-[26px] flex justify-between">
       <Link to="/search/1" reloadDocument>
         <div className="logo w-[64px] h-[64px]">
           <img src="../images/logo.png" alt="Logo" />
@@ -20,6 +21,7 @@ const Navbar = () => {
       </Link>
 
       <div className="flex gap-4">
+        <ThemeToggleButton />
         <button
           className="error-button"
           onClick={() => setShouldThrowError(true)}>

@@ -115,3 +115,8 @@ export interface ExportCSVProps {
   data: Character[];
   fileName: string;
 }
+
+export interface ThemeContextType {
+  isDarkMode: boolean;
+  toggleTheme: () => void;
+}

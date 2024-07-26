@@ -20,20 +20,20 @@ const ModalMenu = () => {
 
   return (
     <div
-      className={`flex transition-all sticky bottom-[50px] bg-main p-4 rounded-lg shadow-lg w-fit m-auto items-center ${isVisible ? "translate-y-0" : "translate-y-[1000px]"}`}>
+      className={`modal flex transition-all sticky bottom-[50px] p-4 rounded-lg shadow-lg w-fit m-auto items-center ${isVisible ? " visible " : "hidden"}`}>
       <h1 className="text-lg font-semibold p-0 m-0">
         {selectedItems.length} items are selected
       </h1>
       <button
         onClick={unselectAllCheckboxes}
-        className="bg-hover text-black font-semibold py-2 px-2 rounded hover:bg-white mr-2 ml-5">
+        className=" text-black font-semibold py-2 px-2 rounded  mr-2 ml-5">
         Unselect all
       </button>
       <button
         onClick={() =>
           ExportCSV({data: selectedItems, fileName: `${selectedItems.length}`})
         }
-        className="bg-hover text-black py-2 font-semibold px-2 rounded hover:bg-green-700 hover:bg-white">
+        className=" text-black py-2 font-semibold px-2 rounded hover:bg-green-700 ">
         Download
       </button>
     </div>

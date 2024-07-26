@@ -1,4 +1,4 @@
-import React, {createContext, useState} from "react";
+import React, {createContext, useContext, useState} from "react";
 import {useEffect} from "react";
 import SingleCharacter from "./components/SingleCharacter";
 import Loader from "./components/Loader";
@@ -20,6 +20,8 @@ import {
 import DetailedCard from "./components/DetailedCard";
 import ModalMenu from "./components/ModalMenu";
 
+import {ThemeContext} from "./context/ThemeContext";
+
 export const SearchContext = createContext<GlobalContent>({
   setTerm: () => {},
   setCurrentPage: () => {},
@@ -37,6 +39,7 @@ const App = () => {
   const [detailedcardLoading, isDetailedcardLoading] = useState(false);
   const {page} = useParams<ParamTypes>();
   const navigate = useNavigate();
+  const {isDarkMode} = useContext(ThemeContext);
 
   useEffect(() => {
     if (page) {
@@ -52,6 +55,15 @@ const App = () => {
       setTerm(items);
     }
   }, []);
+
+  useEffect(() => {
+    document.documentElement.setAttribute(
+      "data-theme",
+      isDarkMode ? "dark" : "light",
+    );
+    console.log(isDarkMode, "main");
+  }, [isDarkMode]);
+
   function handlePageClick(id: number) {
     setDetailedcardID(id);
     setSearchParams((params) => {
@@ -64,7 +76,6 @@ const App = () => {
     <SearchContext.Provider value={{setTerm, setCurrentPage}}>
       <div className="container">
         <Navbar />
-
         <h1
           className="characters mb-[4px] mt-[50px]"
           data-testid="main-heading">

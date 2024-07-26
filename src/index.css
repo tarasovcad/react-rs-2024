@@ -3,17 +3,35 @@
 @tailwind utilities;
 
 :root {
+  --background-color: #ffffff;
+  --text-color: #000000;
   font-family: "Tahoma", sans-serif;
   color-scheme: light dark;
-  background-color: #fff;
+  background-color: var(--background-color);
   font-weight: 400;
   font-size: 25px;
-  color: #000;
+  color: var(--text-color);
+}
+[data-theme="dark"] {
+  --background-color: #1a1a1a;
+  --text-color: #ffffff;
+  --navbar-background-color: #2e2e2e;
+  --text-color: #ffffff;
+  --blue: #5987ff;
+}
+
+[data-theme="light"] {
+  --background-color: #ffffff;
+  --text-color: #ffffff;
+  --navbar-background-color: #e8e8e8;
+  --text-color: #1a1a1a;
+  --blue: #5987ff;
 }
 
 .container {
   margin: 0 auto;
   max-width: 1280px;
+  background-color: var(--background-color);
 }
 
 .search-wrapper {
@@ -21,10 +39,14 @@
   align-items: center;
 }
 
+.header {
+  background-color: var(--navbar-background-color);
+}
+
 .search {
   border: 1px solid #d6d6d6;
   border-radius: 25px;
-  background: #fdfdfd;
+  background: var(--navbar-background-color);
   max-width: 300px;
   max-height: 52px;
   align-self: center;
@@ -49,7 +71,6 @@
 .characters {
   font-weight: 400;
   font-size: 33px;
-  color: #000;
 }
 
 .description {
@@ -258,15 +279,15 @@
 .detailed-card__container {
   position: absolute;
   padding: 25px;
-  background: #fff;
   top: 0;
   right: 0;
   height: 100%;
   min-width: 300px;
   margin-left: 15px;
-  background: #fff5f5;
+
   border-radius: 10px;
   border: 1px solid #dadada;
+  background-color: var(--navbar-background-color);
 }
 
 .detailed-card__container > img {
@@ -283,7 +304,7 @@
   margin-top: 10px;
   margin-bottom: 25px;
   font-size: 25px;
-  color: #909090;
+  color: var(--text-color);
   font-style: italic;
 }
 .detailed-card__container > h2 > span {
@@ -334,4 +355,15 @@
   width: 20px;
   top: 25px;
   right: 25px;
+}
+
+.modal {
+  background-color: var(--navbar-background-color);
+}
+
+.modal > button {
+  background-color: var(--blue);
+}
+.modal > button:hover {
+  background-color: var(--background-color);
 }
