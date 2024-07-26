@@ -110,3 +110,8 @@ export interface SingleCharacterResponse {
 export interface SelectedDataState {
   selectedItems: Character[];
 }
+
+export interface ExportCSVProps {
+  data: Character[];
+  fileName: string;
+}
