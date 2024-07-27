@@ -120,3 +120,10 @@ export interface ThemeContextType {
   isDarkMode: boolean;
   toggleTheme: () => void;
 }
+
+export type CharactersResponse = {
+  info: {
+    pages: number;
+  };
+  results: Character[];
+};

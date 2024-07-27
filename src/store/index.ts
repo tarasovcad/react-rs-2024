@@ -1,10 +1,13 @@
 import {configureStore} from "@reduxjs/toolkit";
 import selectedDataReducer from "./slices/selectedDataSlice";
-
+import {rickAndMortyApi} from "../api/fetchData";
 export const store = configureStore({
   reducer: {
     selectedData: selectedDataReducer,
+    [rickAndMortyApi.reducerPath]: rickAndMortyApi.reducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(rickAndMortyApi.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

@@ -1,5 +1,38 @@
+import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
+import {
+  type Character,
+  type FetchDataByIDProps,
+  type FetchDataByTermProps,
+  type CharactersResponse,
+} from "../types/types";
 import {useEffect} from "react";
-import {FetchDataByIDProps, type FetchDataByTermProps} from "../types/types";
+
+export const rickAndMortyApi = createApi({
+  reducerPath: "rickAndMortyApi",
+  baseQuery: fetchBaseQuery({
+    baseUrl: "https://rickandmortyapi.com/api/",
+  }),
+  endpoints: (builder) => ({
+    fetchDataByTerm: builder.query<
+      CharactersResponse,
+      {term: string; currentPage: number}
+    >({
+      query: ({term, currentPage}) =>
+        `character/?page=${currentPage}&name=${term}`,
+    }),
+    fetchDataByID: builder.query<Character, number>({
+      query: (detailedcardID) => `character/${detailedcardID}`,
+    }),
+  }),
+});
+
+export const {
+  useFetchDataByTermQuery,
+  useFetchDataByIDQuery,
+}: {
+  useFetchDataByTermQuery: CallableFunction;
+  useFetchDataByIDQuery: CallableFunction;
+} = rickAndMortyApi;
 
 export const FetchDataByTerm = ({
   isLoading,
@@ -9,31 +42,26 @@ export const FetchDataByTerm = ({
   setTotalPages,
   currentPage,
 }: FetchDataByTermProps) => {
+  const {data, error, isFetching} = useFetchDataByTermQuery({
+    term,
+    currentPage,
+  });
   useEffect(() => {
-    isLoading(true);
-    fetch(
-      `https://rickandmortyapi.com/api/character/?page=${currentPage}&name=${term}`,
-    )
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Something went wrong...");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        if (data.results.length === 0) {
-          setNotFound(true);
-        }
-        setTotalPages(data.info.pages);
-        setCharacters(data);
-        setNotFound(false);
-        isLoading(false);
-      })
-      .catch(() => {
-        isLoading(false);
+    isLoading(isFetching);
+    if (data) {
+      if (data.results.length === 0) {
         setNotFound(true);
-      });
-  }, [term, currentPage]);
+      }
+      setTotalPages(data.info.pages);
+      setCharacters(data);
+      setNotFound(false);
+      isLoading(false);
+    }
+    if (error) {
+      isLoading(false);
+      setNotFound(true);
+    }
+  }, [term, currentPage, data, error, isFetching]);
   return null;
 };
 
@@ -42,28 +70,14 @@ export const FetchDataByID = ({
   detailedcardID,
   setDetailedCardData,
 }: FetchDataByIDProps) => {
+  const {data, error, isFetching} = useFetchDataByIDQuery(detailedcardID);
   useEffect(() => {
     if (typeof isDetailedcardLoading === "function") {
-      isDetailedcardLoading(true);
+      isDetailedcardLoading(isFetching);
     }
-    fetch(`https://rickandmortyapi.com/api/character/${detailedcardID}`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Something went wrong...");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setDetailedCardData(data);
-        if (typeof isDetailedcardLoading === "function") {
-          isDetailedcardLoading(false);
-        }
-      })
-      .catch(() => {
-        if (typeof isDetailedcardLoading === "function") {
-          isDetailedcardLoading(false);
-        }
-      });
-  }, [detailedcardID]);
+    if (data) {
+      setDetailedCardData(data);
+    }
+  }, [detailedcardID, data, error, isFetching]);
   return null;
 };
