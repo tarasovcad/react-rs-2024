@@ -1,12 +1,12 @@
 import {ReactNode} from "react";
 
 export interface Character {
-  id: number;
-  name: string;
-  image: string;
-  status: string;
-  gender: string;
-  species: string;
+  id?: number;
+  name?: string;
+  image?: string;
+  status?: string;
+  gender?: string;
+  species?: string;
 }
 
 export interface CharacterArray {

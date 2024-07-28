@@ -4,12 +4,15 @@ import {render, screen, waitFor} from "@testing-library/react";
 import {MemoryRouter} from "react-router-dom";
 import * as fetchDataModule from "../../src/api/fetchData";
 import App from "../../src/App";
-
+import {Dispatch, UnknownAction} from "redux";
 vi.mock("../../src/api/fetchData", () => ({
   rickAndMortyApi: {
     reducerPath: "rickAndMortyApi",
     reducer: () => ({}),
-    middleware: vi.fn(() => (next) => (action) => next(action)),
+    middleware: vi.fn(
+      () => (next: Dispatch<UnknownAction>) => (action: UnknownAction) =>
+        next(action),
+    ),
     endpoints: {
       fetchDataByTerm: {useQuery: vi.fn()},
       fetchDataByID: {useQuery: vi.fn()},

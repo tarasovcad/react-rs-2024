@@ -1,4 +1,3 @@
-// tests/DetailedCard.test.tsx
 import React from "react";
 import {render, screen} from "@testing-library/react";
 import DetailedCard from "../../src/components/DetailedCard";
