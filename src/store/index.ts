@@ -1,6 +1,7 @@
 import {configureStore} from "@reduxjs/toolkit";
 import selectedDataReducer from "./slices/selectedDataSlice";
 import {rickAndMortyApi} from "../api/fetchData";
+
 export const store = configureStore({
   reducer: {
     selectedData: selectedDataReducer,

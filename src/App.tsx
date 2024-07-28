@@ -21,6 +21,8 @@ import DetailedCard from "./components/DetailedCard";
 import ModalMenu from "./components/ModalMenu";
 
 import {ThemeContext} from "./context/ThemeContext";
+import {Provider} from "react-redux";
+import {store} from "./store";
 
 export const SearchContext = createContext<GlobalContent>({
   setTerm: () => {},
@@ -73,85 +75,87 @@ const App = () => {
   }
   const isDetailsOpen = Boolean(Number(searchParams.get("details"))) || false;
   return (
-    <SearchContext.Provider value={{setTerm, setCurrentPage}}>
-      <div className="container">
-        <Navbar />
-        <h1
-          className="characters mb-[4px] mt-[50px]"
-          data-testid="main-heading">
-          {term ? `Search results for: ${term}` : "Characters"}
-        </h1>
-        <h2 className="description mb-[45px]">
-          All of the characters that appear in the
-          <a
-            href="https://rickandmorty.fandom.com/wiki/Rickipedia"
-            target="_blank"
-            rel="noreferrer">
-            <em> Rick and Morty </em>
-          </a>
-          franchise.
-        </h2>
+    <Provider store={store}>
+      <SearchContext.Provider value={{setTerm, setCurrentPage}}>
+        <div className="container">
+          <Navbar />
+          <h1
+            className="characters mb-[4px] mt-[50px]"
+            data-testid="main-heading">
+            {term ? `Search results for: ${term}` : "Characters"}
+          </h1>
+          <h2 className="description mb-[45px]">
+            All of the characters that appear in the
+            <a
+              href="https://rickandmorty.fandom.com/wiki/Rickipedia"
+              target="_blank"
+              rel="noreferrer">
+              <em> Rick and Morty </em>
+            </a>
+            franchise.
+          </h2>
 
-        {loading && (
-          <div data-testid="loader">
-            <Loader />
-          </div>
-        )}
-
-        {notFound === true ? (
-          <h2 data-testid="not-found">No characters found :(</h2>
-        ) : (
-          <>
-            <div className="flex mt-10">
-              <div data-testid="grid-container" className={"grid-container"}>
-                {characters.results &&
-                  characters.results.map((character: Character) => {
-                    return (
-                      <SingleCharacter
-                        key={character.id}
-                        character={character}
-                        handlePageClick={handlePageClick}
-                        data-testid={`character-${character.id}`}
-                      />
-                    );
-                  })}
-              </div>
+          {loading && (
+            <div data-testid="loader">
+              <Loader />
             </div>
-            <Pagination
-              totalPages={totalPages}
-              currentPage={currentPage}
-              setCurrentPage={setCurrentPage}
-            />
-            <Outlet />
-            {isDetailsOpen && detailedcardID && (
-              <div data-testid="detailed-card">
-                <DetailedCard
-                  detailedcardID={detailedcardID}
-                  isDetailedcardLoading={isDetailedcardLoading}
-                  detailedcardLoading={detailedcardLoading}
-                  hideDetailedCard={() => {
-                    setSearchParams((params) => {
-                      params.set("details", "0");
-                      return params;
-                    });
-                  }}
-                />
+          )}
+
+          {notFound === true ? (
+            <h2 data-testid="not-found">No characters found :(</h2>
+          ) : (
+            <>
+              <div className="flex mt-10">
+                <div data-testid="grid-container" className={"grid-container"}>
+                  {characters.results &&
+                    characters.results.map((character: Character) => {
+                      return (
+                        <SingleCharacter
+                          key={character.id}
+                          character={character}
+                          handlePageClick={handlePageClick}
+                          data-testid={`character-${character.id}`}
+                        />
+                      );
+                    })}
+                </div>
               </div>
-            )}
-            <ModalMenu />
-          </>
-        )}
-        <FetchDataByTerm
-          term={term}
-          isLoading={isLoading}
-          setNotFound={setNotFound}
-          setCharacters={setCharacters}
-          setTerm={setTerm}
-          setTotalPages={setTotalPages}
-          currentPage={currentPage}
-        />
-      </div>
-    </SearchContext.Provider>
+              <Pagination
+                totalPages={totalPages}
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+              />
+              <Outlet />
+              {isDetailsOpen && detailedcardID && (
+                <div data-testid="detailed-card">
+                  <DetailedCard
+                    detailedcardID={detailedcardID}
+                    isDetailedcardLoading={isDetailedcardLoading}
+                    detailedcardLoading={detailedcardLoading}
+                    hideDetailedCard={() => {
+                      setSearchParams((params) => {
+                        params.set("details", "0");
+                        return params;
+                      });
+                    }}
+                  />
+                </div>
+              )}
+              <ModalMenu />
+            </>
+          )}
+          <FetchDataByTerm
+            term={term}
+            isLoading={isLoading}
+            setNotFound={setNotFound}
+            setCharacters={setCharacters}
+            setTerm={setTerm}
+            setTotalPages={setTotalPages}
+            currentPage={currentPage}
+          />
+        </div>
+      </SearchContext.Provider>
+    </Provider>
   );
 };
 

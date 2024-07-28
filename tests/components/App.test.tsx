@@ -6,6 +6,17 @@ import * as fetchDataModule from "../../src/api/fetchData";
 import App from "../../src/App";
 
 vi.mock("../../src/api/fetchData", () => ({
+  rickAndMortyApi: {
+    reducerPath: "rickAndMortyApi",
+    reducer: () => ({}),
+    middleware: vi.fn(() => (next) => (action) => next(action)),
+    endpoints: {
+      fetchDataByTerm: {useQuery: vi.fn()},
+      fetchDataByID: {useQuery: vi.fn()},
+    },
+  },
+  useFetchDataByTermQuery: vi.fn(),
+  useFetchDataByIDQuery: vi.fn(),
   FetchDataByTerm: vi.fn(),
 }));
 

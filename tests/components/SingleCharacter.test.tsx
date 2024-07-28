@@ -2,7 +2,8 @@ import React from "react";
 import {render, screen, fireEvent} from "@testing-library/react";
 import SingleCharacter from "../../src/components/SingleCharacter";
 import {Character} from "../../src/types/types";
-
+import {store} from "../../src/store/index";
+import {Provider} from "react-redux";
 describe("SingleCharacter", () => {
   // Create a "fake" character
   const mockCharacter: Character = {
@@ -18,10 +19,12 @@ describe("SingleCharacter", () => {
 
   it("renders character name and image", () => {
     render(
-      <SingleCharacter
-        character={mockCharacter}
-        handlePageClick={mockHandlePageClick}
-      />,
+      <Provider store={store}>
+        <SingleCharacter
+          character={mockCharacter}
+          handlePageClick={mockHandlePageClick}
+        />
+      </Provider>,
     );
 
     const characterName = screen.getByText("Rick Sanchez");
@@ -32,10 +35,12 @@ describe("SingleCharacter", () => {
 
   it("calls handlePageClick when clicking on SingleCharacter card", () => {
     render(
-      <SingleCharacter
-        character={mockCharacter}
-        handlePageClick={mockHandlePageClick}
-      />,
+      <Provider store={store}>
+        <SingleCharacter
+          character={mockCharacter}
+          handlePageClick={mockHandlePageClick}
+        />
+      </Provider>,
     );
     // closest - we want click on div, not on text
     const characterDiv = screen.getByText("Rick Sanchez").closest("div")!;
