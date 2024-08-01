@@ -2,6 +2,9 @@ import React, {useState} from "react";
 import {FetchDataByID} from "../api/fetchData";
 import LoaderDetailedCard from "./LoaderDetailedCard";
 import {type Character, DetailedCardpProps} from "../types/types";
+import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "../store";
+import {addItem, removeItem} from "./../store/slices/selectedDataSlice";
 
 const DetailedCard = ({
   detailedcardID,
@@ -13,7 +16,20 @@ const DetailedCard = ({
     null,
   );
 
-  const {name, status, gender, species, image} = detailedCardData ?? {};
+  const {name, status, gender, species, image, id} = detailedCardData ?? {};
+
+  const dispatch = useDispatch();
+  const selectedItems = useSelector(
+    (state: RootState) => state.selectedData.selectedItems,
+  );
+
+  const handleCheckboxChange = () => {
+    if (selectedItems.some((item) => item.id === id)) {
+      dispatch(removeItem(detailedCardData));
+    } else {
+      dispatch(addItem(detailedCardData));
+    }
+  };
 
   const handleOverlayClick = (event: React.MouseEvent<HTMLDivElement>) => {
     if (event.target === event.currentTarget) {
@@ -41,6 +57,15 @@ const DetailedCard = ({
             <h2>
               Gender: <span>{gender}</span>
             </h2>
+            <div className="flex">
+              <input
+                type="checkbox"
+                className="checkbox__detailed"
+                onChange={handleCheckboxChange}
+                checked={selectedItems.some((item) => item.id === id)} // if the item is in the selectedItems array, it will be checked
+              />
+              <label className="label">Add to selection</label>
+            </div>
           </>
         )}
       </div>

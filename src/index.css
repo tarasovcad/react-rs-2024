@@ -357,6 +357,17 @@
   right: 25px;
 }
 
+.checkbox__detailed {
+  position: absolute;
+  height: 40px;
+  width: 40px;
+}
+
+.label {
+  margin-left: 60px;
+  font-size: 25px;
+}
+
 .modal {
   background-color: var(--navbar-background-color);
 }

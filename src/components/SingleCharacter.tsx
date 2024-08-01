@@ -32,7 +32,7 @@ const SingleCharacter: React.FC<SingleState> = ({
         onChange={handleCheckboxChange}
         checked={selectedItems.some((item) => item.id === id)} // if the item is in the selectedItems array, it will be checked
       />
-      <div onClick={() => handlePageClick(id)} data-testid={`character-${id}`}>
+      <div onClick={() => handlePageClick(id!)} data-testid={`character-${id}`}>
         <img src={image} alt={name} loading="lazy" />
         <h2 className="mt-[12px] text-lg" data-testid="character-name">
           {name}
