@@ -7,7 +7,6 @@ const Layout = ({ children }: Props) => {
   const { isDarkMode } = useContext(ThemeContext);
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', isDarkMode ? 'dark' : 'light');
-    console.log(isDarkMode, 'main');
   }, [isDarkMode]);
   return (
     <>

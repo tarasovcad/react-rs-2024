@@ -1,9 +1,8 @@
-import Main from '@/components/App';
 import Loader from '@/components/loader/Loader';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 
-const Home = () => {
+const Search = () => {
   const router = useRouter();
   useEffect(() => {
     router.replace('/search/1');
@@ -11,4 +10,4 @@ const Home = () => {
   return <Loader />;
 };
 
-export default Home;
+export default Search;
