@@ -15,7 +15,7 @@ const Search = () => {
     setTerm(value);
     setItem(value);
     setCurrentPage(1);
-    // router.push('/search/1');
+    router.push('/search/1');
   }
   function onInputChange(e: React.FormEvent<HTMLInputElement>) {
     setValue(e.currentTarget.value);
