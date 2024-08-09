@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import Loader from './loader/Loader';
 import SingleCharacter from './SingleCharacter';
 import { FetchDataByTerm } from '@/hooks/useRickAndMortiData';
+import ModalMenu from './redux/ModalMenu';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -15,7 +16,7 @@ export default function Main() {
   const [currentPage, setCurrentPage] = useState(1);
   const searchParams = useSearchParams();
   const [detailedcardID, setDetailedcardID] = useState<number>();
-  
+
   const { characters, notFound, totalPages, isLoading } = FetchDataByTerm(term, currentPage);
   const router = useRouter();
   useEffect(() => {
@@ -73,6 +74,7 @@ export default function Main() {
                   })}
               </div>
             </div>
+            <ModalMenu />
           </>
         )}
       </div>
