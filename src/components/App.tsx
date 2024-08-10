@@ -18,9 +18,9 @@ export default function Main() {
   const [currentPage, setCurrentPage] = useState(1);
   const searchParams = useSearchParams();
   const [detailedcardID, setDetailedcardID] = useState<number>();
-  const [detailedcardLoading, isDetailedcardLoading] = useState(false);
   const { characters, notFound, totalPages, isLoading } = FetchDataByTerm(term, currentPage);
   const router = useRouter();
+  
   useEffect(() => {
     if (searchParams.size > 0) {
       setCurrentPage(Number(searchParams));

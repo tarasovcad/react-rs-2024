@@ -5,10 +5,10 @@ import { RootState } from '../store';
 import { addItem, removeItem } from './../store/slices/selectedDataSlice';
 import LoaderDetailedCard from './loader/LoaderDetailedCard';
 import { FetchDataByID } from '@/hooks/useRickAndMortiData';
+import Image from 'next/image';
 
 const DetailedCard = ({ detailedcardID, hideDetailedCard }: DetailedCardpProps) => {
   const { isDetailedcardLoading, detailedCardData } = FetchDataByID(detailedcardID);
-  console.log(detailedCardData);
 
   const { name, status, gender, species, image, id } = detailedCardData ?? {};
 
@@ -36,7 +36,14 @@ const DetailedCard = ({ detailedcardID, hideDetailedCard }: DetailedCardpProps) 
         ) : (
           <>
             <div className="close cursor-pointer" onClick={hideDetailedCard}></div>
-            <img src={image} alt="Image" loading="lazy" />
+            <Image
+              src={image || ''}
+              alt="Image"
+              loading="lazy"
+              width={65}
+              height={65}
+              unoptimized
+            />
             <h1>{name}</h1>
             <h2>
               Status: <span>{status}</span>
