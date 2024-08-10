@@ -44,5 +44,5 @@ export const FetchDataByID = (detailedcardID: number) => {
     }
   }, [detailedcardID, data, error, isFetching]);
 
-  return { detailedCardData, isDetailedcardLoading };
+  return { isDetailedcardLoading, detailedCardData };
 };

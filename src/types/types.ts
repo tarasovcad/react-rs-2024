@@ -1,4 +1,4 @@
-import {ReactNode} from "react";
+import { ReactNode } from 'react';
 
 export interface Character {
   id?: number;
@@ -51,7 +51,7 @@ export interface FetchDataByTermProps {
   setTerm: (term: string) => void;
   setNotFound: (notFound: boolean) => void;
   isLoading: (loading: boolean) => void;
-  setCharacters: (characters: {results: []}) => void;
+  setCharacters: (characters: { results: [] }) => void;
   setTotalPages: (totalPages: number) => void;
   currentPage: number;
 }
@@ -62,9 +62,7 @@ export interface FetchDataByIDProps {
 }
 
 export interface DetailedCardpProps {
-  isDetailedcardLoading?: boolean | ((detailedcardLoading: boolean) => void);
   detailedcardID: number;
-  detailedcardLoading: boolean;
   hideDetailedCard: () => void;
 }
 export interface DetailedCardpProps3 {
@@ -97,7 +95,7 @@ export interface CharacterResult {
 
 export interface ApiResponse {
   results: CharacterResult[];
-  info: {pages: number};
+  info: { pages: number };
 }
 
 export interface SingleCharacterResponse {

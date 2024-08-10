@@ -8,6 +8,8 @@ import Loader from './loader/Loader';
 import SingleCharacter from './SingleCharacter';
 import { FetchDataByTerm } from '@/hooks/useRickAndMortiData';
 import ModalMenu from './redux/ModalMenu';
+import Pagination from './Pagination';
+import DetailedCard from './DetailedCard';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -16,11 +18,11 @@ export default function Main() {
   const [currentPage, setCurrentPage] = useState(1);
   const searchParams = useSearchParams();
   const [detailedcardID, setDetailedcardID] = useState<number>();
-
+  const [detailedcardLoading, isDetailedcardLoading] = useState(false);
   const { characters, notFound, totalPages, isLoading } = FetchDataByTerm(term, currentPage);
   const router = useRouter();
   useEffect(() => {
-    if (searchParams) {
+    if (searchParams.size > 0) {
       setCurrentPage(Number(searchParams));
     } else {
       router.push(`/search/${currentPage}`);
@@ -32,8 +34,12 @@ export default function Main() {
   }, []);
   function handlePageClick(id: number) {
     setDetailedcardID(id);
-    router.push(`/search/${id}`);
+    router.push({
+      pathname: router.pathname,
+      query: { ...router.query, details: '1' },
+    });
   }
+  const isDetailsOpen = Boolean(Number(searchParams.get('details'))) || false;
   return (
     <main className={` ${inter.className}`}>
       <div className="container">
@@ -74,6 +80,24 @@ export default function Main() {
                   })}
               </div>
             </div>
+            <Pagination
+              totalPages={totalPages}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+            />
+            {isDetailsOpen && detailedcardID && (
+              <div data-testid="detailed-card">
+                <DetailedCard
+                  detailedcardID={detailedcardID}
+                  hideDetailedCard={() => {
+                    router.push({
+                      pathname: router.pathname,
+                      query: { ...router.query, details: '0' },
+                    });
+                  }}
+                />
+              </div>
+            )}
             <ModalMenu />
           </>
         )}
