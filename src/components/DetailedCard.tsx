@@ -29,7 +29,7 @@ const DetailedCard = ({ detailedcardID, hideDetailedCard }: DetailedCardpProps) 
     }
   };
   return (
-    <div className="detailedcard-overlay" onClick={handleOverlayClick}>
+    <div className="detailedcard-overlay" onClick={handleOverlayClick} data-testid="overlay">
       <div className="detailed-card__container">
         {isDetailedcardLoading ? (
           <LoaderDetailedCard />
