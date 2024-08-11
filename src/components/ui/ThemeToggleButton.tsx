@@ -1,9 +1,10 @@
-import { ThemeContext } from '@/contexts/ThemeContext';
-import React, { useContext } from 'react';
+"use client";
+import { ThemeContext } from "@/providers/ThemeProvider";
+import React, { useContext } from "react";
 
 const ThemeToggleButton = () => {
   const { isDarkMode, toggleTheme } = useContext(ThemeContext);
-
+  console.log(isDarkMode);
   return (
     <button onClick={toggleTheme}>
       {isDarkMode ? (
@@ -17,7 +18,8 @@ const ThemeToggleButton = () => {
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
-          className="lucide lucide-sun">
+          className="lucide lucide-sun"
+        >
           <circle cx="12" cy="12" r="4" />
           <path d="M12 2v2" />
           <path d="M12 20v2" />
@@ -39,7 +41,8 @@ const ThemeToggleButton = () => {
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
-          className="lucide lucide-moon">
+          className="lucide lucide-moon"
+        >
           <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
         </svg>
       )}

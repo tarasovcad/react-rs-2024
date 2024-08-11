@@ -1,17 +1,26 @@
-import { ThemeContext } from '@/contexts/ThemeContext';
-import React, { ReactNode, useCallback, useState } from 'react';
+import { createContext, useCallback, useEffect, useState } from "react";
+import { Props, ThemeContextType } from "@/types/types";
 
-export const ThemeProvider = ({ children }: { children: ReactNode }) => {
+export const ThemeContext = createContext<ThemeContextType>({
+  isDarkMode: false,
+  toggleTheme: () => {},
+});
+
+export const ThemeProvider = ({ children }: Props) => {
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   const toggleTheme = useCallback(() => {
-    setIsDarkMode((prevMode) => {
-      console.log('Toggling theme. New mode:', !prevMode);
-      return !prevMode;
-    });
+    setIsDarkMode((prevMode) => !prevMode);
   }, []);
-
+  useEffect(() => {
+    document.documentElement.setAttribute(
+      "data-theme",
+      isDarkMode ? "dark" : "light",
+    );
+  }, [isDarkMode]);
   return (
-    <ThemeContext.Provider value={{ isDarkMode, toggleTheme }}>{children}</ThemeContext.Provider>
+    <ThemeContext.Provider value={{ isDarkMode, toggleTheme }}>
+      {children}
+    </ThemeContext.Provider>
   );
 };
