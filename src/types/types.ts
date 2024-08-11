@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode } from "react";
 
 export interface Character {
   id?: number;
@@ -125,3 +125,14 @@ export type CharactersResponse = {
   };
   results: Character[];
 };
+
+export interface MainProps {
+  term: string;
+  currentPage: number;
+  characters: CharactersResponse | null;
+  totalPages: number;
+  detailedCardId: number | null | undefined;
+  isLoading: boolean;
+  notFound: boolean;
+  setCurrentPage: (currentPage: number) => void;
+}

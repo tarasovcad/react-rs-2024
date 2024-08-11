@@ -1,8 +1,5 @@
-import React from "react";
-import Main from "@/components/App";
+import { redirect } from "next/navigation";
 
-const Page = () => {
-  return <Main />;
-};
-
-export default Page;
+export default function Page() {
+  redirect("/search/1");
+}

@@ -1,11 +1,15 @@
-import { SearchContext } from '@/contexts/SearchContext';
-import useLocalStorage from '@/hooks/useLocalStorage';
-import Image from 'next/image';
-import { useRouter } from 'next/router';
-import React, { useContext } from 'react';
+"use client";
+import { SearchContext } from "@/contexts/SearchContext";
+import useLocalStorage from "@/hooks/useLocalStorage";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import React, { useContext } from "react";
 
 const Search = () => {
-  const [value, setValue, setItem] = useLocalStorage('tarasovcadLocalStorage', '');
+  const [value, setValue, setItem] = useLocalStorage(
+    "tarasovcadLocalStorage",
+    "",
+  );
 
   const { setTerm, setCurrentPage } = useContext(SearchContext);
   const router = useRouter();
@@ -15,7 +19,10 @@ const Search = () => {
     setTerm(value);
     setItem(value);
     setCurrentPage(1);
-    router.push('/search/1').then(() => router.reload());
+    router.push("/search/1");
+    setTimeout(() => {
+      window.location.href = "/search/1";
+    }, 0);
   }
   function onInputChange(e: React.FormEvent<HTMLInputElement>) {
     setValue(e.currentTarget.value);
