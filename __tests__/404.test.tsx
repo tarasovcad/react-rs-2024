@@ -2,7 +2,7 @@
 
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import Page from "@/app/404";
+import Page from "@/app/not-found";
 
 jest.mock("./../src/components/NotFound", () => {
   return function MockNotFound() {

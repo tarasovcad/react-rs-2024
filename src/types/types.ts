@@ -139,3 +139,7 @@ export interface MainProps {
   hideDetailedCard: () => void;
   handlePageClick: (id: number) => void;
 }
+
+export interface RootState {
+  selectedData: SelectedDataState;
+}

@@ -1,8 +1,8 @@
-import { FetchDataByTerm } from "@/hooks/useRickAndMortiData";
 import { renderHook } from "@testing-library/react-hooks";
-import { useFetchDataByTermQuery } from "@/pages/api/rickAndMorti";
+import { useFetchDataByTerm } from "../src/hooks/useRickAndMortiData";
+import { useFetchDataByTermQuery } from "@/lib/store/rickAndMorti";
 
-jest.mock("./../src/pages/api/rickAndMorti", () => ({
+jest.mock("./../src/lib/store/rickAndMorti", () => ({
   useFetchDataByTermQuery: jest.fn(() => ({
     data: { results: [], info: { pages: 0 } },
     error: null,
@@ -10,7 +10,7 @@ jest.mock("./../src/pages/api/rickAndMorti", () => ({
   })),
 }));
 
-jest.mock("./../src/pages/api/rickAndMorti", () => ({
+jest.mock("./../src/lib/store/rickAndMorti", () => ({
   useFetchDataByTermQuery: jest.fn(),
 }));
 
@@ -21,7 +21,7 @@ describe("FetchDataByTerm", () => {
       error: null,
       isFetching: false,
     });
-    const { result } = renderHook(() => FetchDataByTerm("test", 1));
+    const { result } = renderHook(() => useFetchDataByTerm("test", 1));
     expect(result.current.notFound).toBe(true);
   });
 });

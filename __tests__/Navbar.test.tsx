@@ -1,40 +1,39 @@
-import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
-import Navbar from '@/components/Navbar';
+import React from "react";
+import { render, screen, fireEvent } from "@testing-library/react";
+import Navbar from "@/components/Navbar";
 
 // Mock the useRouter hook
-jest.mock('next/router', () => ({
+jest.mock("next/navigation", () => ({
   useRouter() {
     return {
-      route: '/',
-      pathname: '',
-      query: '',
-      asPath: '',
-      
+      route: "/",
+      pathname: "",
+      query: "",
+      asPath: "",
     };
   },
 }));
 
-describe('Navbar Component', () => {
-  it('renders the logo and error button', () => {
+describe("Navbar Component", () => {
+  it("renders the logo and error button", () => {
     render(<Navbar />);
 
     // Check if the logo is rendered
-    const logo = screen.getByAltText('Logo');
+    const logo = screen.getByAltText("Logo");
     expect(logo).toBeInTheDocument();
 
     // Check if the error button is rendered
-    const errorButton = screen.getByText('Throw error');
+    const errorButton = screen.getByText("Throw error");
     expect(errorButton).toBeInTheDocument();
   });
 
-  it('throws an error when the error button is clicked', () => {
+  it("throws an error when the error button is clicked", () => {
     render(<Navbar />);
 
     // Click the error button
-    const errorButton = screen.getByText('Throw error');
+    const errorButton = screen.getByText("Throw error");
     expect(() => {
       fireEvent.click(errorButton);
-    }).toThrow('This is a test error');
+    }).toThrow("This is a test error");
   });
 });
