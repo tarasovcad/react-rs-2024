@@ -116,7 +116,7 @@ export interface ExportCSVProps {
 
 export interface ThemeContextType {
   isDarkMode: boolean;
-  toggleTheme: () => void;
+  toggleTheme?: () => void;
 }
 
 export type CharactersResponse = {
