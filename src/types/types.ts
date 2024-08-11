@@ -131,8 +131,11 @@ export interface MainProps {
   currentPage: number;
   characters: CharactersResponse | null;
   totalPages: number;
-  detailedCardId: number | null | undefined;
+  detailedcardID: number | null | undefined;
   isLoading: boolean;
   notFound: boolean;
   setCurrentPage: (currentPage: number) => void;
+  isDetailsOpen: boolean;
+  hideDetailedCard: () => void;
+  handlePageClick: (id: number) => void;
 }

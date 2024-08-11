@@ -5,12 +5,16 @@ interface PageProps {
   params: {
     search: number;
   };
+  searchParams: {
+    page?: string;
+    term?: string;
+    details?: string;
+  };
 }
 
-const Page = ({ params }: PageProps) => {
+const Page = ({ params, searchParams }: PageProps) => {
   const { search } = params;
-  console.log(search, "search");
-  return <Main search={search} />;
+  return <Main search={search} searchParams={searchParams} />;
 };
 
 export default Page;

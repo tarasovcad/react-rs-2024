@@ -1,19 +1,24 @@
-import React, { useState } from 'react';
-import { type Character, DetailedCardpProps } from '../types/types';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../store';
-import { addItem, removeItem } from './../store/slices/selectedDataSlice';
-import LoaderDetailedCard from './loader/LoaderDetailedCard';
-import { FetchDataByID } from '@/hooks/useRickAndMortiData';
-import Image from 'next/image';
+"use client";
+import React from "react";
+import { type DetailedCardpProps } from "../types/types";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../store";
+import { addItem, removeItem } from "./../store/slices/selectedDataSlice";
+import LoaderDetailedCard from "./loader/LoaderDetailedCard";
+import { useFetchDataByID } from "@/hooks/useRickAndMortiData";
+import Image from "next/image";
 
-const DetailedCard = ({ detailedcardID, hideDetailedCard }: DetailedCardpProps) => {
-  const { isDetailedcardLoading, detailedCardData } = FetchDataByID(detailedcardID);
-
+const DetailedCard = ({
+  detailedcardID,
+  hideDetailedCard,
+}: DetailedCardpProps) => {
+  const { isDetailedcardLoading, detailedCardData } =
+    useFetchDataByID(detailedcardID);
   const { name, status, gender, species, image, id } = detailedCardData ?? {};
-
   const dispatch = useDispatch();
-  const selectedItems = useSelector((state: RootState) => state.selectedData.selectedItems);
+  const selectedItems = useSelector(
+    (state: RootState) => state.selectedData.selectedItems,
+  );
 
   const handleCheckboxChange = () => {
     if (selectedItems.some((item) => item.id === id)) {
@@ -29,19 +34,27 @@ const DetailedCard = ({ detailedcardID, hideDetailedCard }: DetailedCardpProps) 
     }
   };
   return (
-    <div className="detailedcard-overlay" onClick={handleOverlayClick} data-testid="overlay">
+    <div
+      className="detailedcard-overlay"
+      onClick={handleOverlayClick}
+      data-testid="overlay"
+    >
       <div className="detailed-card__container">
         {isDetailedcardLoading ? (
           <LoaderDetailedCard />
         ) : (
           <>
-            <div className="close cursor-pointer" onClick={hideDetailedCard}></div>
+            <div
+              className="close cursor-pointer"
+              onClick={hideDetailedCard}
+            ></div>
             <Image
-              src={image || ''}
+              src={image || ""}
               alt="Image"
               loading="lazy"
               width={65}
               height={65}
+              style={{ width: "250px", height: "250px" }}
               unoptimized
             />
             <h1>{name}</h1>

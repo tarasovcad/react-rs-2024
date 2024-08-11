@@ -4,6 +4,7 @@ import SingleCharacter from "./SingleCharacter";
 import { Character, MainProps } from "@/types/types";
 import ModalMenu from "./redux/ModalMenu";
 import Pagination from "./Pagination";
+import DetailedCard from "./DetailedCard";
 
 export default function Main({
   setCurrentPage,
@@ -11,11 +12,13 @@ export default function Main({
   currentPage,
   characters,
   totalPages,
-  detailedCardId,
+  detailedcardID,
   isLoading,
   notFound,
+  isDetailsOpen,
+  handlePageClick,
+  hideDetailedCard,
 }: MainProps) {
-  console.log(detailedCardId);
   return (
     <main>
       <div className="container">
@@ -53,19 +56,27 @@ export default function Main({
                       <SingleCharacter
                         key={character.id}
                         character={character}
-                        handlePageClick={() => {}}
+                        handlePageClick={handlePageClick}
                         data-testid={`character-${character.id}`}
                       />
                     );
                   })}
               </div>
             </div>
-            <ModalMenu />
             <Pagination
               totalPages={totalPages}
               currentPage={currentPage}
               setCurrentPage={setCurrentPage}
             />
+            {isDetailsOpen && detailedcardID && (
+              <div data-testid="detailed-card">
+                <DetailedCard
+                  detailedcardID={detailedcardID}
+                  hideDetailedCard={hideDetailedCard}
+                />
+              </div>
+            )}
+            <ModalMenu />
           </>
         )}
       </div>

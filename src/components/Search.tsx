@@ -38,7 +38,13 @@ const Search = () => {
         placeholder="Search character...."
       />
       <button className="search-button m1l-[-14px]">
-        <Image src="/images/search.svg" alt="Search" width={20} height={20} />
+        <Image
+          src="/images/search.svg"
+          alt="Search"
+          width={20}
+          height={20}
+          style={{ width: "20px", height: "20px" }}
+        />
       </button>
     </form>
   );

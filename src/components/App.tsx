@@ -18,14 +18,30 @@ export default function App({
   const router = useRouter();
   const [currentPage, setCurrentPage] = useState(0);
   const [term, setTerm] = useState("");
-  const detailedCardId = Number(searchParams?.details) || undefined;
   const { characters, notFound, totalPages, isLoading } = useFetchDataByTerm(
     term,
     currentPage,
   );
+  const [detailedcardID, setDetailedcardID] = useState<number>();
+  const isDetailsOpen = Boolean(Number(searchParams?.details) || false);
 
+  const hideDetailedCard = () => {
+    const currentPath = `/search/${currentPage}`;
+    const params = new URLSearchParams(searchParams);
+    params.set("details", "0");
+    const queryString = params.toString();
+    router.push(`${currentPath}?${queryString}`);
+  };
+
+  const handlePageClick = (id: number) => {
+    setDetailedcardID(id);
+    const currentPath = `/search/${currentPage}`;
+    const params = new URLSearchParams(searchParams);
+    params.set("details", "1");
+    const queryString = params.toString();
+    router.push(`${currentPath}?${queryString}`);
+  };
   useEffect(() => {
-    console.log(search, "params");
     if (search > 0) {
       setCurrentPage(Number(search));
     } else {
@@ -45,9 +61,12 @@ export default function App({
       currentPage={currentPage}
       characters={characters}
       totalPages={totalPages}
-      detailedCardId={detailedCardId}
+      detailedcardID={detailedcardID}
       isLoading={isLoading}
       notFound={notFound}
+      isDetailsOpen={isDetailsOpen}
+      handlePageClick={handlePageClick}
+      hideDetailedCard={hideDetailedCard}
     />
   );
 }

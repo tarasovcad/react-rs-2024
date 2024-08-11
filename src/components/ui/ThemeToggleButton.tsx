@@ -4,7 +4,6 @@ import React, { useContext } from "react";
 
 const ThemeToggleButton = () => {
   const { isDarkMode, toggleTheme } = useContext(ThemeContext);
-  console.log(isDarkMode);
   return (
     <button onClick={toggleTheme}>
       {isDarkMode ? (
