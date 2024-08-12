@@ -53,6 +53,7 @@ export default function App({
     if (items) {
       setTerm(items);
     }
+    console.log(isLoading, "isLoading");
   }, []);
   return (
     <Main
