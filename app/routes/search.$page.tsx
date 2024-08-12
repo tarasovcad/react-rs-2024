@@ -65,19 +65,3 @@ export default function App() {
     />
   );
 }
-
-{
-  /* <Main
-      setCurrentPage={setCurrentPage}
-      term={term}
-      currentPage={currentPage}
-      characters={characters}
-      totalPages={totalPages}
-      detailedcardID={detailedcardID}
-      isLoading={isLoading}
-      notFound={notFound}
-      isDetailsOpen={isDetailsOpen}
-      handlePageClick={handlePageClick}
-      hideDetailedCard={hideDetailedCard}
-    /> */
-}

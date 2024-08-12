@@ -1,6 +1,6 @@
 import { json, LoaderFunction } from '@remix-run/node';
 import { useLoaderData, useNavigate, useSearchParams } from '@remix-run/react';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useFetchDataByTerm } from '~/hooks/useRickAndMortiData';
 import Main from './Main';
 
@@ -15,9 +15,7 @@ export const loader: LoaderFunction = async ({ params, request }) => {
 export default function App() {
   const loaderData = useLoaderData<typeof loader>();
   console.log('loaderData', loaderData);
-  if (!loaderData) {
-    return <div>Error: No data loaded</div>;
-  }
+
   const { page, details } = useLoaderData<typeof loader>();
   const navigate = useNavigate();
 

@@ -1,5 +1,3 @@
-import React from 'react';
-
 const LoaderDetailedCard = () => {
   return (
     <div className="loader-section-detailed" data-testid="loader-section">

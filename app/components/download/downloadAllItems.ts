@@ -1,4 +1,4 @@
-import { ExportCSVProps } from "@/types/types";
+import { ExportCSVProps } from "~/types/types";
 
 const ExportCSV = ({ data, fileName }: ExportCSVProps) => {
   const headers = ["id", "name", "image", "status", "gender", "species"];

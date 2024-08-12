@@ -16,6 +16,7 @@ const Search = () => {
     setItem(value);
     setCurrentPage(1);
     navigate('/search/1');
+    window.location.reload();
   };
 
   const onInputChange = (e: React.FormEvent<HTMLInputElement>) => {
