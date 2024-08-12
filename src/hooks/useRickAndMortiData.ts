@@ -10,7 +10,7 @@ export const useFetchDataByTerm = (term: string, currentPage: number) => {
   const [characters, setCharacters] = useState<CharactersResponse | null>(null);
   const [notFound, setNotFound] = useState(false);
   const [totalPages, setTotalPages] = useState(0);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const { data, error, isFetching } = useFetchDataByTermQuery({
     term,

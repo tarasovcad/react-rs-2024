@@ -16,7 +16,7 @@ export default function App({
   search: number;
 }) {
   const router = useRouter();
-  const [currentPage, setCurrentPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
   const [term, setTerm] = useState("");
   const { characters, notFound, totalPages, isLoading } = useFetchDataByTerm(
     term,
@@ -53,6 +53,7 @@ export default function App({
     if (items) {
       setTerm(items);
     }
+    console.log(isLoading, "isLoading");
   }, []);
   return (
     <Main
