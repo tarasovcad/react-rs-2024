@@ -1,6 +1,9 @@
-import { useEffect, useState } from 'react';
-import type { Character, CharactersResponse } from '../types/types';
-import { useFetchDataByIDQuery, useFetchDataByTermQuery } from '@/pages/api/rickAndMorti';
+import {useEffect, useState} from "react";
+import type {Character, CharactersResponse} from "../types/types";
+import {
+  useFetchDataByIDQuery,
+  useFetchDataByTermQuery,
+} from "@/pages/api/rickAndMorti";
 
 export const FetchDataByTerm = (term: string, currentPage: number) => {
   const [characters, setCharacters] = useState<CharactersResponse | null>(null);
@@ -8,7 +11,10 @@ export const FetchDataByTerm = (term: string, currentPage: number) => {
   const [totalPages, setTotalPages] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
 
-  const { data, error, isFetching } = useFetchDataByTermQuery({ term, currentPage });
+  const {data, error, isFetching} = useFetchDataByTermQuery({
+    term,
+    currentPage,
+  });
 
   useEffect(() => {
     setIsLoading(isFetching);
@@ -28,14 +34,16 @@ export const FetchDataByTerm = (term: string, currentPage: number) => {
     }
   }, [term, currentPage, data, error, isFetching]);
 
-  return { characters, notFound, totalPages, isLoading };
+  return {characters, notFound, totalPages, isLoading};
 };
 
 export const FetchDataByID = (detailedcardID: number) => {
-  const [detailedCardData, setDetailedCardData] = useState<Character | null>(null);
+  const [detailedCardData, setDetailedCardData] = useState<Character | null>(
+    null,
+  );
   const [isDetailedcardLoading, setIsDetailedcardLoading] = useState(false);
 
-  const { data, error, isFetching } = useFetchDataByIDQuery(detailedcardID);
+  const {data, error, isFetching} = useFetchDataByIDQuery(detailedcardID);
 
   useEffect(() => {
     setIsDetailedcardLoading(isFetching);
@@ -44,5 +52,5 @@ export const FetchDataByID = (detailedcardID: number) => {
     }
   }, [detailedcardID, data, error, isFetching]);
 
-  return { isDetailedcardLoading, detailedCardData };
+  return {isDetailedcardLoading, detailedCardData};
 };

@@ -1,7 +1,11 @@
-import React from 'react';
-import { PaginationProps } from '../types/types';
-import { useRouter } from 'next/router';
-const Pagination = ({ totalPages, currentPage, setCurrentPage }: PaginationProps) => {
+import React from "react";
+import {PaginationProps} from "../types/types";
+import {useRouter} from "next/router";
+const Pagination = ({
+  totalPages,
+  currentPage,
+  setCurrentPage,
+}: PaginationProps) => {
   const router = useRouter();
 
   function onClickPrev() {
@@ -18,7 +22,10 @@ const Pagination = ({ totalPages, currentPage, setCurrentPage }: PaginationProps
   }
   return (
     <div className="pagination-container ">
-      <button className="pagination-btn" onClick={onClickPrev} disabled={currentPage === 1}>
+      <button
+        className="pagination-btn"
+        onClick={onClickPrev}
+        disabled={currentPage === 1}>
         Previous
       </button>
       <h1 className="pagination-title">

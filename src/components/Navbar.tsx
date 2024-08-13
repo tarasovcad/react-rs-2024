@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
-import Search from './Search';
-import Link from 'next/link';
-import Image from 'next/image';
-import ThemeToggleButton from './ui/ThemeToggleButton';
+import React, {useState} from "react";
+import Search from "./Search";
+import Link from "next/link";
+import Image from "next/image";
+import ThemeToggleButton from "./ui/ThemeToggleButton";
 
 const Navbar = () => {
   const [shouldThrowError, setShouldThrowError] = useState(false);
 
   function callError() {
-    throw new Error('This is a test error');
+    throw new Error("This is a test error");
   }
   if (shouldThrowError === true) {
     callError();
@@ -23,7 +23,9 @@ const Navbar = () => {
         </Link>
         <div className="flex gap-4">
           <ThemeToggleButton />
-          <button className="error-button" onClick={() => setShouldThrowError(true)}>
+          <button
+            className="error-button"
+            onClick={() => setShouldThrowError(true)}>
             Throw error
           </button>
           <Search />
