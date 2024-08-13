@@ -1,33 +1,56 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
-import { useRouter } from "next/navigation";
-import App from "@/components/App";
-import ClientProviders from "@/providers/ClientProviders";
-import { useFetchDataByTerm } from "@/hooks/useRickAndMortiData";
+import {render, screen} from "@testing-library/react";
+import {useRouter} from "next/navigation";
+import Main from "@/components/Main";
+import {Provider} from "react-redux";
+import {store} from "@/store";
 
-// Mock the useRouter hook
 jest.mock("next/navigation", () => ({
   useRouter: jest.fn(),
 }));
 
-// Mock the custom hook
-jest.mock("./../src/hooks/useRickAndMortiData", () => ({
-  useFetchDataByTerm: jest.fn(),
+jest.mock("./../src/components/api/fetchDataByTerm", () => ({
+  fetchDataByTerm: jest.fn(),
 }));
 
 describe("App Component", () => {
   const mockPush = jest.fn();
+  const mockHideDetailedCard = jest.fn();
+  const mockHandlePageClick = jest.fn();
+
+  const defaultProps = {
+    isDetailsOpen: false,
+    term: "",
+    currentPage: 1,
+    totalPages: 5,
+    searchParams: {},
+    characters: {
+      results: [
+        {
+          id: 1,
+          name: "Rick Sanchez",
+          species: "Human",
+          image: "https://example.com/images/rick.jpg",
+        },
+        {
+          id: 2,
+          name: "Morty Smith",
+          species: "Human",
+          image: "https://example.com/images/morty.jpg",
+        },
+      ],
+    },
+    hideDetailedCard: mockHideDetailedCard,
+    handlePageClick: mockHandlePageClick,
+    detailedcardID: undefined,
+    notFound: false,
+  };
+
   beforeEach(() => {
     jest.clearAllMocks();
     (useRouter as jest.Mock).mockReturnValue({
       push: mockPush,
     });
-  });
-  (useFetchDataByTerm as jest.Mock).mockReturnValue({
-    characters: { results: [] },
-    notFound: false,
-    totalPages: 0,
-    isLoading: false,
   });
 
   afterEach(() => {
@@ -35,11 +58,26 @@ describe("App Component", () => {
   });
 
   it("renders without crashing", () => {
+    const consoleErrorSpy = jest
+      .spyOn(console, "error")
+      .mockImplementation(() => {});
     render(
-      <ClientProviders>
-        <App search={1} searchParams={{ page: "1", term: "", details: "0" }} />
-      </ClientProviders>,
+      <Provider store={store}>
+        <Main {...defaultProps} />
+      </Provider>,
     );
+
+    if (consoleErrorSpy.mock.calls.length > 0) {
+      console.log("Caught error:", consoleErrorSpy.mock.calls);
+    }
     expect(screen.getByTestId("main-heading")).toBeInTheDocument();
+  });
+  it("shows 'Not Found' message when no characters are found", () => {
+    render(
+      <Provider store={store}>
+        <Main {...defaultProps} notFound={true} />
+      </Provider>,
+    );
+    expect(screen.getByText(/No characters found/i)).toBeInTheDocument();
   });
 });

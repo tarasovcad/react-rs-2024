@@ -1,5 +1,5 @@
 import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react";
+import {render, screen, fireEvent} from "@testing-library/react";
 import Pagination from "@/components/Pagination";
 
 const mockPush = jest.fn();
@@ -14,18 +14,11 @@ jest.mock("next/navigation", () => ({
 }));
 
 describe("Pagination Component", () => {
-  const setCurrentPage = jest.fn();
   const totalPages = 5;
   const currentPage = 3;
 
   const renderComponent = () =>
-    render(
-      <Pagination
-        totalPages={totalPages}
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-      />,
-    );
+    render(<Pagination totalPages={totalPages} currentPage={currentPage} />);
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -40,46 +33,33 @@ describe("Pagination Component", () => {
   });
 
   it("disables Previous button on first page", () => {
-    render(
-      <Pagination
-        totalPages={totalPages}
-        currentPage={1}
-        setCurrentPage={setCurrentPage}
-      />,
-    );
+    render(<Pagination totalPages={totalPages} currentPage={1} />);
 
     expect(screen.getByText("Previous")).toBeDisabled();
     expect(screen.getByText("Next")).not.toBeDisabled();
   });
 
   it("disables Next button on last page", () => {
-    render(
-      <Pagination
-        totalPages={totalPages}
-        currentPage={totalPages}
-        setCurrentPage={setCurrentPage}
-      />,
-    );
+    render(<Pagination totalPages={totalPages} currentPage={totalPages} />);
 
     expect(screen.getByText("Previous")).not.toBeDisabled();
     expect(screen.getByText("Next")).toBeDisabled();
   });
-  it("calls setCurrentPage and router.push when Next button is clicked", () => {
+  it("calls router.push when Next button is clicked", () => {
     renderComponent();
 
     const nextButton = screen.getByText("Next");
     fireEvent.click(nextButton);
 
-    expect(setCurrentPage).toHaveBeenCalledWith(currentPage + 1);
     expect(mockPush).toHaveBeenCalledWith(`/search/${currentPage + 1}`);
   });
-  it("calls setCurrentPage and router.push when Previous button is clicked", () => {
+
+  it("calls router.push when Previous button is clicked", () => {
     renderComponent();
 
     const prevButton = screen.getByText("Previous");
     fireEvent.click(prevButton);
 
-    expect(setCurrentPage).toHaveBeenCalledWith(currentPage - 1);
     expect(mockPush).toHaveBeenCalledWith(`/search/${currentPage - 1}`);
   });
 });

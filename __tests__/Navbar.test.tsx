@@ -1,5 +1,4 @@
-import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react";
+import {render, screen, fireEvent} from "@testing-library/react";
 import Navbar from "@/components/Navbar";
 
 // Mock the useRouter hook

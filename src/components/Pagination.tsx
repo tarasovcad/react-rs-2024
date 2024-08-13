@@ -7,13 +7,11 @@ const Pagination = ({totalPages, currentPage}: PaginationProps) => {
 
   function onClickPrev() {
     if (currentPage > 1) {
-      // setCurrentPage(currentPage - 1);
       router.push(`/search/${currentPage - 1}`);
     }
   }
   function onClickNext() {
     if (currentPage < totalPages) {
-      // setCurrentPage(currentPage + 1);
       router.push(`/search/${currentPage + 1}`);
     }
   }
