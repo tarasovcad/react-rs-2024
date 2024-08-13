@@ -1,8 +1,8 @@
 "use client";
-import { useFetchDataByTerm } from "./../hooks/useRickAndMortiData";
-import React, { useEffect, useState } from "react";
+import {useFetchDataByTerm} from "./../hooks/useRickAndMortiData";
+import React, {useEffect, useState} from "react";
 import Main from "./Main";
-import { useRouter } from "next/navigation";
+import {useRouter} from "next/navigation";
 
 export default function App({
   searchParams,
@@ -18,7 +18,7 @@ export default function App({
   const router = useRouter();
   const [currentPage, setCurrentPage] = useState(1);
   const [term, setTerm] = useState("");
-  const { characters, notFound, totalPages, isLoading } = useFetchDataByTerm(
+  const {characters, notFound, totalPages, isLoading} = useFetchDataByTerm(
     term,
     currentPage,
   );
@@ -54,7 +54,7 @@ export default function App({
       setTerm(items);
     }
     console.log(isLoading, "isLoading");
-  }, []);
+  }, [currentPage, search, router, isLoading]);
   return (
     <Main
       setCurrentPage={setCurrentPage}

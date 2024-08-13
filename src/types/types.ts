@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import {ReactNode} from "react";
 
 export interface Character {
   id?: number;
@@ -16,7 +16,7 @@ export interface CharacterArray {
 }
 
 export interface Props {
-  children: ReactNode;
+  children?: ReactNode;
 }
 
 export interface SingleState {
@@ -51,7 +51,7 @@ export interface FetchDataByTermProps {
   setTerm: (term: string) => void;
   setNotFound: (notFound: boolean) => void;
   isLoading: (loading: boolean) => void;
-  setCharacters: (characters: { results: [] }) => void;
+  setCharacters: (characters: {results: []}) => void;
   setTotalPages: (totalPages: number) => void;
   currentPage: number;
 }
@@ -95,7 +95,7 @@ export interface CharacterResult {
 
 export interface ApiResponse {
   results: CharacterResult[];
-  info: { pages: number };
+  info: {pages: number};
 }
 
 export interface SingleCharacterResponse {
