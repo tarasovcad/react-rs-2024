@@ -82,7 +82,6 @@ export interface CharactersData {
 export interface PaginationProps {
   totalPages: number;
   currentPage: number;
-  setCurrentPage: (currentPage: number) => void;
 }
 
 export interface DetailedCardData {
@@ -125,6 +124,9 @@ export type CharactersResponse = {
   };
   results: Character[];
 };
+export type CharactersWResult = {
+  results: Character[];
+};
 
 export interface MainProps {
   term: string;
@@ -142,4 +144,38 @@ export interface MainProps {
 
 export interface RootState {
   selectedData: SelectedDataState;
+}
+
+export interface PageProps {
+  params: {
+    search: number;
+  };
+  searchParams: {
+    page?: string;
+    term?: string;
+    details?: string;
+  };
+}
+
+export interface MainPageProps {
+  searchParams?: {
+    page?: string;
+    term?: string;
+    details?: string;
+  };
+  characters: CharactersWResult | false;
+  totalPages: number;
+  currentPage: number;
+  term: string;
+  detailedcardID: number | undefined;
+  hideDetailedCard: () => void;
+  handlePageClick: (id: number) => void;
+  isDetailsOpen: boolean;
+  notFound: boolean;
+}
+
+export function isCharactersWResult(
+  characters: CharactersWResult | false,
+): characters is CharactersWResult {
+  return characters !== false && "results" in characters;
 }
