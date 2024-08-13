@@ -1,23 +1,23 @@
-import { Inter } from "next/font/google";
-import { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
-import { Character } from "@/types/types";
-import { useRouter } from "next/router";
+import {Inter} from "next/font/google";
+import {useEffect, useState} from "react";
+import {useSearchParams} from "next/navigation";
+import {Character} from "@/types/types";
+import {useRouter} from "next/router";
 import Loader from "./loader/Loader";
 import SingleCharacter from "./SingleCharacter";
-import { FetchDataByTerm } from "@/hooks/useRickAndMortiData";
+import {FetchDataByTerm} from "@/hooks/useRickAndMortiData";
 import ModalMenu from "./redux/ModalMenu";
 import Pagination from "./Pagination";
 import DetailedCard from "./DetailedCard";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({subsets: ["latin"]});
 
 export default function Main() {
   const [term, setTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const searchParams = useSearchParams();
   const [detailedcardID, setDetailedcardID] = useState<number>();
-  const { characters, notFound, totalPages, isLoading } = FetchDataByTerm(
+  const {characters, notFound, totalPages, isLoading} = FetchDataByTerm(
     term,
     currentPage,
   );
@@ -35,12 +35,12 @@ export default function Main() {
     if (items) {
       setTerm(items);
     }
-  }, []);
+  }, [currentPage, router, isLoading, searchParams]);
   function handlePageClick(id: number) {
     setDetailedcardID(id);
     router.push({
       pathname: router.pathname,
-      query: { ...router.query, details: "1" },
+      query: {...router.query, details: "1"},
     });
   }
   const isDetailsOpen = Boolean(Number(searchParams.get("details"))) || false;
@@ -49,8 +49,7 @@ export default function Main() {
       <div className="container">
         <h1
           className="characters mb-[4px] mt-[50px]"
-          data-testid="main-heading"
-        >
+          data-testid="main-heading">
           {term ? `Search results for: ${term}` : "Characters"}
         </h1>
         <h2 className="description mb-[45px]">
@@ -58,8 +57,7 @@ export default function Main() {
           <a
             href="https://rickandmorty.fandom.com/wiki/Rickipedia"
             target="_blank"
-            rel="noreferrer"
-          >
+            rel="noreferrer">
             <em> Rick and Morty </em>
           </a>
           franchise.
@@ -100,7 +98,7 @@ export default function Main() {
                   hideDetailedCard={() => {
                     router.push({
                       pathname: router.pathname,
-                      query: { ...router.query, details: "0" },
+                      query: {...router.query, details: "0"},
                     });
                   }}
                 />
