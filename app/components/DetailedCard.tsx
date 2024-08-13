@@ -1,24 +1,37 @@
-import React from "react";
-import { type DetailedCardpProps } from "../types/types";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../store";
-import { addItem, removeItem } from "./../store/slices/selectedDataSlice";
-import LoaderDetailedCard from "./loader/LoaderDetailedCard";
-import { useFetchDataByID } from "~/hooks/useRickAndMortiData";
+import React, { useEffect, useState } from 'react';
+import { Character, type DetailedCardpProps } from '../types/types';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../store';
+import { addItem, removeItem } from './../store/slices/selectedDataSlice';
+import LoaderDetailedCard from './loader/LoaderDetailedCard';
 
-const DetailedCard = ({
-  hideDetailedCard,
-  detailedcardID,
-}: DetailedCardpProps) => {
-  const { isDetailedcardLoading, detailedCardData } =
-    useFetchDataByID(detailedcardID);
-  const { name, status, gender, species, image, id } = detailedCardData ?? {};
-
+const DetailedCard = ({ hideDetailedCard, detailedcardID }: DetailedCardpProps) => {
+  const [detailedCardData, setDetailedCardData] = useState<Character | null>(null);
+  const [isDetailedcardLoading, setIsDetailedcardLoading] = useState(true);
   const dispatch = useDispatch();
-  const selectedItems = useSelector(
-    (state: RootState) => state.selectedData.selectedItems
-  );
+  const selectedItems = useSelector((state: RootState) => state.selectedData.selectedItems);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsDetailedcardLoading(true);
+      try {
+        const response = await fetch(`https://rickandmortyapi.com/api/character/${detailedcardID}`);
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        setDetailedCardData(data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      } finally {
+        setIsDetailedcardLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [detailedcardID]);
+
+  const { name, status, gender, species, image, id } = detailedCardData ?? {};
   const handleCheckboxChange = () => {
     if (selectedItems.some((item) => item.id === id)) {
       dispatch(removeItem(detailedCardData));
@@ -33,7 +46,7 @@ const DetailedCard = ({
     }
   };
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    if (event.key === "Enter" || event.key === " ") {
+    if (event.key === 'Enter' || event.key === ' ') {
       hideDetailedCard();
     }
   };
@@ -44,8 +57,7 @@ const DetailedCard = ({
       data-testid="overlay"
       onKeyDown={handleKeyDown}
       role="button"
-      tabIndex={0}
-    >
+      tabIndex={0}>
       <div className="detailed-card__container">
         {isDetailedcardLoading ? (
           <LoaderDetailedCard />
@@ -55,20 +67,19 @@ const DetailedCard = ({
               className="close cursor-pointer"
               onClick={hideDetailedCard}
               onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
+                if (e.key === 'Enter' || e.key === ' ') {
                   hideDetailedCard();
                 }
               }}
               role="button"
-              tabIndex={0}
-            ></div>
+              tabIndex={0}></div>
             <img
-              src={image || ""}
+              src={image || ''}
               alt="Close"
               loading="lazy"
               width={65}
               height={65}
-              style={{ width: "250px", height: "250px" }}
+              style={{ width: '250px', height: '250px' }}
             />
             <h1>{name}</h1>
             <h2>

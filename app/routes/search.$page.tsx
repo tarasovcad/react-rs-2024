@@ -1,12 +1,12 @@
 import { json, LoaderFunction } from '@remix-run/node';
-import { useLoaderData, useNavigate, useSearchParams } from '@remix-run/react';
-import { useEffect, useState } from 'react';
+import { useLoaderData, useSearchParams } from '@remix-run/react';
+import { useState } from 'react';
 import Main from '~/components/Main';
-import { useFetchDataByTerm } from '~/hooks/useRickAndMortiData';
 import { CharactersResponse } from '~/types/types';
 import * as cookie from 'cookie';
 
 export const loader: LoaderFunction = async ({ params, request }) => {
+  // get cookie from request
   const cookieHeader = request.headers.get('Cookie');
   const cookies = cookie.parse(cookieHeader || '');
   const term = cookies['tarasovcadCookieAppRemix'] || '';
@@ -19,33 +19,36 @@ export const loader: LoaderFunction = async ({ params, request }) => {
   try {
     const response = await fetch(apiUrl);
     const data: CharactersResponse = await response.json();
-    console.log(data);
+
     return json({
-      page,
+      page: Number(page),
       details,
       characters: data,
       notFound: data.results.length === 0,
       totalPages: data.info.pages,
+      term,
+      isLoading: false,
+      detailedcardID: Number(url.searchParams.get('details')),
     });
   } catch (error) {
     return json({
-      page,
+      page: Number(page),
       details,
       characters: null,
       notFound: true,
       totalPages: 0,
+      term,
+      isLoading: false,
+      detailedcardID: undefined,
     });
   }
 };
 
 export default function App() {
-  const { page, details } = useLoaderData<typeof loader>();
-  const navigate = useNavigate();
+  const { page, details, characters, notFound, totalPages, isLoading, term, detailedcardID } =
+    useLoaderData<typeof loader>();
   const [searchParams, setSearchParams] = useSearchParams();
   const [currentPage, setCurrentPage] = useState(Number(page));
-  const [term, setTerm] = useState('');
-  const { characters, notFound, totalPages, isLoading } = useFetchDataByTerm(term, currentPage);
-  const [detailedcardID, setDetailedcardID] = useState<number>();
   const isDetailsOpen = Boolean(Number(details) || false);
 
   const hideDetailedCard = () => {
@@ -54,21 +57,9 @@ export default function App() {
   };
 
   const handlePageClick = (id: number) => {
-    setDetailedcardID(id);
-    searchParams.set('details', '1');
+    searchParams.set('details', id.toString());
     setSearchParams(searchParams);
   };
-
-  useEffect(() => {
-    if (currentPage > 0) {
-      navigate(`/search/${currentPage}?${searchParams.toString()}`);
-    }
-
-    const items = JSON.parse(localStorage.getItem('tarasovcadLocalStorage') || '{}');
-    if (items) {
-      setTerm(items);
-    }
-  }, [currentPage, navigate, searchParams]);
 
   return (
     <Main
