@@ -62,9 +62,15 @@ export interface FetchDataByIDProps {
 }
 
 export interface DetailedCardpProps {
+  hideDetailedCard: () => void;
+  detailedCardData: Character;
+}
+
+export interface DetailedCardWrappeerProps {
   detailedcardID: number;
   hideDetailedCard: () => void;
 }
+
 export interface DetailedCardpProps3 {
   isDetailedcardLoading: boolean;
   detailedcardID: number;

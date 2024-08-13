@@ -1,4 +1,4 @@
-import {CharactersResponse} from "@/types/types";
+import {type CharactersResponse} from "@/types/types";
 
 export async function fetchDataByTerm(
   term: string,

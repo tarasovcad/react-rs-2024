@@ -3,7 +3,7 @@ import SingleCharacter from "./SingleCharacter";
 import {Character, isCharactersWResult, MainPageProps} from "@/types/types";
 import ModalMenu from "./redux/ModalMenu";
 import Pagination from "./Pagination";
-import DetailedCard from "./DetailedCard";
+import DetailedCardWrapper from "./DetailedCardWrapper";
 
 export default function Main({
   totalPages,
@@ -57,7 +57,7 @@ export default function Main({
             <Pagination totalPages={totalPages} currentPage={currentPage} />
             {isDetailsOpen && detailedcardID && (
               <div data-testid="detailed-card">
-                <DetailedCard
+                <DetailedCardWrapper
                   detailedcardID={detailedcardID}
                   hideDetailedCard={hideDetailedCard}
                 />
