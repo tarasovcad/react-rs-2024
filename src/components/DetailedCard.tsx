@@ -48,11 +48,12 @@ const DetailedCard = ({
               className="close cursor-pointer"
               onClick={hideDetailedCard}></div>
             <Image
-              src={image || ""}
+              src={image || "/images/18.jpeg"}
               alt="Image"
               loading="lazy"
               width={65}
               height={65}
+              style={{width: "100%", height: "auto"}}
               unoptimized
             />
             <h1>{name}</h1>

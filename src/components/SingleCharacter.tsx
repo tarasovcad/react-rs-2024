@@ -31,10 +31,12 @@ const SingleCharacter: React.FC<SingleState> = ({
       />
       <div onClick={() => handlePageClick(id!)} data-testid={`character-${id}`}>
         <Image
-          src={image || ""}
+          src={image || "/images/18.jpeg"}
+          style={{width: "100%", height: "auto"}}
           alt={name || "Photo"}
           width={300}
           height={300}
+          priority
         />
         <h2 className="mt-[12px] text-lg" data-testid="character-name">
           {name}

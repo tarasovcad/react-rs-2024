@@ -16,6 +16,8 @@
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.7",
     "@types/jest": "^29.5.12",
+    "cookies-next": "^4.2.1",
+    "js-cookie": "^3.0.5",
     "next": "14.2.5",
     "react": "^18",
     "react-dom": "^18",
@@ -28,6 +30,7 @@
     "@eslint/js": "^9.9.0",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/react": "^16.0.0",
+    "@types/js-cookie": "^3.0.6",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
