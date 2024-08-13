@@ -1,7 +1,11 @@
-import { useNavigate } from '@remix-run/react';
-import { PaginationProps } from '../types/types';
+import { useNavigate } from "@remix-run/react";
+import { PaginationProps } from "../types/types";
 
-const Pagination = ({ totalPages, currentPage, setCurrentPage }: PaginationProps) => {
+const Pagination = ({
+  totalPages,
+  currentPage,
+  setCurrentPage,
+}: PaginationProps) => {
   const navigate = useNavigate();
 
   function onClickPrev() {
@@ -18,7 +22,11 @@ const Pagination = ({ totalPages, currentPage, setCurrentPage }: PaginationProps
   }
   return (
     <div className="pagination-container ">
-      <button className="pagination-btn" onClick={onClickPrev} disabled={currentPage === 1}>
+      <button
+        className="pagination-btn"
+        onClick={onClickPrev}
+        disabled={currentPage === 1}
+      >
         Previous
       </button>
       <h1 className="pagination-title">
@@ -27,7 +35,8 @@ const Pagination = ({ totalPages, currentPage, setCurrentPage }: PaginationProps
       <button
         className="pagination-btn"
         onClick={onClickNext}
-        disabled={currentPage === totalPages}>
+        disabled={currentPage === totalPages}
+      >
         Next
       </button>
     </div>

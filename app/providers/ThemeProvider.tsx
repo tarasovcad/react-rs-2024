@@ -1,6 +1,5 @@
-import { createContext, useCallback, useEffect, useState } from 'react';
-import { Props, ThemeContextType } from '~/types/types';
-
+import { createContext, useCallback, useEffect, useState } from "react";
+import { Props, ThemeContextType } from "~/types/types";
 
 export const ThemeContext = createContext<ThemeContextType>({
   isDarkMode: false,
@@ -14,9 +13,14 @@ export const ThemeProvider = ({ children }: Props) => {
     setIsDarkMode((prevMode) => !prevMode);
   }, []);
   useEffect(() => {
-    document.documentElement.setAttribute('data-theme', isDarkMode ? 'dark' : 'light');
+    document.documentElement.setAttribute(
+      "data-theme",
+      isDarkMode ? "dark" : "light"
+    );
   }, [isDarkMode]);
   return (
-    <ThemeContext.Provider value={{ isDarkMode, toggleTheme }}>{children}</ThemeContext.Provider>
+    <ThemeContext.Provider value={{ isDarkMode, toggleTheme }}>
+      {children}
+    </ThemeContext.Provider>
   );
 };

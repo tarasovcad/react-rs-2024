@@ -1,17 +1,23 @@
-import React from 'react';
-import { type DetailedCardpProps } from '../types/types';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../store';
-import { addItem, removeItem } from './../store/slices/selectedDataSlice';
-import LoaderDetailedCard from './loader/LoaderDetailedCard';
-import { useFetchDataByID } from '~/hooks/useRickAndMortiData';
+import React from "react";
+import { type DetailedCardpProps } from "../types/types";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../store";
+import { addItem, removeItem } from "./../store/slices/selectedDataSlice";
+import LoaderDetailedCard from "./loader/LoaderDetailedCard";
+import { useFetchDataByID } from "~/hooks/useRickAndMortiData";
 
-const DetailedCard = ({ hideDetailedCard, detailedcardID }: DetailedCardpProps) => {
-  const { isDetailedcardLoading, detailedCardData } = useFetchDataByID(detailedcardID);
+const DetailedCard = ({
+  hideDetailedCard,
+  detailedcardID,
+}: DetailedCardpProps) => {
+  const { isDetailedcardLoading, detailedCardData } =
+    useFetchDataByID(detailedcardID);
   const { name, status, gender, species, image, id } = detailedCardData ?? {};
 
   const dispatch = useDispatch();
-  const selectedItems = useSelector((state: RootState) => state.selectedData.selectedItems);
+  const selectedItems = useSelector(
+    (state: RootState) => state.selectedData.selectedItems
+  );
 
   const handleCheckboxChange = () => {
     if (selectedItems.some((item) => item.id === id)) {
@@ -27,7 +33,7 @@ const DetailedCard = ({ hideDetailedCard, detailedcardID }: DetailedCardpProps) 
     }
   };
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    if (event.key === 'Enter' || event.key === ' ') {
+    if (event.key === "Enter" || event.key === " ") {
       hideDetailedCard();
     }
   };
@@ -38,7 +44,8 @@ const DetailedCard = ({ hideDetailedCard, detailedcardID }: DetailedCardpProps) 
       data-testid="overlay"
       onKeyDown={handleKeyDown}
       role="button"
-      tabIndex={0}>
+      tabIndex={0}
+    >
       <div className="detailed-card__container">
         {isDetailedcardLoading ? (
           <LoaderDetailedCard />
@@ -48,19 +55,20 @@ const DetailedCard = ({ hideDetailedCard, detailedcardID }: DetailedCardpProps) 
               className="close cursor-pointer"
               onClick={hideDetailedCard}
               onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
+                if (e.key === "Enter" || e.key === " ") {
                   hideDetailedCard();
                 }
               }}
               role="button"
-              tabIndex={0}></div>
+              tabIndex={0}
+            ></div>
             <img
-              src={image || ''}
+              src={image || ""}
               alt="Close"
               loading="lazy"
               width={65}
               height={65}
-              style={{ width: '250px', height: '250px' }}
+              style={{ width: "250px", height: "250px" }}
             />
             <h1>{name}</h1>
             <h2>

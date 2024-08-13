@@ -1,8 +1,5 @@
-
-import { createContext } from 'react';
-import { GlobalContent } from '~/types/types';
-
-
+import { createContext } from "react";
+import { GlobalContent } from "~/types/types";
 
 export const SearchContext = createContext<GlobalContent>({
   setTerm: () => {},

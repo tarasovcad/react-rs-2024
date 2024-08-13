@@ -1,7 +1,7 @@
-import { Link } from '@remix-run/react';
-import ThrowErrorButton from './ui/ThrowErrorButton';
-import Search from './Search';
-import ThemeToggleButton from './ui/ThemeToggleButton';
+import { Link } from "@remix-run/react";
+import ThrowErrorButton from "./ui/ThrowErrorButton";
+import Search from "./Search";
+import ThemeToggleButton from "./ui/ThemeToggleButton";
 
 const Navbar = () => {
   return (

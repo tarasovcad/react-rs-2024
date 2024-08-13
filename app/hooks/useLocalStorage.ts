@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
-export default function useLocalStorage<T extends object>(key: string, defaultValue: T) {
-  const [value, setValue] = useState<T>(defaultValue);
+export default function useLocalStorage(key: string, defaultValue: string) {
+  const [value, setValue] = useState<string>(defaultValue);
 
   useEffect(() => {
     try {
@@ -16,7 +16,7 @@ export default function useLocalStorage<T extends object>(key: string, defaultVa
     }
   }, [key, defaultValue]);
 
-  const setItem = (newValue: T) => {
+  const setItem = (newValue: string) => {
     setValue(newValue);
     try {
       localStorage.setItem(key, JSON.stringify(newValue));

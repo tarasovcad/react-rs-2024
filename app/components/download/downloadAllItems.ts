@@ -12,7 +12,7 @@ const ExportCSV = ({ data, fileName }: ExportCSVProps) => {
         item.status,
         item.gender,
         item.species,
-      ].join(","),
+      ].join(",")
     ),
   ];
   const csvString = csvRows.join("\n");

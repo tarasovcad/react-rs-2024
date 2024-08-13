@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 export default function ThrowErrorButton() {
   const [shouldThrowError, setShouldThrowError] = useState(false);
 
   useEffect(() => {
     if (shouldThrowError) {
-      throw new Error('This is a test error');
+      throw new Error("This is a test error");
     }
   }, [shouldThrowError]);
 

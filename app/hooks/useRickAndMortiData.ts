@@ -1,7 +1,10 @@
-'use client';
-import { useEffect, useState } from 'react';
-import type { Character, CharactersResponse } from '../types/types';
-import { useFetchDataByIDQuery, useFetchDataByTermQuery } from './../store/rickAndMorti';
+"use client";
+import { useEffect, useState } from "react";
+import type { Character, CharactersResponse } from "../types/types";
+import {
+  useFetchDataByIDQuery,
+  useFetchDataByTermQuery,
+} from "./../store/rickAndMorti";
 
 export const useFetchDataByTerm = (term: string, currentPage: number) => {
   const [characters, setCharacters] = useState<CharactersResponse | null>(null);
@@ -36,7 +39,9 @@ export const useFetchDataByTerm = (term: string, currentPage: number) => {
 };
 
 export const useFetchDataByID = (detailedcardID: number) => {
-  const [detailedCardData, setDetailedCardData] = useState<Character | null>(null);
+  const [detailedCardData, setDetailedCardData] = useState<Character | null>(
+    null
+  );
   const [isDetailedcardLoading, setIsDetailedcardLoading] = useState(false);
 
   const { data, error, isFetching } = useFetchDataByIDQuery(detailedcardID);

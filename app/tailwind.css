@@ -5,14 +5,14 @@
 :root {
   --background-color: #ffffff;
   --text-color: #000000;
-  font-family: 'Tahoma', sans-serif;
+  font-family: "Tahoma", sans-serif;
   color-scheme: light dark;
   background-color: var(--background-color);
   font-weight: 400;
   font-size: 25px;
   color: var(--text-color);
 }
-[data-theme='dark'] {
+[data-theme="dark"] {
   --background-color: #1a1a1a;
   --text-color: #ffffff;
   --navbar-background-color: #2e2e2e;
@@ -20,7 +20,7 @@
   --blue: #5987ff;
 }
 
-[data-theme='light'] {
+[data-theme="light"] {
   --background-color: #ffffff;
   --text-color: #ffffff;
   --navbar-background-color: #e8e8e8;
@@ -101,8 +101,8 @@ header {
   aspect-ratio: 1;
   border-radius: 50%;
   padding: 6px;
-  background: conic-gradient(from 135deg at top, currentColor 90deg, #0000 0) 0 calc(50% - 4px) /
-      17px 8.5px,
+  background: conic-gradient(from 135deg at top, currentColor 90deg, #0000 0) 0
+      calc(50% - 4px) / 17px 8.5px,
     radial-gradient(
         farthest-side at bottom left,
         #0000 calc(100% - 6px),
@@ -136,7 +136,7 @@ header {
   animation: l4 1s steps(4) infinite;
 }
 .loader:before {
-  content: 'Loading...';
+  content: "Loading...";
 }
 @keyframes l4 {
   to {
@@ -323,7 +323,7 @@ header {
 .close:after {
   position: absolute;
   left: 15px;
-  content: '';
+  content: "";
   height: 33px;
   width: 2px;
   background-color: #4470e2;

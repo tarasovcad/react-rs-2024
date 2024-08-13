@@ -1,5 +1,5 @@
-import {createSlice} from "@reduxjs/toolkit";
-import {SelectedDataState} from "../../types/types";
+import { createSlice } from "@reduxjs/toolkit";
+import { SelectedDataState } from "../../types/types";
 
 const initialState: SelectedDataState = {
   selectedItems: [],
@@ -14,7 +14,7 @@ const selectedDataSlice = createSlice({
     },
     removeItem: (state, action) => {
       state.selectedItems = state.selectedItems.filter(
-        (item) => item.id !== action.payload.id,
+        (item) => item.id !== action.payload.id
       );
     },
     unselectAllItems: (state) => {
@@ -23,7 +23,7 @@ const selectedDataSlice = createSlice({
   },
 });
 
-export const {addItem, removeItem, unselectAllItems} =
+export const { addItem, removeItem, unselectAllItems } =
   selectedDataSlice.actions;
 
 export default selectedDataSlice.reducer;

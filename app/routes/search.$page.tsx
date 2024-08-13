@@ -1,13 +1,13 @@
-import { json, LoaderFunction } from '@remix-run/node';
-import { useLoaderData, useNavigate, useSearchParams } from '@remix-run/react';
-import { useEffect, useState } from 'react';
-import Main from '~/components/Main';
-import { useFetchDataByTerm } from '~/hooks/useRickAndMortiData';
+import { json, LoaderFunction } from "@remix-run/node";
+import { useLoaderData, useNavigate, useSearchParams } from "@remix-run/react";
+import { useEffect, useState } from "react";
+import Main from "~/components/Main";
+import { useFetchDataByTerm } from "~/hooks/useRickAndMortiData";
 
 export const loader: LoaderFunction = async ({ params, request }) => {
   const url = new URL(request.url);
-  const page = params.page || '1';
-  const details = url.searchParams.get('details') || '0';
+  const page = params.page || "1";
+  const details = url.searchParams.get("details") || "0";
   return json({ page, details });
 };
 
@@ -19,22 +19,25 @@ export default function App() {
 
   const [currentPage, setCurrentPage] = useState(Number(page));
 
-  const [term, setTerm] = useState('');
+  const [term, setTerm] = useState("");
 
-  const { characters, notFound, totalPages, isLoading } = useFetchDataByTerm(term, currentPage);
+  const { characters, notFound, totalPages, isLoading } = useFetchDataByTerm(
+    term,
+    currentPage
+  );
 
   const [detailedcardID, setDetailedcardID] = useState<number>();
 
   const isDetailsOpen = Boolean(Number(details) || false);
 
   const hideDetailedCard = () => {
-    searchParams.set('details', '0');
+    searchParams.set("details", "0");
     setSearchParams(searchParams);
   };
 
   const handlePageClick = (id: number) => {
     setDetailedcardID(id);
-    searchParams.set('details', '1');
+    searchParams.set("details", "1");
     setSearchParams(searchParams);
   };
 
@@ -43,7 +46,9 @@ export default function App() {
       navigate(`/search/${currentPage}?${searchParams.toString()}`);
     }
 
-    const items = JSON.parse(localStorage.getItem('tarasovcadLocalStorage') || '{}');
+    const items = JSON.parse(
+      localStorage.getItem("tarasovcadLocalStorage") || "{}"
+    );
     if (items) {
       setTerm(items);
     }
