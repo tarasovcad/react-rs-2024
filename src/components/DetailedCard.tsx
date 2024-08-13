@@ -1,20 +1,39 @@
-import React from "react";
-import {type DetailedCardpProps} from "../types/types";
+import React, {useEffect, useState} from "react";
+import {Character, type DetailedCardpProps} from "../types/types";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../store";
 import {addItem, removeItem} from "./../store/slices/selectedDataSlice";
 import LoaderDetailedCard from "./loader/LoaderDetailedCard";
-import {FetchDataByID} from "@/hooks/useRickAndMortiData";
 import Image from "next/image";
 
 const DetailedCard = ({
   detailedcardID,
   hideDetailedCard,
 }: DetailedCardpProps) => {
-  const {isDetailedcardLoading, detailedCardData} =
-    FetchDataByID(detailedcardID);
+  const [detailedCardData, setDetailedCardData] = useState<Character | null>(
+    null,
+  );
+  const [isLoading, setIsLoading] = useState(true);
 
   const {name, status, gender, species, image, id} = detailedCardData ?? {};
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          `https://rickandmortyapi.com/api/character/${detailedcardID}`,
+        );
+        const data = await response.json();
+        setDetailedCardData(data);
+      } catch (error) {
+        console.error("Error fetching detailed card data:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [detailedcardID]);
 
   const dispatch = useDispatch();
   const selectedItems = useSelector(
@@ -40,7 +59,7 @@ const DetailedCard = ({
       onClick={handleOverlayClick}
       data-testid="overlay">
       <div className="detailed-card__container">
-        {isDetailedcardLoading ? (
+        {isLoading ? (
           <LoaderDetailedCard />
         ) : (
           <>
