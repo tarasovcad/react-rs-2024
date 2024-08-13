@@ -1,8 +1,7 @@
-/* eslint-disable */
 import {Inter} from "next/font/google";
 import {useEffect, useState} from "react";
 import {useSearchParams} from "next/navigation";
-import {Character, CharactersResponse} from "@/types/types";
+import {Character, CharactersResponse, MainProps} from "@/types/types";
 import {useRouter} from "next/router";
 import Loader from "@/components/loader/Loader";
 import SingleCharacter from "@/components/SingleCharacter";
@@ -10,46 +9,22 @@ import Pagination from "@/components/Pagination";
 import DetailedCard from "@/components/DetailedCard";
 import ModalMenu from "@/components/redux/ModalMenu";
 import {GetServerSideProps} from "next";
-import {getCookie} from "cookies-next";
 
 const inter = Inter({subsets: ["latin"]});
-
-interface MainProps {
-  characters: CharactersResponse | null;
-  notFound: boolean;
-  totalPages: number;
-  isLoading: boolean;
-  initialTerm: string;
-  initialPage: number;
-}
 
 export default function Main({
   characters,
   notFound,
   totalPages,
-  isLoading,
+
   initialTerm,
-  initialPage,
 }: MainProps) {
-  const [term, setTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const searchParams = useSearchParams();
   const [detailedcardID, setDetailedcardID] = useState<number>();
   const router = useRouter();
 
-  // useEffect(() => {
-  //   if (searchParams.size > 0) {
-  //     setCurrentPage(Number(searchParams));
-  //   } else {
-  //     router.push(`/search/${currentPage}`);
-  //   }
-  //   const items = JSON.parse(
-  //     localStorage.getItem("tarasovcadLocalStorage") || "{}",
-  //   );
-  //   if (items) {
-  //     setTerm(items);
-  //   }
-  // }, [currentPage, router, isLoading, searchParams]);
+  const [isLoading, setIsLoading] = useState(false);
 
   function handlePageClick(id: number) {
     setDetailedcardID(id);
@@ -60,22 +35,35 @@ export default function Main({
   }
   const isDetailsOpen = Boolean(Number(searchParams.get("details"))) || false;
 
+  useEffect(() => {
+    const handleRouteChangeStart = () => setIsLoading(true);
+    const handleRouteChangeComplete = () => setIsLoading(false);
+    const handleRouteChangeError = () => setIsLoading(false);
+
+    router.events.on("routeChangeStart", handleRouteChangeStart);
+    router.events.on("routeChangeComplete", handleRouteChangeComplete);
+    router.events.on("routeChangeError", handleRouteChangeError);
+
+    return () => {
+      router.events.off("routeChangeStart", handleRouteChangeStart);
+      router.events.off("routeChangeComplete", handleRouteChangeComplete);
+      router.events.off("routeChangeError", handleRouteChangeError);
+    };
+  }, [router]);
   return (
     <main className={` ${inter.className}`}>
-      {/* <div className="container">
+      <div className="container">
         <h1
           className="characters mb-[4px] mt-[50px]"
-          data-testid="main-heading"
-        >
-          {term ? `Search results for: ${term}` : "Characters"}
+          data-testid="main-heading">
+          {initialTerm ? `Search results for: ${initialTerm}` : "Characters"}
         </h1>
         <h2 className="description mb-[45px]">
           All of the characters that appear in the
           <a
             href="https://rickandmorty.fandom.com/wiki/Rickipedia"
             target="_blank"
-            rel="noreferrer"
-          >
+            rel="noreferrer">
             <em> Rick and Morty </em>
           </a>
           franchise.
@@ -116,7 +104,7 @@ export default function Main({
                   hideDetailedCard={() => {
                     router.push({
                       pathname: router.pathname,
-                      query: { ...router.query, details: "0" },
+                      query: {...router.query, details: "0"},
                     });
                   }}
                 />
@@ -125,8 +113,7 @@ export default function Main({
             <ModalMenu />
           </>
         )}
-      </div> */}
-      <h1>{initialPage}</h1>
+      </div>
     </main>
   );
 }
@@ -166,7 +153,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
           totalPages: 0,
           isLoading: false,
           initialTerm: term,
-          initialPage: currentPage,
         },
       };
     }
@@ -178,7 +164,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         totalPages: data.info.pages,
         isLoading: false,
         initialTerm: term,
-        initialPage: currentPage,
       },
     };
   } catch (error) {
@@ -190,7 +175,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         totalPages: 0,
         isLoading: false,
         initialTerm: term,
-        initialPage: currentPage,
       },
     };
   }

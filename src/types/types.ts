@@ -125,3 +125,11 @@ export type CharactersResponse = {
   };
   results: Character[];
 };
+
+export interface MainProps {
+  characters: CharactersResponse | null;
+  notFound: boolean;
+  totalPages: number;
+  isLoading: boolean;
+  initialTerm: string;
+}
