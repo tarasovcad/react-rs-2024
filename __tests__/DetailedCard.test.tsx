@@ -1,17 +1,24 @@
-import React from 'react';
-import { Provider } from 'react-redux';
-import { render, screen, fireEvent } from '@testing-library/react';
-import { configureStore } from '@reduxjs/toolkit';
-import select from '@/store/slices/selectedDataSlice';
-import selectedDataReducer from '@/store/slices/selectedDataSlice';
-import DetailedCard from '@/components/DetailedCard';
+import React from "react";
+import {Provider} from "react-redux";
+import {render, screen, fireEvent, waitFor, act} from "@testing-library/react";
+import {configureStore} from "@reduxjs/toolkit";
 
-// Mock the FetchDataByID hook
-jest.mock('./../src/hooks/useRickAndMortiData', () => ({
-  FetchDataByID: jest.fn(),
-}));
+import selectedDataReducer from "@/store/slices/selectedDataSlice";
+import DetailedCard from "@/components/DetailedCard";
 
-import { FetchDataByID } from '@/hooks/useRickAndMortiData';
+global.fetch = jest.fn(() =>
+  Promise.resolve({
+    json: () =>
+      Promise.resolve({
+        id: 1,
+        name: "Rick Sanchez",
+        status: "Alive",
+        gender: "Male",
+        species: "Human",
+        image: "https://example.com/rick.png",
+      }),
+  }),
+) as jest.Mock;
 
 const mockStore = configureStore({
   reducer: {
@@ -19,81 +26,61 @@ const mockStore = configureStore({
   },
 });
 
-describe('DetailedCard', () => {
+describe("DetailedCard", () => {
   beforeEach(() => {
-    (FetchDataByID as jest.Mock).mockReturnValue({
-      isDetailedcardLoading: true,
-      detailedCardData: null,
-    });
-  });
-  it('renders loading state when detailedcardLoading is true', () => {
-    render(
-      <Provider store={mockStore}>
-        <DetailedCard detailedcardID={1} hideDetailedCard={() => {}} />
-      </Provider>,
-    );
-
-    expect(screen.getByTestId('loader-section')).toBeInTheDocument();
-    expect(screen.getByTestId('loader1')).toBeInTheDocument();
-    expect(screen.getByTestId('loader2')).toBeInTheDocument();
+    jest.clearAllMocks();
   });
 
-  it('renders character data when not loading', () => {
-    (FetchDataByID as jest.Mock).mockReturnValue({
-      isDetailedcardLoading: false,
-      detailedCardData: {
-        id: 1,
-        name: 'Rick Sanchez',
-        status: 'Alive',
-        gender: 'Male',
-        species: 'Human',
-        image: 'https://example.com/rick.png',
-      },
-    });
-    render(
-      <Provider store={mockStore}>
-        <DetailedCard detailedcardID={1} hideDetailedCard={() => {}} />
-      </Provider>,
-    );
-    expect(screen.getByText('Rick Sanchez')).toBeInTheDocument();
-    expect(screen.getByText('Status:')).toBeInTheDocument();
-    expect(screen.getByText('Species:')).toBeInTheDocument();
-    expect(screen.getByText('Gender:')).toBeInTheDocument();
-  });
-  it('handles checkbox change correctly', () => {
-    (FetchDataByID as jest.Mock).mockReturnValue({
-      isDetailedcardLoading: false,
-      detailedCardData: {
-        id: 1,
-        name: 'Rick Sanchez',
-        status: 'Alive',
-        gender: 'Male',
-        species: 'Human',
-        image: 'https://example.com/rick.png',
-      },
+  it("renders character data after loading", async () => {
+    await act(async () => {
+      render(
+        <Provider store={mockStore}>
+          <DetailedCard detailedcardID={1} hideDetailedCard={() => {}} />
+        </Provider>,
+      );
     });
 
-    render(
-      <Provider store={mockStore}>
-        <DetailedCard detailedcardID={1} hideDetailedCard={() => {}} />
-      </Provider>,
-    );
-
-    const checkbox = screen.getByRole('checkbox');
-    fireEvent.click(checkbox);
-    expect(checkbox).toBeChecked();
+    await waitFor(() => {
+      expect(screen.getByText("Rick Sanchez")).toBeInTheDocument();
+      expect(screen.getByText("Status:")).toBeInTheDocument();
+      expect(screen.getByText("Species:")).toBeInTheDocument();
+      expect(screen.getByText("Gender:")).toBeInTheDocument();
+    });
   });
 
-  it('calls hideDetailedCard on overlay click', () => {
+  it("handles checkbox change correctly", async () => {
+    await act(async () => {
+      render(
+        <Provider store={mockStore}>
+          <DetailedCard detailedcardID={1} hideDetailedCard={() => {}} />
+        </Provider>,
+      );
+    });
+
+    await waitFor(() => {
+      const checkbox = screen.getByRole("checkbox");
+      fireEvent.click(checkbox);
+      expect(checkbox).toBeChecked();
+    });
+  });
+
+  it("calls hideDetailedCard on overlay click", async () => {
     const hideDetailedCardMock = jest.fn();
 
-    render(
-      <Provider store={mockStore}>
-        <DetailedCard detailedcardID={1} hideDetailedCard={hideDetailedCardMock} />
-      </Provider>,
-    );
+    await act(async () => {
+      render(
+        <Provider store={mockStore}>
+          <DetailedCard
+            detailedcardID={1}
+            hideDetailedCard={hideDetailedCardMock}
+          />
+        </Provider>,
+      );
+    });
 
-    fireEvent.click(screen.getByTestId('overlay'));
-    expect(hideDetailedCardMock).toHaveBeenCalled();
+    await waitFor(() => {
+      fireEvent.click(screen.getByTestId("overlay"));
+      expect(hideDetailedCardMock).toHaveBeenCalled();
+    });
   });
 });

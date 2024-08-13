@@ -25,7 +25,7 @@ export default class ErrorBoundary extends React.Component<Props, ErrorState> {
       return (
         <div className="error">
           <Image
-            src="../images/error.png"
+            src="/images/error.png"
             alt="error"
             width={65}
             height={65}

@@ -16,7 +16,6 @@ export default function Main({
   characters,
   notFound,
   totalPages,
-
   initialTerm,
 }: MainProps) {
   const [currentPage, setCurrentPage] = useState(1);
@@ -123,13 +122,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const {cookies} = context.req;
   const currentPage = Number(query.page) || 1;
 
-  const cookieTerm = cookies["tarasovcadCookie"];
+  let cookieTerm = cookies["tarasovcadCookie"];
   let term = "";
   if (cookieTerm) {
     term = cookieTerm;
   }
   if (!cookieTerm) {
-    console.log("Cookie is undefined");
+    cookieTerm = "";
   }
   try {
     const response = await fetch(
