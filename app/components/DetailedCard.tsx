@@ -6,6 +6,7 @@ import { addItem, removeItem } from './../store/slices/selectedDataSlice';
 import LoaderDetailedCard from './loader/LoaderDetailedCard';
 
 const DetailedCard = ({ hideDetailedCard, detailedcardID }: DetailedCardpProps) => {
+
   const [detailedCardData, setDetailedCardData] = useState<Character | null>(null);
   const [isDetailedcardLoading, setIsDetailedcardLoading] = useState(true);
   const dispatch = useDispatch();
@@ -30,7 +31,7 @@ const DetailedCard = ({ hideDetailedCard, detailedcardID }: DetailedCardpProps) 
 
     fetchData();
   }, [detailedcardID]);
-
+  
   const { name, status, gender, species, image, id } = detailedCardData ?? {};
   const handleCheckboxChange = () => {
     if (selectedItems.some((item) => item.id === id)) {

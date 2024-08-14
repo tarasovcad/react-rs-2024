@@ -1,22 +1,14 @@
-import {
-  Links,
-  Meta,
-  Outlet,
-  Scripts,
-  ScrollRestoration,
-} from "@remix-run/react";
-import type { LinksFunction } from "@remix-run/node";
-import { Provider } from "react-redux";
-import stylesheet from "~/tailwind.css?url";
-import Navbar from "./components/Navbar";
-import { store } from "./store";
-import { ThemeProvider } from "./providers/ThemeProvider";
-import { SearchProvider } from "./providers/SearchProvider";
-import ErrorBoundary from "./components/ErrorBoundary";
+import { Links, Meta, Outlet, Scripts, ScrollRestoration } from '@remix-run/react';
+import type { LinksFunction } from '@remix-run/node';
+import { Provider } from 'react-redux';
+import stylesheet from '~/tailwind.css?url';
+import Navbar from './components/Navbar';
+import { store } from './store';
+import { ThemeProvider } from './providers/ThemeProvider';
+import { SearchProvider } from './providers/SearchProvider';
+import ErrorBoundary from './components/ErrorBoundary';
 
-export const links: LinksFunction = () => [
-  { rel: "stylesheet", href: stylesheet },
-];
+export const links: LinksFunction = () => [{ rel: 'stylesheet', href: stylesheet }];
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (

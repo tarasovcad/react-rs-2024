@@ -6,7 +6,6 @@ import Pagination from './Pagination';
 import DetailedCard from './DetailedCard';
 
 export default function Main({
-  setCurrentPage,
   term,
   currentPage,
   characters,
@@ -58,11 +57,7 @@ export default function Main({
                   })}
               </div>
             </div>
-            <Pagination
-              totalPages={totalPages}
-              currentPage={currentPage}
-              setCurrentPage={setCurrentPage}
-            />
+            <Pagination totalPages={totalPages} currentPage={currentPage} />
 
             {isDetailsOpen && detailedcardID && (
               <div data-testid="detailed-card">

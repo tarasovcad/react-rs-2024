@@ -1,6 +1,5 @@
 import { json, LoaderFunction } from '@remix-run/node';
 import { useLoaderData, useSearchParams } from '@remix-run/react';
-import { useState } from 'react';
 import Main from '~/components/Main';
 import { CharactersResponse } from '~/types/types';
 import * as cookie from 'cookie';
@@ -12,16 +11,16 @@ export const loader: LoaderFunction = async ({ params, request }) => {
   const term = cookies['tarasovcadCookieAppRemix'] || '';
 
   const url = new URL(request.url);
-  const page = params.page || '1';
+  const currentPage = Number(params.page) || '1';
   const details = url.searchParams.get('details') || '0';
-  const apiUrl = `https://rickandmortyapi.com/api/character/?page=${page}&name=${term}`;
+  const apiUrl = `https://rickandmortyapi.com/api/character/?page=${currentPage}&name=${term}`;
 
   try {
     const response = await fetch(apiUrl);
     const data: CharactersResponse = await response.json();
 
     return json({
-      page: Number(page),
+      currentPage,
       details,
       characters: data,
       notFound: data.results.length === 0,
@@ -32,7 +31,7 @@ export const loader: LoaderFunction = async ({ params, request }) => {
     });
   } catch (error) {
     return json({
-      page: Number(page),
+      currentPage,
       details,
       characters: null,
       notFound: true,
@@ -45,10 +44,17 @@ export const loader: LoaderFunction = async ({ params, request }) => {
 };
 
 export default function App() {
-  const { page, details, characters, notFound, totalPages, isLoading, term, detailedcardID } =
-    useLoaderData<typeof loader>();
+  const {
+    details,
+    characters,
+    notFound,
+    totalPages,
+    isLoading,
+    term,
+    detailedcardID,
+    currentPage,
+  } = useLoaderData<typeof loader>();
   const [searchParams, setSearchParams] = useSearchParams();
-  const [currentPage, setCurrentPage] = useState(Number(page));
   const isDetailsOpen = Boolean(Number(details) || false);
 
   const hideDetailedCard = () => {
@@ -60,10 +66,8 @@ export default function App() {
     searchParams.set('details', id.toString());
     setSearchParams(searchParams);
   };
-
   return (
     <Main
-      setCurrentPage={setCurrentPage}
       term={term}
       currentPage={currentPage}
       characters={characters}

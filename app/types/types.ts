@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode } from 'react';
 
 export interface Character {
   id?: number;
@@ -82,7 +82,6 @@ export interface CharactersData {
 export interface PaginationProps {
   totalPages: number;
   currentPage: number;
-  setCurrentPage: (currentPage: number) => void;
 }
 
 export interface DetailedCardData {
@@ -134,7 +133,7 @@ export interface MainProps {
   detailedcardID: number | null | undefined;
   isLoading: boolean;
   notFound: boolean;
-  setCurrentPage: (currentPage: number) => void;
+
   isDetailsOpen: boolean;
   hideDetailedCard: () => void;
   handlePageClick: (id: number) => void;
@@ -143,3 +142,4 @@ export interface MainProps {
 export interface RootState {
   selectedData: SelectedDataState;
 }
+
