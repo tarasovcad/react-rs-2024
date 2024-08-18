@@ -1,19 +1,45 @@
 import {ChangeEvent, useState} from "react";
 import {InputField} from "./InputField";
 import {countries} from "../data/countries";
+import {useForm, Controller} from "react-hook-form";
+import {yupResolver} from "@hookform/resolvers/yup";
+import {schema} from "../lib/yup-schema";
 
-interface FieldData {
+interface FieldType {
+  name: keyof FormData;
   label: string;
   type: string;
   placeholder: string;
 }
 
-const fields: FieldData[] = [
-  {label: "Name", type: "text", placeholder: "Write your name"},
-  {label: "Age", type: "number", placeholder: "Write your age"},
-  {label: "Email", type: "email", placeholder: "Write your email"},
-  {label: "Password", type: "password", placeholder: "Write your password"},
+interface FormData {
+  name: string;
+  age: number;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  gender: string;
+  terms: boolean;
+  country: string;
+}
+
+const fields: FieldType[] = [
+  {name: "name", label: "Name", type: "text", placeholder: "Write your name"},
+  {name: "age", label: "Age", type: "number", placeholder: "Write your age"},
   {
+    name: "email",
+    label: "Email",
+    type: "email",
+    placeholder: "Write your email",
+  },
+  {
+    name: "password",
+    label: "Password",
+    type: "password",
+    placeholder: "Write your password",
+  },
+  {
+    name: "confirmPassword",
     label: "Confirm Password",
     type: "password",
     placeholder: "Confirm your password",
@@ -21,6 +47,20 @@ const fields: FieldData[] = [
 ];
 
 const ControlledPage = () => {
+  const {
+    control,
+    handleSubmit,
+    formState: {errors},
+  } = useForm<FormData>({
+    resolver: yupResolver<FormData>(schema),
+    mode: "all",
+    reValidateMode: "onChange",
+  });
+
+  const onSubmit = (data: FormData) => {
+    console.log(data);
+  };
+
   const [selectedCountry, setSelectedCountry] = useState("");
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -28,9 +68,36 @@ const ControlledPage = () => {
   };
 
   return (
-    <div className="max-w-[500px] mx-auto flex flex-col gap-7 text-start">
+    <form
+      className="max-w-[500px] mx-auto flex flex-col gap-7 text-start"
+      onSubmit={handleSubmit(onSubmit)}>
       {fields.map((field, index) => (
-        <InputField key={index} {...field} />
+        <Controller
+          key={index}
+          name={field.name as keyof FormData}
+          control={control}
+          render={({field: {onChange, value, onBlur}}) => (
+            <>
+              <div>
+                <InputField
+                  label={field.label}
+                  type={field.type}
+                  placeholder={field.placeholder}
+                  value={value}
+                  onChange={onChange}
+                  onBlur={onBlur}
+                />
+                <div className="h-1">
+                  {errors[field.name as keyof FormData] && (
+                    <p className="text-red-500 text-xs">
+                      {errors[field.name as keyof FormData]?.message}
+                    </p>
+                  )}
+                </div>
+              </div>
+            </>
+          )}
+        />
       ))}
       <label className="text-start">Gender</label>
       <div className="flex justify-center gap-10 items-center self-start">
@@ -92,7 +159,7 @@ const ControlledPage = () => {
       <button className="bg-green-500 text-black p-2 w-fit self-center px-7 rounded-lg hover:bg-green-400 transition-all duration-300 ease-in-out">
         Submit
       </button>
-    </div>
+    </form>
   );
 };
 
