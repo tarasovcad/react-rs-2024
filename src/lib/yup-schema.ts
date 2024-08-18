@@ -1,7 +1,5 @@
 import * as yup from "yup";
 import {countries} from "../data/countries";
-const FILE_SIZE = 5 * 1024 * 1024;
-const SUPPORTED_FORMATS = ["image/jpg", "image/jpeg", "image/png"];
 
 export const schema = yup.object().shape({
   name: yup
@@ -18,35 +16,36 @@ export const schema = yup.object().shape({
     .integer("Age must be an integer")
     .required("Age is required"),
   email: yup.string().email("Invalid email").required("Email is required"),
-  password: yup.string() 
+  password: yup
+    .string()
     .min(6, "Password must be at least 6 characters")
     .required("Password is required")
     .test(
       "has-number",
       "Password must contain at least one number",
       (value) => {
-        return value ? /[0-9]/.test(value) : false; 
+        return value ? /[0-9]/.test(value) : false;
       },
     )
     .test(
       "has-uppercase",
       "Password must contain at least one uppercase letter",
       (value) => {
-        return value ? /[A-Z]/.test(value) : false; 
+        return value ? /[A-Z]/.test(value) : false;
       },
     )
     .test(
       "has-lowercase",
       "Password must contain at least one lowercase letter",
       (value) => {
-        return value ? /[a-z]/.test(value) : false; 
+        return value ? /[a-z]/.test(value) : false;
       },
     )
     .test(
       "has-special",
       "Password must contain at least one special character",
       (value) => {
-        return value ? /[!@#$%^&*(),.?":{}|<>]/.test(value) : false; 
+        return value ? /[!@#$%^&*(),.?":{}|<>]/.test(value) : false;
       },
     ),
   confirmPassword: yup
@@ -67,16 +66,11 @@ export const schema = yup.object().shape({
     .string()
     .oneOf(countries, "Please select a valid country")
     .required("Country is required"),
-
   file: yup
     .mixed<File | FileList>()
-    .required("File is required")
-    .test("fileFormat", "Unsupported Format", (value) => {
-      const files = value as FileList;
-      return files && SUPPORTED_FORMATS.includes(files[0]?.type);
+    .test("fileType", "Invalid file type", (value) => {
+      if (!value) return true;
+      return value instanceof FileList || value instanceof File;
     })
-    .test("fileSize", "File too large", (value) => {
-      const files = value as FileList;
-      return files && files[0]?.size <= FILE_SIZE;
-    }),
+    .required("File is required"),
 });

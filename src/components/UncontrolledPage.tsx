@@ -3,6 +3,9 @@ import {schema} from "../lib/yup-schema";
 import {useRef, useState} from "react";
 import * as yup from "yup";
 import {UncontrolledInput} from "./UncontrolledInput";
+import {useDispatch} from "react-redux";
+import {useNavigate} from "react-router-dom";
+import {AppDispatch, saveFormData} from "../store/store";
 
 interface FieldType {
   name: keyof FormData;
@@ -57,6 +60,9 @@ const fields: FieldType[] = [
 const UnControlledPage = () => {
   const formRef = useRef<HTMLFormElement>(null);
 
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
+
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -69,6 +75,8 @@ const UnControlledPage = () => {
         await schema.validate(data, {abortEarly: false});
         setFormErrors({});
         console.log("Form Data:", data);
+        dispatch(saveFormData(data));
+        navigate("/");
       } catch (err) {
         if (err instanceof yup.ValidationError) {
           const errors: Record<string, string> = {};

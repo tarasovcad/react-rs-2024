@@ -3,6 +3,9 @@ import {countries} from "../data/countries";
 import {useForm, Controller} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {schema} from "../lib/yup-schema";
+import {useDispatch} from "react-redux";
+import {AppDispatch, saveFormData} from "../store/store";
+import {useNavigate} from "react-router-dom";
 
 interface FieldType {
   name: keyof FormData;
@@ -58,15 +61,20 @@ const ControlledPage = () => {
   const {
     control,
     handleSubmit,
-    formState: {errors},
+    formState: {errors, isValid},
   } = useForm<FormData>({
     resolver: yupResolver<FormData>(schema),
     mode: "all",
     reValidateMode: "onChange",
   });
 
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
+
   const onSubmit = (data: FormData) => {
     console.log(data);
+    dispatch(saveFormData(data));
+    navigate("/");
   };
 
   return (
@@ -231,7 +239,9 @@ const ControlledPage = () => {
           )}
         />
       </div>
-      <button className="bg-green-500 text-black p-2 w-fit self-center px-7 rounded-lg hover:bg-green-400 transition-all duration-300 ease-in-out">
+      <button
+        className="bg-green-500 text-black p-2 w-fit self-center px-7 rounded-lg hover:bg-green-400 transition-all duration-300 ease-in-out disabled:bg-green-200 disabled:cursor-not-allowed"
+        disabled={!isValid}>
         Submit
       </button>
     </form>
