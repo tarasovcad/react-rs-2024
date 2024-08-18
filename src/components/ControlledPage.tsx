@@ -1,4 +1,3 @@
-import {ChangeEvent, useState} from "react";
 import {InputField} from "./InputField";
 import {countries} from "../data/countries";
 import {useForm, Controller} from "react-hook-form";
@@ -18,9 +17,18 @@ interface FormData {
   email: string;
   password: string;
   confirmPassword: string;
-  gender: string;
+  gender: "male" | "female";
   terms: boolean;
   country: string;
+  file: FileList | File;
+}
+export interface InputFieldProps {
+  label: string;
+  type: string;
+  placeholder: string;
+  value: string | number | boolean | FileList | File;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onBlur: (event: React.FocusEvent<HTMLInputElement>) => void;
 }
 
 const fields: FieldType[] = [
@@ -61,12 +69,6 @@ const ControlledPage = () => {
     console.log(data);
   };
 
-  const [selectedCountry, setSelectedCountry] = useState("");
-
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setSelectedCountry(event.target.value);
-  };
-
   return (
     <form
       className="max-w-[500px] mx-auto flex flex-col gap-7 text-start"
@@ -99,62 +101,135 @@ const ControlledPage = () => {
           )}
         />
       ))}
-      <label className="text-start">Gender</label>
-      <div className="flex justify-center gap-10 items-center self-start">
-        <div className="flex items-center gap-2">
-          <input
-            type="radio"
-            className="text-sm bg-white w-full border border-black rounded-md mt-1 p-2 placeholder:text-black text-black"
-          />
-          <label className="text-sm">Male</label>
-        </div>
-        <div className="flex items-center gap-2">
-          <input
-            type="radio"
-            className="text-sm bg-white w-full border border-black rounded-md mt-1 p-2 placeholder:text-black text-black"
-          />
-          <label className="text-sm">Female</label>
-        </div>
-      </div>
-      <div className="flex items-center gap-2 self-start ">
-        <input
-          type="checkbox"
-          className="text-sm bg-white border border-black rounded-md mt-1 p-2 placeholder:text-black text-black w-4 h-4"
+      <div className=" flex flex-col gap-5">
+        <label className="text-start">Gender</label>
+        <Controller
+          name="gender"
+          control={control}
+          render={({field}) => (
+            <>
+              <div className="flex flex-col text-start">
+                <div className="flex justify-center gap-10 items-center self-start">
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="radio"
+                      {...field}
+                      value="male"
+                      checked={field.value === "male"}
+                    />
+                    <label className="text-sm">Male</label>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="radio"
+                      {...field}
+                      value="female"
+                      checked={field.value === "female"}
+                    />
+                    <label className="text-sm">Female</label>
+                  </div>
+                </div>
+                <div className="h-1 mt-3">
+                  {errors[field.name as keyof FormData] && (
+                    <p className="text-red-500 text-xs">
+                      {errors[field.name as keyof FormData]?.message}
+                    </p>
+                  )}
+                </div>
+              </div>
+            </>
+          )}
         />
-        <label className="text-start whitespace-nowrap">
-          I accept the Terms and Conditions
-        </label>
       </div>
-      <div className="flex items-center gap-4 flex-col text-start">
+      <div className=" flex flex-col gap-5">
+        <label className="text-start">Gender</label>
+        <Controller
+          name="terms"
+          control={control}
+          render={({field: {onChange, onBlur, value, name, ref}}) => (
+            <>
+              <div className="flex items-center gap-2 self-start">
+                <input
+                  type="checkbox"
+                  onChange={onChange}
+                  onBlur={onBlur}
+                  checked={value}
+                  name={name}
+                  ref={ref}
+                  className="text-sm bg-white border border-black rounded-md mt-1 p-2 placeholder:text-black text-black w-4 h-4"
+                />
+                <label className="text-start whitespace-nowrap">
+                  I accept the Terms and Conditions
+                </label>
+              </div>
+              <div className="h-1">
+                {errors.terms && (
+                  <p className="text-red-500 text-xs">{errors.terms.message}</p>
+                )}
+              </div>
+            </>
+          )}
+        />
+      </div>
+
+      <div className="flex items-start gap-4 flex-col text-start">
         <label className="text-sm whitespace-nowrap self-start">
           Choose your file
         </label>
-        <input
-          type="file"
-          className="text-sm bg-white w-full border border-black rounded-md mt-1 p-2 placeholder:text-black text-black"
+        <Controller
+          name="file"
+          control={control}
+          render={({field: {onChange, onBlur}}) => (
+            <>
+              <input
+                type="file"
+                onChange={(e) => onChange(e.target.files)}
+                onBlur={onBlur}
+                className="text-sm bg-white w-full border border-black rounded-md mt-1 p-2 placeholder:text-black text-black"
+              />
+              <div className="h-1">
+                {errors.file && (
+                  <p className="text-red-500 text-xs">{errors.file.message}</p>
+                )}
+              </div>
+            </>
+          )}
         />
       </div>
-      <div className="flex items-center gap-2 self-start flex-col w-full">
+      <div className="flex items-start gap-2 self-start flex-col w-full ">
         <label
           className="text-start whitespace-nowrap self-start"
           htmlFor="country">
           Select a Country:
         </label>
-        <input
-          type="text"
-          id="country"
+        <Controller
           name="country"
-          list="country-list"
-          value={selectedCountry}
-          onChange={handleChange}
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          placeholder="Start typing a country name..."
+          control={control}
+          render={({field}) => (
+            <>
+              <input
+                type="text"
+                id="country"
+                list="country-list"
+                {...field}
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                placeholder="Start typing a country name..."
+              />
+              <datalist id="country-list">
+                {countries.map((country, index) => (
+                  <option key={index} value={country} />
+                ))}
+              </datalist>
+              <div className="h-1">
+                {errors.country && (
+                  <p className="text-red-500 text-xs">
+                    {errors.country.message}
+                  </p>
+                )}
+              </div>
+            </>
+          )}
         />
-        <datalist id="country-list">
-          {countries.map((country, index) => (
-            <option key={index} value={country} />
-          ))}
-        </datalist>
       </div>
       <button className="bg-green-500 text-black p-2 w-fit self-center px-7 rounded-lg hover:bg-green-400 transition-all duration-300 ease-in-out">
         Submit

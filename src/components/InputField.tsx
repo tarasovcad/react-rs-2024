@@ -1,11 +1,4 @@
-interface InputFieldProps {
-  label: string;
-  type: string;
-  placeholder: string;
-  value: string | number | boolean;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  onBlur: (event: React.FocusEvent<HTMLInputElement>) => void;
-}
+import {InputFieldProps} from "./ControlledPage";
 
 export const InputField = ({
   label,
