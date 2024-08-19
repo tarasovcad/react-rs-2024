@@ -37,16 +37,6 @@ const fields: FieldType[] = [
   },
 ];
 
-
-export interface InputFieldProps {
-  label: string;
-  type: string;
-  placeholder: string;
-  value: string | number | boolean | FileList | File;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  onBlur: (event: React.FocusEvent<HTMLInputElement>) => void;
-}
-
 interface FormData {
   name: string;
   age: number;
@@ -58,6 +48,15 @@ interface FormData {
   country: string;
   file: File | FileList | string;
 }
+export interface InputFieldProps {
+  label: string;
+  type: string;
+  placeholder: string;
+  value: string | number | boolean | FileList | File;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onBlur: (event: React.FocusEvent<HTMLInputElement>) => void;
+}
+
 
 const ControlledPage = () => {
   const {
