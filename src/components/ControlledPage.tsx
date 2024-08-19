@@ -23,7 +23,7 @@ interface FormData {
   gender: "male" | "female";
   terms: boolean;
   country: string;
-  file: FileList | File;
+  file: File | FileList | string;
 }
 export interface InputFieldProps {
   label: string;
@@ -62,11 +62,24 @@ const ControlledPage = () => {
     control,
     handleSubmit,
     formState: {errors, isValid},
+    setValue,
   } = useForm<FormData>({
     resolver: yupResolver<FormData>(schema),
     mode: "all",
     reValidateMode: "onChange",
   });
+
+  const handleFileChange = (files: FileList | null) => {
+    if (files && files.length > 0) {
+      const file = files[0];
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64String = reader.result as string;
+        setValue("file", base64String, {shouldValidate: true});
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
@@ -187,11 +200,11 @@ const ControlledPage = () => {
         <Controller
           name="file"
           control={control}
-          render={({field: {onChange, onBlur}}) => (
+          render={({field: {onBlur}}) => (
             <>
               <input
                 type="file"
-                onChange={(e) => onChange(e.target.files)}
+                onChange={(e) => handleFileChange(e.target.files)}
                 onBlur={onBlur}
                 className="text-sm bg-white w-full border border-black rounded-md mt-1 p-2 placeholder:text-black text-black"
               />

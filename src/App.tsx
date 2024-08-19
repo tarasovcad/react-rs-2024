@@ -8,10 +8,7 @@ interface RootState {
     password?: string;
     gender?: string;
     confirmPassword?: string;
-    file?: {
-      base64?: string;
-      name?: string;
-    };
+    file?: {base64?: string; name?: string};
   };
 }
 
@@ -22,6 +19,8 @@ function App() {
   if (!formData || Object.keys(formData).length === 0) {
     return "No List Found";
   }
+  console.log(formData.file);
+
   return (
     <div className="text-2xl">
       <h1 className="text-center mb-4">React Form Handling</h1>
@@ -32,11 +31,11 @@ function App() {
         <p>Password: {formData.password}</p>
         <p>Gender: {formData.gender}</p>
         <p>Confirm Password: {formData.confirmPassword}</p>
-        {formData.file && formData.file.base64 && (
+        {formData.file && (
           <img
             className="w-[250px] h-[250px] object-cover mx-auto mt-5"
-            src={formData.file.base64}
-            alt={formData.file.name}
+            src={formData.file as unknown as string}
+            alt={formData.file.name || "Uploaded image"}
           />
         )}
       </div>

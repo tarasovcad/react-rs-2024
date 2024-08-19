@@ -68,9 +68,9 @@ export const schema = yup.object().shape({
     .required("Country is required"),
   file: yup
     .mixed<File | FileList>()
-    .test("fileType", "Invalid file type", (value) => {
-      if (!value) return true;
-      return value instanceof FileList || value instanceof File;
-    })
+    // .test("fileType", "Invalid file type", (value) => {
+    //   if (!value) return true;
+    //   return value instanceof FileList || value instanceof File;
+    // })
     .required("File is required"),
 });

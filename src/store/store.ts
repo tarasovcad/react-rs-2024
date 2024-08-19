@@ -9,7 +9,7 @@ interface FormData {
   gender: "male" | "female";
   terms: boolean;
   country: string;
-  file: FileList | File;
+  file: FileList | File | string;
 }
 
 interface StoreState {
