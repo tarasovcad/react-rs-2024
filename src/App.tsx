@@ -14,13 +14,9 @@ interface RootState {
 
 function App() {
   const formData = useSelector((state: RootState) => state.formData);
-  console.log("Form Data at App:", formData);
-
   if (!formData || Object.keys(formData).length === 0) {
     return "No List Found";
   }
-  console.log(formData.file);
-
   return (
     <div className="text-2xl">
       <h1 className="text-center mb-4">React Form Handling</h1>

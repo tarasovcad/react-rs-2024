@@ -14,26 +14,6 @@ interface FieldType {
   placeholder: string;
 }
 
-interface FormData {
-  name: string;
-  age: number;
-  email: string;
-  password: string;
-  confirmPassword: string;
-  gender: "male" | "female";
-  terms: boolean;
-  country: string;
-  file: File | FileList | string;
-}
-export interface InputFieldProps {
-  label: string;
-  type: string;
-  placeholder: string;
-  value: string | number | boolean | FileList | File;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  onBlur: (event: React.FocusEvent<HTMLInputElement>) => void;
-}
-
 const fields: FieldType[] = [
   {name: "name", label: "Name", type: "text", placeholder: "Write your name"},
   {name: "age", label: "Age", type: "number", placeholder: "Write your age"},
@@ -56,6 +36,28 @@ const fields: FieldType[] = [
     placeholder: "Confirm your password",
   },
 ];
+
+
+export interface InputFieldProps {
+  label: string;
+  type: string;
+  placeholder: string;
+  value: string | number | boolean | FileList | File;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onBlur: (event: React.FocusEvent<HTMLInputElement>) => void;
+}
+
+interface FormData {
+  name: string;
+  age: number;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  gender: "male" | "female";
+  terms: boolean;
+  country: string;
+  file: File | FileList | string;
+}
 
 const ControlledPage = () => {
   const {
