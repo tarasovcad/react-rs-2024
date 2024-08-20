@@ -57,7 +57,6 @@ export interface InputFieldProps {
   onBlur: (event: React.FocusEvent<HTMLInputElement>) => void;
 }
 
-
 const ControlledPage = () => {
   const {
     control,

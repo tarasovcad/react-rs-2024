@@ -55,13 +55,14 @@ interface FormData {
   gender: "male" | "female";
   terms: boolean;
   country: string;
-  file: FileList | File;
+  file: string | null;
 }
 const UnControlledPage = () => {
   const formRef = useRef<HTMLFormElement>(null);
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+
   const [fileBase64, setFileBase64] = useState<string | null>(null);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -81,19 +82,11 @@ const UnControlledPage = () => {
     event.preventDefault();
     if (formRef.current) {
       const formData = new FormData(formRef.current);
-      const data = Object.fromEntries(formData);
-      if (fileBase64) {
-        data.file = fileBase64;
-      }
+      const data: Record<string, File | string | null> = {};
 
       formData.forEach((value, key) => {
         if (key === "file") {
-      
-          if (value instanceof File && value.size > 0) {
-            data[key] = value;
-          } else {
-            data[key] = ""; 
-          }
+          data[key] = fileBase64 || null;
         } else {
           data[key] = value;
         }

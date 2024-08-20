@@ -60,7 +60,6 @@ export const schema = yup.object().shape({
     .string()
     .oneOf(["male", "female"] as const, "Please select a valid gender")
     .required("Gender is required"),
-
   terms: yup
     .boolean()
     .oneOf([true], "You must accept the terms and conditions")
@@ -83,5 +82,4 @@ export const schema = yup.object().shape({
       const fileSizeInBytes = (base64Length * 3) / 4;
       return fileSizeInBytes <= FILE_SIZE;
     }),
-
 });
