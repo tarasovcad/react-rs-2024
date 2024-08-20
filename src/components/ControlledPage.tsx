@@ -39,7 +39,7 @@ const fields: FieldType[] = [
 
 interface FormData {
   name: string;
-  age: number;
+  age: number | string;
   email: string;
   password: string;
   confirmPassword: string;
@@ -67,6 +67,16 @@ const ControlledPage = () => {
     resolver: yupResolver<FormData>(schema),
     mode: "all",
     reValidateMode: "onChange",
+    defaultValues: {
+      name: "",
+      age: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+      gender: undefined,
+      terms: false,
+      country: "",
+    },
   });
 
   const handleFileChange = (files: FileList | null) => {

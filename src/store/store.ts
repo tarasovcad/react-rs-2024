@@ -2,7 +2,7 @@ import {createStore, Action} from "redux";
 
 interface FormData {
   name: string;
-  age: number;
+  age: number | string;
   email: string;
   password: string;
   confirmPassword: string;
