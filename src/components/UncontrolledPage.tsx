@@ -61,9 +61,15 @@ const UnControlledPage = () => {
   const formRef = useRef<HTMLFormElement>(null);
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
+  const [termsAccepted, setTermsAccepted] = useState(false);
+
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
 
   const [fileBase64, setFileBase64] = useState<string | null>(null);
+
+  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTermsAccepted(event.target.checked);
+  };
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
@@ -82,11 +88,13 @@ const UnControlledPage = () => {
     event.preventDefault();
     if (formRef.current) {
       const formData = new FormData(formRef.current);
-      const data: Record<string, File | string | null> = {};
+      const data: Record<string, File | string | boolean | null> = {};
 
       formData.forEach((value, key) => {
         if (key === "file") {
           data[key] = fileBase64 || null;
+        } else if (key === "terms") {
+          data[key] = termsAccepted;
         } else {
           data[key] = value;
         }
@@ -155,6 +163,8 @@ const UnControlledPage = () => {
           <input
             type="checkbox"
             name="terms"
+            defaultChecked={false}
+            onChange={(e) => handleCheckboxChange(e)}
             className="text-sm bg-white border border-black rounded-md mt-1 p-2 placeholder:text-black text-black w-4 h-4"
           />
           <label className="text-start whitespace-nowrap">
