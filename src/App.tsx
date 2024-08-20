@@ -1,3 +1,4 @@
+import {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
 
 interface RootState {
@@ -13,12 +14,24 @@ interface RootState {
 }
 
 function App() {
+  const [isUpdated, setIsUpdated] = useState(false);
   const formData = useSelector((state: RootState) => state.formData);
+
+  useEffect(() => {
+    setIsUpdated(true);
+    const timer = setTimeout(() => setIsUpdated(false), 3000);
+    return () => clearTimeout(timer);
+  }, [formData]);
+
   if (!formData || Object.keys(formData).length === 0) {
     return "No List Found";
   }
   return (
-    <div className="text-2xl">
+    <div
+      className={`text-2xl p-4 max-w-[800px] mx-auto ${isUpdated ? "border-4 border-red-500 " : ""}`}>
+      {isUpdated && (
+        <p className="text-center mb-5 text-red-500">Form data updated</p>
+      )}
       <h1 className="text-center mb-4">React Form Handling</h1>
       <div className="text-center text-base">
         <p>Name: {formData.name}</p>
