@@ -14,26 +14,6 @@ interface FieldType {
   placeholder: string;
 }
 
-interface FormData {
-  name: string;
-  age: number;
-  email: string;
-  password: string;
-  confirmPassword: string;
-  gender: "male" | "female";
-  terms: boolean;
-  country: string;
-  file: FileList | File;
-}
-export interface InputFieldProps {
-  label: string;
-  type: string;
-  placeholder: string;
-  value: string | number | boolean | FileList | File;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  onBlur: (event: React.FocusEvent<HTMLInputElement>) => void;
-}
-
 const fields: FieldType[] = [
   {name: "name", label: "Name", type: "text", placeholder: "Write your name"},
   {name: "age", label: "Age", type: "number", placeholder: "Write your age"},
@@ -57,16 +37,59 @@ const fields: FieldType[] = [
   },
 ];
 
+interface FormData {
+  name: string;
+  age: number | string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  gender: "male" | "female";
+  terms: boolean;
+  country: string;
+  file: File | FileList | string;
+}
+export interface InputFieldProps {
+  label: string;
+  type: string;
+  placeholder: string;
+  value: string | number | boolean | FileList | File;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onBlur: (event: React.FocusEvent<HTMLInputElement>) => void;
+}
+
 const ControlledPage = () => {
   const {
     control,
     handleSubmit,
     formState: {errors, isValid},
+    setValue,
   } = useForm<FormData>({
     resolver: yupResolver<FormData>(schema),
     mode: "all",
     reValidateMode: "onChange",
+    defaultValues: {
+      name: "",
+      age: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+      gender: undefined,
+      terms: false,
+      country: "",
+    },
   });
+
+  const handleFileChange = (files: FileList | null) => {
+    if (files && files.length > 0) {
+      const file = files[0];
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64String = reader.result as string;
+        setValue("file", base64String, {shouldValidate: true});
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
@@ -187,11 +210,11 @@ const ControlledPage = () => {
         <Controller
           name="file"
           control={control}
-          render={({field: {onChange, onBlur}}) => (
+          render={({field: {onBlur}}) => (
             <>
               <input
                 type="file"
-                onChange={(e) => onChange(e.target.files)}
+                onChange={(e) => handleFileChange(e.target.files)}
                 onBlur={onBlur}
                 className="text-sm bg-white w-full border border-black rounded-md mt-1 p-2 placeholder:text-black text-black"
               />

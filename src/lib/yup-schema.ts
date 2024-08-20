@@ -1,6 +1,9 @@
 import * as yup from "yup";
 import {countries} from "../data/countries";
 
+const FILE_SIZE = 5 * 1024 * 1024;
+const SUPPORTED_FORMATS = ["jpeg", "jpg", "png", "gif"];
+
 export const schema = yup.object().shape({
   name: yup
     .string()
@@ -57,7 +60,6 @@ export const schema = yup.object().shape({
     .string()
     .oneOf(["male", "female"] as const, "Please select a valid gender")
     .required("Gender is required"),
-
   terms: yup
     .boolean()
     .oneOf([true], "You must accept the terms and conditions")
@@ -67,10 +69,17 @@ export const schema = yup.object().shape({
     .oneOf(countries, "Please select a valid country")
     .required("Country is required"),
   file: yup
-    .mixed<File | FileList>()
-    .test("fileType", "Invalid file type", (value) => {
-      if (!value) return true;
-      return value instanceof FileList || value instanceof File;
+    .string()
+    .required("File is required")
+    .test("fileFormat", "Unsupported Format", (value) => {
+      if (!value) return false;
+      const [, format] = value.split(";")[0].split("/");
+      return SUPPORTED_FORMATS.includes(format);
     })
-    .required("File is required"),
+    .test("fileSize", "File too large", (value) => {
+      if (!value) return false;
+      const base64Length = value.split(",")[1].length;
+      const fileSizeInBytes = (base64Length * 3) / 4;
+      return fileSizeInBytes <= FILE_SIZE;
+    }),
 });

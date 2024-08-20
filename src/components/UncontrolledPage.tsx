@@ -14,17 +14,6 @@ interface FieldType {
   placeholder: string;
 }
 
-interface FormData {
-  name: string;
-  age: number;
-  email: string;
-  password: string;
-  confirmPassword: string;
-  gender: "male" | "female";
-  terms: boolean;
-  country: string;
-  file: FileList | File;
-}
 export interface InputFieldProps {
   label: string;
   type: string;
@@ -57,22 +46,63 @@ const fields: FieldType[] = [
   },
 ];
 
+interface FormData {
+  name: string;
+  age: number;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  gender: "male" | "female";
+  terms: boolean;
+  country: string;
+  file: string | null;
+}
 const UnControlledPage = () => {
   const formRef = useRef<HTMLFormElement>(null);
-
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
+  const [termsAccepted, setTermsAccepted] = useState(false);
 
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+
+  const [fileBase64, setFileBase64] = useState<string | null>(null);
+
+  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTermsAccepted(event.target.checked);
+  };
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    if (files && files.length > 0) {
+      const file = files[0];
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64String = reader.result as string;
+        setFileBase64(base64String);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (formRef.current) {
       const formData = new FormData(formRef.current);
-      const data = Object.fromEntries(formData.entries());
+      const data: Record<string, File | string | boolean | null> = {};
 
+      formData.forEach((value, key) => {
+        if (key === "file") {
+          data[key] = fileBase64 || null;
+        } else if (key === "terms") {
+          data[key] = termsAccepted;
+        } else {
+          data[key] = value;
+        }
+      });
+      console.log("Data:", data);
       try {
         await schema.validate(data, {abortEarly: false});
+
         setFormErrors({});
         console.log("Form Data:", data);
         dispatch(saveFormData(data));
@@ -87,6 +117,8 @@ const UnControlledPage = () => {
           });
           setFormErrors(errors);
           console.log("Validation Errors:", errors);
+        } else {
+          console.error("Unexpected error:", err);
         }
       }
     }
@@ -131,6 +163,8 @@ const UnControlledPage = () => {
           <input
             type="checkbox"
             name="terms"
+            defaultChecked={false}
+            onChange={(e) => handleCheckboxChange(e)}
             className="text-sm bg-white border border-black rounded-md mt-1 p-2 placeholder:text-black text-black w-4 h-4"
           />
           <label className="text-start whitespace-nowrap">
@@ -150,6 +184,7 @@ const UnControlledPage = () => {
         <input
           type="file"
           name="file"
+          onChange={handleFileChange}
           className="text-sm bg-white w-full border border-black rounded-md mt-1 p-2 placeholder:text-black text-black"
         />
         <div className="h-1 mt-3">

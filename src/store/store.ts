@@ -2,14 +2,14 @@ import {createStore, Action} from "redux";
 
 interface FormData {
   name: string;
-  age: number;
+  age: number | string;
   email: string;
   password: string;
   confirmPassword: string;
   gender: "male" | "female";
   terms: boolean;
   country: string;
-  file: FileList | File;
+  file: FileList | File | string;
 }
 
 interface StoreState {
